@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
-    public float jumpForce = 5.0f;
+    private float moveSpeed = 5.0f;
+    private float jumpForce = 5.0f;
     private bool isJumping = false;
     private Rigidbody2D rb;
 
@@ -40,5 +40,16 @@ public class PlayerMovement : MonoBehaviour
         {
             isJumping = false;
         }
+    }
+
+    //added this to access speed and jump from external scripts
+    public void changeSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
+
+    public void changeJump(float jump)
+    {
+        jumpForce = jump;
     }
 }
