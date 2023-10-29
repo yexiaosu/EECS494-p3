@@ -37,7 +37,7 @@ public class WalkMovement : EnemyMovement
             rb.velocity = Vector3.zero;
             return;
         }
-        time += Time.deltaTime;
+        time += Time.fixedDeltaTime;
         if (time >= changeDirectionTime)
         {
             time = 0;
