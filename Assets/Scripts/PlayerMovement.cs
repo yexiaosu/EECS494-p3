@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float moveSpeed = 5.0f;
-    private float jumpForce = 5.0f;
+    private float jumpForce = 10.0f;
     private bool isJumping = false;
     private Rigidbody2D rb;
 
