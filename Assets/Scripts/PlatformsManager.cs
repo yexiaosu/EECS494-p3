@@ -43,7 +43,7 @@ public class PlatformsManager : MonoBehaviour
 
             float yOffset = Random.Range(3.5f, 4.2f);
             platformPos.y = platformPos.y + yOffset;
-            float xOffset = Random.Range(5.0f, 10.0f - yOffset);
+            float xOffset = Random.Range(5.0f, 8.0f - yOffset);
             if (platformPos.x + xOffset * dir > 7.5f)
                 dir = -1;
             else if (platformPos.x + xOffset * dir < -7.5f)

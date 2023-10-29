@@ -920,7 +920,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 589b15bb073dd4cdb8caa7d106f99ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: 0
+  offset: 20
+  spawnCd: 2
+  enemyPrefabs:
+  - _gameObjects:
+    - {fileID: 974341857172255828, guid: a7bbd1d02f61d4341b7027a6a3bfed15, type: 3}
+  - _gameObjects:
+    - {fileID: 2994935649063905116, guid: c1a154de51db84146b37809b55cb7de3, type: 3}
 --- !u!4 &1766022563
 Transform:
   m_ObjectHideFlags: 0
