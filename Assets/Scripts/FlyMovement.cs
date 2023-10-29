@@ -15,12 +15,9 @@ public class FlyMovement : EnemyMovement
     protected float time;
     protected Vector2 input;
     protected bool isStop = false;
-    private float leftEdge = -10.0f;
-    private float rightEdge = 10.0f;
-    protected float bottromEdge = 0.0f;
-    protected float topEdge = 8.0f;
 
-    private bool canChangeDir = true;
+    private bool canChangeDir = false;
+    private Vector2 cameraPos;
 
     protected override Vector2 GetInput(Vector2 rawInput)
     {
@@ -29,21 +26,18 @@ public class FlyMovement : EnemyMovement
         if (canChangeDir)
         {
             bool flag = false;
-            if ((transform.position.x - leftEdge < 0.001 && horizonInput < 0) || (rightEdge - transform.position.x < 0.001 && horizonInput > 0))
+            if ((transform.position.x < cameraPos.x && horizonInput < 0) || (cameraPos.x < transform.position.x && horizonInput > 0))
             {
                 horizonInput = -1 * horizonInput;
                 flag = true;
             }
-            if ((transform.position.y - bottromEdge < 0.001 && verticalInput < 0) || (topEdge - transform.position.y < 0.001 && verticalInput < 0))
+            if ((transform.position.y < cameraPos.y && verticalInput < 0) || (cameraPos.y < transform.position.y && verticalInput > 0))
             {
                 verticalInput = -1 * verticalInput;
                 flag = true;
             }
             if (flag)
-            {
                 canChangeDir = false;
-                StartCoroutine(StopChangeDir());
-            }
         }
         return new Vector2(horizonInput, verticalInput);
     }
@@ -56,7 +50,7 @@ public class FlyMovement : EnemyMovement
             return;
         }
         time += Time.fixedDeltaTime;
-        if (time >= changeDirectionTime || isOutOfRange())
+        if (time >= changeDirectionTime)
         {
             time = 0;
             changeDirectionTime = Random.Range(minDirectionChangeTime, maxDirectionChangeTime);
@@ -80,17 +74,17 @@ public class FlyMovement : EnemyMovement
         StartCoroutine(Stop());
     }
 
-    protected bool isOutOfRange()
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        if (transform.position.x - leftEdge < 0.001 || rightEdge - transform.position.x < 0.001 || transform.position.y - bottromEdge < 0.001 || topEdge - transform.position.y < 0.001)
-            return true;
-        else
-            return false;
-    }
-
-    private IEnumerator StopChangeDir()
-    {
-        yield return new WaitForSeconds(1);
-        canChangeDir = true;
+        if (collision.gameObject.tag == "MainCamera")
+        {
+            canChangeDir = true;
+            cameraPos = collision.transform.position;
+            time = 0;
+            changeDirectionTime = Random.Range(minDirectionChangeTime, maxDirectionChangeTime);
+            input = GenerateInput();
+            Vector2 velocity = GetInput(input).normalized;
+            rb.velocity = velocity * speed;
+        }
     }
 }
