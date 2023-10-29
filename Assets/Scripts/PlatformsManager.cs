@@ -6,10 +6,11 @@ public class PlatformsManager : MonoBehaviour
 {
     public float offset;
     public GameObject platformPrefab;
+    public GameObject boonPrefab;
 
     private Subscription<RepeatEvent> repeatEventSubscription;
-    private HashSet<int> touchedPlatforms = new HashSet<int>();  // To keep track of touched platforms
-    private int platformIDCounter = 0;  // Counter to give each platform a unique ID
+    private HashSet<int> touchedPlatforms = new HashSet<int>();
+    private int platformIDCounter = 0;
 
     void Start()
     {
@@ -37,21 +38,25 @@ public class PlatformsManager : MonoBehaviour
         {
             GameObject platform = Instantiate(platformPrefab, platformPos, Quaternion.identity);
             platform.transform.parent = transform;
-
-            // Assign unique ID to the platform and increment the counter
             platform.GetComponent<Platform>().PlatformID = platformIDCounter++;
 
+            // 10% chance to spawn a boon on the platform
+            if (Random.value <= 0.10f)
+            {
+                Vector3 boonPos = new Vector3(platformPos.x, platformPos.y + platform.GetComponent<Renderer>().bounds.size.y, platformPos.z);
+                Instantiate(boonPrefab, boonPos, Quaternion.identity);
+            }
+
             float yOffset = Random.Range(3.5f, 4.2f);
-            platformPos.y = platformPos.y + yOffset;
+            platformPos.y += yOffset;
             float xOffset = Random.Range(5.0f, 8.0f - yOffset);
             if (platformPos.x + xOffset * dir > 7.5f)
                 dir = -1;
             else if (platformPos.x + xOffset * dir < -7.5f)
                 dir = 1;
-            platformPos.x = platformPos.x + xOffset * dir;
+            platformPos.x += xOffset * dir;
         }
     }
-
 }
 
 public struct PlayerTouchedPlatformEvent

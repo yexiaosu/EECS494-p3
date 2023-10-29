@@ -52,4 +52,15 @@ public class PlayerMovement : MonoBehaviour
     {
         jumpForce = jump;
     }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed;
+    }
+
+    public float GetJumpForce()
+    {
+        return jumpForce;
+    }
+
 }
