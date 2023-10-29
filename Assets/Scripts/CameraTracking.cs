@@ -9,7 +9,7 @@ public class CameraTracking : MonoBehaviour
     {
         if (player)
         {
-            transform.position = new Vector3(player.position.x + offset.x, player.position.y + offset.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x + offset.x, player.position.y + offset.y, transform.position.z);
         }
     }
 }
