@@ -21,11 +21,11 @@ public class Inventory : MonoBehaviour
     //used to update the values of player info
     private void updateJump()
     {
-        pm.changeJump(numJumpUps + 5);
+        pm.changeJump(numJumpUps/10 + 5);
     }
     private void updateSpeed()
     {
-        pm.changeSpeed(numSpeedUps + 5);
+        pm.changeSpeed(numSpeedUps/10 + 5);
     }
 
 
