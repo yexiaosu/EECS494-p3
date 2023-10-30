@@ -1,0 +1,8 @@
+Our game is a rouge-like survival game, where the player needs to fight against endless enemies and can level up during this process.
+Unlike other rouge-like survival games, the players need to jump on the platforms to fight against enemies, and the players will level up when they achieve to a specific height by jumping to higher plateforms, instead of surviving for a time or killing a number of enemies. So the player needs to make the decision of whether to fight with enemies or avoid them and get to higher levels faster.
+
+How to play: 
+WASD - move
+Space - jump
+left mouse - attack from left
+right mouse - attack from right
