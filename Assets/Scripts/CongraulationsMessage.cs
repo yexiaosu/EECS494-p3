@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CongratulationsMessage : MonoBehaviour
 {
     public Text UIManagerText; 
     private UIManager UIManagerObject;
-    public Text messageText; // The UI text component to display the message
+    public GameObject congratulationsPanel; // The UI text component to display the message
 
     private bool hasDisplayedMessage = false;
 
@@ -15,7 +16,7 @@ public class CongratulationsMessage : MonoBehaviour
         UIManagerObject = UIManagerText.GetComponent<UIManager>();
 
         // Initially hide the message
-        messageText.gameObject.SetActive(false);
+        congratulationsPanel.gameObject.SetActive(false);
     }
 
     void Update()
@@ -26,11 +27,18 @@ public class CongratulationsMessage : MonoBehaviour
             DisplayMessage();
             hasDisplayedMessage = true;
         }
+
+        if (hasDisplayedMessage && Input.GetKeyDown(KeyCode.Space))
+        {
+            // Reload the current scene
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
 
     void DisplayMessage()
     {
-        messageText.gameObject.SetActive(true);
+        congratulationsPanel.SetActive(true);
+
     }
 }
