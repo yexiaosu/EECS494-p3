@@ -1,35 +1,50 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelUpManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    public Text scoreAndLevelText;  
-
-    private int score = 0;
-    private int level = 0;
+    public Text scoreAndLevelText;
+    public Transform playerTransform; 
+    private float highestYValue = 0f;
 
     private void Start()
     {
+        if (playerTransform == null)
+        {
+            Debug.LogError("Player Transform is not assigned in LevelUpManager!");
+            return;
+        }
+
         UpdateScoreAndLevelText();
 
-        // Subscribe to the PlayerTouchedPlatformEvent
         EventBus.Subscribe<PlayerTouchedPlatformEvent>(OnPlayerTouchedPlatform);
+    }
+
+    private void Update()
+    {
+        // Check the current Y value of the player
+        float currentY = playerTransform.position.y;
+
+        if (currentY > highestYValue)
+        {
+            highestYValue = currentY;
+            UpdateScoreAndLevelText();
+        }
     }
 
     private void OnPlayerTouchedPlatform(PlayerTouchedPlatformEvent evt)
     {
-        score += 1;
-        level += 1;
-
-        // Update the text display
-        UpdateScoreAndLevelText();
     }
 
     private void UpdateScoreAndLevelText()
     {
-        scoreAndLevelText.text = $"Score: {score}\nLevel: {level}";
+        int displayScore = Mathf.Max(0, Mathf.FloorToInt(highestYValue));
+        scoreAndLevelText.text = $"Score: {displayScore - 9}";
     }
 
-    // Remember to unsubscribe when the object is destroyed
-
+    // Public getter for the score
+    public int GetScore()
+    {
+        return Mathf.Max(0, Mathf.FloorToInt(highestYValue));
+    }
 }

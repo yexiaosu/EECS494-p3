@@ -40,8 +40,9 @@ public class PlatformsManager : MonoBehaviour
             platform.transform.parent = transform;
             platform.GetComponent<Platform>().PlatformID = platformIDCounter++;
 
-            // 10% chance to spawn a boon on the platform
-            if (Random.value <= 0.10f)
+            // 2.5% chance to spawn a boon on the platform
+            if (Random.value <= 0.025f)
+
             {
                 Vector3 boonPos = new Vector3(platformPos.x, platformPos.y + platform.GetComponent<Renderer>().bounds.size.y, platformPos.z);
                 Instantiate(boonPrefab, boonPos, Quaternion.identity);
