@@ -70,7 +70,6 @@ public class EnemyManager : MonoBehaviour
         else
             // spawn fly enemy
             InstantiateFlyEnemy();
-        StartCoroutine(SpawnEnemy());
     }
 
     private List<GameObject> getPlatformsInView()
