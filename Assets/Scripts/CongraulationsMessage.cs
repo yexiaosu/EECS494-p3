@@ -6,7 +6,9 @@ public class CongratulationsMessage : MonoBehaviour
 {
     public Text UIManagerText; 
     private UIManager UIManagerObject;
-    public GameObject congratulationsPanel; // The UI text component to display the message
+    public GameObject panel; // The UI text component to display the message
+    public GameObject congrats;
+    public GameObject death;
 
     private bool hasDisplayedMessage = false;
 
@@ -16,7 +18,7 @@ public class CongratulationsMessage : MonoBehaviour
         UIManagerObject = UIManagerText.GetComponent<UIManager>();
 
         // Initially hide the message
-        congratulationsPanel.gameObject.SetActive(false);
+        panel.gameObject.SetActive(false);
     }
 
     void Update()
@@ -24,8 +26,7 @@ public class CongratulationsMessage : MonoBehaviour
         if (!hasDisplayedMessage && UIManagerObject.GetScore() >= 100)
         {
             Debug.Log("past if statement");
-            DisplayMessage();
-            hasDisplayedMessage = true;
+            DisplayMessage("congrats");
         }
 
         if (hasDisplayedMessage && Input.GetKeyDown(KeyCode.Space))
@@ -36,9 +37,15 @@ public class CongratulationsMessage : MonoBehaviour
     }
 
 
-    void DisplayMessage()
+    public void DisplayMessage(string type)
     {
-        congratulationsPanel.SetActive(true);
-
+        panel.SetActive(true);
+        congrats.SetActive(false);
+        death.SetActive(false);
+        if (type == "congrats")
+            congrats.SetActive(true);
+        else if (type == "death")
+            death.SetActive(true);
+        hasDisplayedMessage = true;
     }
 }

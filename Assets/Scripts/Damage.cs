@@ -15,6 +15,8 @@ public class Damage : MonoBehaviour
         {
             gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(amount);
             gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
+            if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
+                gameObject.GetComponent<Player>().Dead();
         }
     }
 
@@ -27,6 +29,8 @@ public class Damage : MonoBehaviour
         {
             gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(amount);
             gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
+            if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
+                gameObject.GetComponent<Player>().Dead();
         }
     }
 }
