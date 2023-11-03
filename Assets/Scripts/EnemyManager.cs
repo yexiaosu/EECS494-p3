@@ -1,26 +1,50 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     public float offset;
     public float spawnCd = 1.0f;
+    public int maxEnemyCount = 5;
     [SerializeField] public List<GOArray> enemyPrefabs = new List<GOArray>(); // two lists, the first one contains walk enemies, the second one contains fly enemies
 
     private Subscription<RepeatEvent> repeatEventSubscription;
     private Camera cam;
     private float camHalfWidth;
     private float camHalfHeight;
+    private float time;
 
     void Start()
     {
         repeatEventSubscription = EventBus.Subscribe<RepeatEvent>(_OnRepeat);
         cam = Camera.main;
-        StartCoroutine(SpawnEnemy());
         camHalfWidth = cam.aspect * cam.orthographicSize;
         camHalfHeight = cam.orthographicSize;
+        time = 0;
+    }
+
+    private void FixedUpdate()
+    {
+        time += Time.fixedDeltaTime;
+        if (time > spawnCd)
+        {
+            int enemyCount = 0;
+            foreach (Transform child in transform)
+            {
+                if (IsInView(child.position))
+                {
+                    enemyCount++;
+                }
+            }
+            if (enemyCount < maxEnemyCount)
+            {
+                SpawnEnemy();
+            }
+            time = 0;
+        }
     }
 
     private void _OnRepeat(RepeatEvent e)
@@ -35,13 +59,13 @@ public class EnemyManager : MonoBehaviour
             }
         }
         // spawn some new enemies
-        InstantiateWalkEnemy(1);
-        InstantiateFlyEnemy(2);
+        //InstantiateWalkEnemy(1);
+        //InstantiateFlyEnemy(2);
     }
 
     private void InstantiateWalkEnemy(int num = 1)
     {
-        List<GameObject> platformsInView = getPlatformsInView();
+        List<GameObject> platformsInView = GetPlatformsInView();
         Vector3 platformPos = platformsInView[UnityEngine.Random.Range(0, platformsInView.Count)].transform.position;
         for (int i = 0; i < num; i++)
         {
@@ -61,9 +85,8 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnEnemy()
+    private void SpawnEnemy()
     {
-        yield return new WaitForSeconds(spawnCd);
         if (UnityEngine.Random.Range(0.0f, 100.0f) < 40.0f)
             // spawn walk enemy
             InstantiateWalkEnemy();
@@ -72,19 +95,24 @@ public class EnemyManager : MonoBehaviour
             InstantiateFlyEnemy();
     }
 
-    private List<GameObject> getPlatformsInView()
+    private List<GameObject> GetPlatformsInView()
     {
         GameObject platforms = GameObject.Find("Platforms");
         List<GameObject> platformsInView = new List<GameObject>();
         foreach (Transform child in platforms.transform)
         {
-            if (child.position.y > cam.transform.position.y - camHalfHeight && child.position.y < cam.transform.position.y + camHalfHeight)
+            if (IsInView(child.position))
             {
                 // the platform is in view
                 platformsInView.Add(child.gameObject);
             }
         }
         return platformsInView;
+    }
+
+    private bool IsInView(Vector3 pos)
+    {
+        return (pos.y > cam.transform.position.y - camHalfHeight && pos.y < cam.transform.position.y + camHalfHeight);
     }
 }
 

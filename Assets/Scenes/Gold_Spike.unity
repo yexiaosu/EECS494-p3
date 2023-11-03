@@ -1777,7 +1777,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: 20
-  spawnCd: 5
+  spawnCd: 2
+  maxEnemyCount: 5
   enemyPrefabs:
   - _gameObjects:
     - {fileID: 974341857172255828, guid: a7bbd1d02f61d4341b7027a6a3bfed15, type: 3}
