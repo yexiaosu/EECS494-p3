@@ -7,6 +7,6 @@ public class Player : MonoBehaviour
     public void Dead()
     {
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        GetComponent<CongratulationsMessage>().DisplayMessage("death");
+        GetComponent<MessageDisplay>().DisplayMessage("death");
     }
 }

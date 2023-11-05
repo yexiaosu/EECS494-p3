@@ -12,6 +12,8 @@ public class SampleFlyEnemyMovement : FlyMovement
         time = 0;
         changeDirectionTime = 0;
         StartCoroutine(Fly());
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
 
     // Update is called once per frame

@@ -12,14 +12,19 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] public List<GOArray> enemyPrefabs = new List<GOArray>(); // two lists, the first one contains walk enemies, the second one contains fly enemies
 
     private Subscription<RepeatEvent> repeatEventSubscription;
+    private Subscription<PauseEvent> pauseEventSubscription;
+    private Subscription<ResumeEvent> resumeEventSubscription;
     private Camera cam;
     private float camHalfWidth;
     private float camHalfHeight;
     private float time;
+    private bool shouldSpawn = true;
 
     void Start()
     {
         repeatEventSubscription = EventBus.Subscribe<RepeatEvent>(_OnRepeat);
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
         cam = Camera.main;
         camHalfWidth = cam.aspect * cam.orthographicSize;
         camHalfHeight = cam.orthographicSize;
@@ -28,6 +33,8 @@ public class EnemyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!shouldSpawn)
+            return;
         time += Time.fixedDeltaTime;
         if (time > spawnCd)
         {
@@ -61,6 +68,16 @@ public class EnemyManager : MonoBehaviour
         // spawn some new enemies
         //InstantiateWalkEnemy(1);
         //InstantiateFlyEnemy(2);
+    }
+
+    private void _OnPause(PauseEvent e)
+    {
+        shouldSpawn = false;
+    }
+
+    private void _OnResume(ResumeEvent e)
+    {
+        shouldSpawn = true;
     }
 
     private void InstantiateWalkEnemy(int num = 1)

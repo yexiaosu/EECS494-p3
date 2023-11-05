@@ -5,6 +5,13 @@ using UnityEngine;
 public abstract class EnemyMovement : MonoBehaviour
 {
     public bool isStunned;
+    protected Rigidbody2D rb;
+    protected float changeDirectionTime;
+    protected float time;
+    protected Vector2 input;
+    protected Subscription<PauseEvent> pauseEventSubscription;
+    protected Subscription<ResumeEvent> resumeEventSubscription;
+
     protected virtual Vector2 GenerateInput()
     {
         float horizonInput = Random.Range(-1f, 1f);
@@ -30,4 +37,17 @@ public abstract class EnemyMovement : MonoBehaviour
     }
 
     protected abstract Vector2 GetInput(Vector2 rawInput);
+
+    protected void _OnPause(PauseEvent e)
+    {
+        this.enabled = false;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
+    }
+
+    protected void _OnResume(ResumeEvent e)
+    {
+        this.enabled = true;
+        rb.gravityScale = 1;
+    }
 }

@@ -10,6 +10,8 @@ public class SampleEnemyMovement : WalkMovement
         rb = GetComponent<Rigidbody2D>();
         time = 0;
         changeDirectionTime = 0;
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
 
     // Update is called once per frame

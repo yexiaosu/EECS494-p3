@@ -2,12 +2,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CongratulationsMessage : MonoBehaviour
+public class MessageDisplay: MonoBehaviour
 {
     public Text UIManagerText; 
     private UIManager UIManagerObject;
     public GameObject panel; // The UI text component to display the message
-    public GameObject congrats;
     public GameObject death;
 
     private bool hasDisplayedMessage = false;
@@ -40,11 +39,8 @@ public class CongratulationsMessage : MonoBehaviour
     public void DisplayMessage(string type)
     {
         panel.SetActive(true);
-        congrats.SetActive(false);
         death.SetActive(false);
-        if (type == "congrats")
-            congrats.SetActive(true);
-        else if (type == "death")
+        if (type == "death")
             death.SetActive(true);
         hasDisplayedMessage = true;
     }

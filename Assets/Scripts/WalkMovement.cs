@@ -10,12 +10,6 @@ public class WalkMovement : EnemyMovement
     [SerializeField] protected float maxDirectionChangeTime;
     [SerializeField] protected float minDirectionChangeTime;
 
-    protected Rigidbody2D rb;
-    protected Vector2 input;
-    protected float changeDirectionTime;
-    protected float time;
-    protected float movementPrecision = 0.05f;
-
     protected override Vector2 GenerateInput()
     {
         float horizonInput = UnityEngine.Random.Range(-1f, 1f);

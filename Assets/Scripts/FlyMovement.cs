@@ -10,10 +10,6 @@ public class FlyMovement : EnemyMovement
     [SerializeField] protected float flyingTime = 23.0f;
     [SerializeField] protected float stopTime = 2.0f;
 
-    protected Rigidbody2D rb;
-    protected float changeDirectionTime;
-    protected float time;
-    protected Vector2 input;
     protected bool isStop = false;
 
     private bool canChangeDir = false;

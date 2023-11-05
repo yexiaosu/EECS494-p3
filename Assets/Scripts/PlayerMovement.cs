@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed = 5.0f;
     private float jumpForce = 10.0f;
     private bool isJumping = false;
+    private Subscription<PauseEvent> pauseEventSubscription;
+    private Subscription<ResumeEvent> resumeEventSubscription;
     private Rigidbody2D rb;
 
     void Start()
@@ -17,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("Rigidbody2D component missing");
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
 
     void Update()
@@ -63,4 +67,16 @@ public class PlayerMovement : MonoBehaviour
         return jumpForce;
     }
 
+    private void _OnPause(PauseEvent e)
+    {
+        this.enabled = false;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
+    }
+
+    private void _OnResume(ResumeEvent e)
+    {
+        this.enabled = true;
+        rb.gravityScale = 1;
+    }
 }
