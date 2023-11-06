@@ -11,6 +11,8 @@ public class EnemyManager : MonoBehaviour
     public int maxEnemyCount = 5;
     [SerializeField] public List<GOArray> enemyPrefabs = new List<GOArray>(); // two lists, the first one contains walk enemies, the second one contains fly enemies
 
+    private Subscription<EnterItemShopEvent> enterShopSubscription;
+    private Subscription<ExitItemShopEvent> exitShopSubscription;
     private Subscription<RepeatEvent> repeatEventSubscription;
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;
@@ -22,6 +24,8 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
+        enterShopSubscription = EventBus.Subscribe<EnterItemShopEvent>(_OnEnterItemShop);
+        exitShopSubscription = EventBus.Subscribe<ExitItemShopEvent>(_OnExitItemShop);
         repeatEventSubscription = EventBus.Subscribe<RepeatEvent>(_OnRepeat);
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
@@ -76,6 +80,16 @@ public class EnemyManager : MonoBehaviour
     }
 
     private void _OnResume(ResumeEvent e)
+    {
+        shouldSpawn = true;
+    }
+
+    private void _OnEnterItemShop(EnterItemShopEvent e)
+    {
+        shouldSpawn = false;
+    }
+
+    private void _OnExitItemShop(ExitItemShopEvent e)
     {
         shouldSpawn = true;
     }

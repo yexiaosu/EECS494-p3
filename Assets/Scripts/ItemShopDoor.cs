@@ -47,15 +47,22 @@ public class ItemShopDoor : MonoBehaviour
     {
         // Hard-coded teleport location
         Vector3 hardCodedLocation = new Vector3(45.8f, 7.88f, 0f); // Replace with the desired coordinates
+        Camera mainCamera = Camera.main;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         // Teleport the player to the hard-coded location
-        GameObject.FindGameObjectWithTag("Player").transform.position = hardCodedLocation;
+        Vector3 playerPosition =player.transform.position;
+        Vector3 cameraPositionBeforeEntering = mainCamera.transform.position;
+
+        player.transform.position = hardCodedLocation;
+
 
         // Optionally, you could also set the player's rotation after teleporting
         // GameObject.FindGameObjectWithTag("Player").transform.rotation = Quaternion.identity;
 
         // After teleporting the player, publish the EnterItemShopEvent to the EventBus
-        EventBus.Publish(new EnterItemShopEvent());
+        EventBus.Publish(new EnterItemShopEvent(playerPosition, cameraPositionBeforeEntering));
+
 
         // Hide the enter prompt as we've already teleported
         if (enterPrompt != null)

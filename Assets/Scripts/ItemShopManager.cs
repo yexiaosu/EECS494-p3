@@ -59,5 +59,18 @@ public class ItemShopManager : MonoBehaviour
 
 public class EnterItemShopEvent
 {
-    // This class can hold information about the event if needed
+    public Vector3 playerPositionBeforeEntering;
+    public Vector3 cameraPositionBeforeEntering;
+
+    public EnterItemShopEvent(Vector3 playerPos, Vector3 cameraPos)
+    {
+        playerPositionBeforeEntering = playerPos;
+        cameraPositionBeforeEntering = cameraPos;
+    }
+}
+
+
+public class ExitItemShopEvent
+{
+
 }
