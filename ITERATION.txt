@@ -1,0 +1,26 @@
+P3 Milestone 1
+Issues:
+1. Player can get out of bounds and not get back
+2. Player can jump under and near box
+3. Player cant stick to walls or sides or platforms
+4. Some scenarios with multiple double jumps
+5. Player doesn't die
+6. When in certain areas Enemies spawn too much
+7. Lack visual indicators
+8. Attacking is not obvious
+9. The fact that the player is getting stronger is not obvious
+10. More mechanisms and rougue-like features are needed
+What we have done:
+1. Use extra colliders to avoid crashing through the colliders
+2. Avoid players to jump under and near the platforms
+3. Turn off friction so that the player cannot stick to the platforms and walls
+4. Reduce the distance between platforms
+5. Add death and restart functionality to the player
+6. Reduce the number of enemies that can be spawned in a certain area
+7. Add more visual indicators
+8. Add visual effect for attack and make the attack area larger
+9. Add visual indicators for what changes are made to the player, eg. "can jump higher"
+10. New mechanisms:
+* A basic level-up functionality is done, where the player can choose an ability to become stronger
+* More boons are added
+* A basic item shop is added
