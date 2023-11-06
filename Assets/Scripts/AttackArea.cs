@@ -21,4 +21,10 @@ public class AttackArea : MonoBehaviour
             }
         }
     }
+    public void increaseDamage(int damageInc)
+    {
+        damage += damageInc;
+    }
+
 }
+
