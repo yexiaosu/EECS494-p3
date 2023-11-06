@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4724988235514152603}
   - component: {fileID: 7378799214367883478}
   - component: {fileID: 6886937744512222296}
+  - component: {fileID: 5459664860212572326}
   m_Layer: 6
   m_Name: SampleWalkEnemy
   m_TagString: Enemy
@@ -148,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c602df8fbca024de58b4bfdc98f9c9a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectiblePrefabs: []
 --- !u!114 &3764269042871061714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,6 +236,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: -50
+--- !u!114 &5459664860212572326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974341857172255828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf4f54328c604e2188dc8c79dcb69f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 5
+  delay: 0.5
+  rb: {fileID: 4724988235514152603}
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDone:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &3269200572137723868
 PrefabInstance:
   m_ObjectHideFlags: 0

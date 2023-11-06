@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8238944986650824307}
   - component: {fileID: 1138608795440084916}
   - component: {fileID: 3745856171362228329}
+  - component: {fileID: 7590022792697221594}
   m_Layer: 6
   m_Name: SampleFlyEnemy
   m_TagString: Enemy
@@ -148,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c602df8fbca024de58b4bfdc98f9c9a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectiblePrefabs: []
 --- !u!50 &2063937718095537469
 Rigidbody2D:
   serializedVersion: 4
@@ -233,6 +235,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: -50
+--- !u!114 &7590022792697221594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2994935649063905116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf4f54328c604e2188dc8c79dcb69f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 5
+  delay: 0.5
+  rb: {fileID: 2063937718095537469}
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDone:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &559057991277357390
 PrefabInstance:
   m_ObjectHideFlags: 0

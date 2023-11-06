@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 181300896}
   - component: {fileID: 181300899}
   m_Layer: 5
-  m_Name: Boon (1)
+  m_Name: Boon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 901603894}
   - component: {fileID: 901603897}
   - component: {fileID: 901603896}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: AttackArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1545,7 +1545,7 @@ GameObject:
   - component: {fileID: 1051535510}
   - component: {fileID: 1051535513}
   - component: {fileID: 1051535512}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: AttackArea (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1965,6 +1965,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8b80cfabe0b864c901ae2c9578018c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Bullet: {fileID: 4829758305704071673, guid: bd1f5c71f5d72489fb534a9c873b675c, type: 3}
+  ProjectileEnabled: 0
+  ProjectileCd: 1
 --- !u!114 &1197629362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,7 +2024,7 @@ GameObject:
   - component: {fileID: 1200931216}
   - component: {fileID: 1200931219}
   m_Layer: 5
-  m_Name: Boon (2)
+  m_Name: Boon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

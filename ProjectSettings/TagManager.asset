@@ -17,8 +17,8 @@ TagManager:
   - EnemyBlock
   - Platforms
   - Camera
-  - 
-  - 
+  - PlayerAttack
+  - EnemyAttack
   - 
   - 
   - 
