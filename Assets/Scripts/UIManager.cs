@@ -3,21 +3,34 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; } // Singleton pattern
     public Text scoreAndLevelText;
-    public Transform playerTransform; 
+    public Transform playerTransform;
     private float highestYValue = 0f;
+    private int nextShopSpawnThreshold = 200; // Initial threshold for spawning the item shop
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
         if (playerTransform == null)
         {
-            Debug.LogError("Player Transform is not assigned in LevelUpManager!");
+            Debug.LogError("Player Transform is not assigned in UIManager!");
             return;
         }
 
         UpdateScoreAndLevelText();
-
-        EventBus.Subscribe<PlayerTouchedPlatformEvent>(OnPlayerTouchedPlatform);
+        // If you're using an event system, you would subscribe to the event here.
     }
 
     private void Update()
@@ -29,17 +42,23 @@ public class UIManager : MonoBehaviour
         {
             highestYValue = currentY;
             UpdateScoreAndLevelText();
-        }
-    }
 
-    private void OnPlayerTouchedPlatform(PlayerTouchedPlatformEvent evt)
-    {
+            // Check if the player has reached a new shop spawn threshold
+            if (highestYValue >= nextShopSpawnThreshold)
+            {
+                // Send a SpawnItemShop event
+                EventBus.Publish(new SpawnItemShopEvent());
+
+                // Set the next threshold, assuming a consistent increase by 200 each time
+                nextShopSpawnThreshold += 200;
+            }
+        }
     }
 
     private void UpdateScoreAndLevelText()
     {
         int displayScore = Mathf.Max(0, Mathf.FloorToInt(highestYValue));
-        scoreAndLevelText.text = $"Score: {displayScore - 9}";
+        scoreAndLevelText.text = $"Score: {displayScore - 9}"; // Assuming you want to start scoring from 0
     }
 
     // Public getter for the score
@@ -47,4 +66,10 @@ public class UIManager : MonoBehaviour
     {
         return Mathf.Max(0, Mathf.FloorToInt(highestYValue));
     }
+}
+
+// Define the SpawnItemShopEvent
+public class SpawnItemShopEvent
+{
+    // Add any fields or properties that you need to pass with this event.
 }

@@ -20,7 +20,6 @@ public class PlatformCheck : MonoBehaviour
     {
         if (playerTransform && !eventSent && playerTransform.position.y > transform.position.y + (this.GetComponent<Renderer>().bounds.size.y / 2))
         {
-            EventBus.Publish(new PlayerTouchedPlatformEvent());
             eventSent = true; // mark the event as sent
         }
     }
