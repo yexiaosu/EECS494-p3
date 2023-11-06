@@ -5,7 +5,7 @@ public class ItemShopManager : MonoBehaviour
 {
     public List<GameObject> itemPrefabs; // The pool of item prefabs
     public Transform[] spawnPoints; // Predetermined spawn points for the items
-    public Transform cameraPosition; // The position to move the camera to
+    public Transform cameraPosition;
 
     private Subscription<EnterItemShopEvent> enterShopSubscription;
 
@@ -17,7 +17,6 @@ public class ItemShopManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe when the object is destroyed
         EventBus.Unsubscribe<EnterItemShopEvent>(enterShopSubscription);
     }
 
@@ -34,7 +33,6 @@ public class ItemShopManager : MonoBehaviour
 
     private void SpawnRandomItems()
     {
-        // Shuffle the list of item prefabs to randomize what gets spawned
         System.Random rng = new System.Random();
         int n = itemPrefabs.Count;
         while (n > 1)
