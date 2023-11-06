@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class LevelUp : MonoBehaviour
 {
     public Text UIManagerText;
     public GameObject LevelUpPanel;
     public bool hasDisplayed = false;
+    public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() };
 
     private UIManager UIManagerObject;
     private int lastScore = 0;
@@ -22,12 +24,51 @@ public class LevelUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100)
+        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 20)
         {
             EventBus.Publish<PauseEvent>(new PauseEvent());
             lastScore = UIManagerObject.GetScore();
+            List<int> randomPos = RandomPick(bigBoons.Count);
+            Debug.Log(randomPos[0]);
+            Debug.Log(randomPos.Count);
+            int i = 0;
+            foreach (Transform child in LevelUpPanel.transform)
+            {
+                Debug.Log(child.name);
+                if (child.name != "Boon")
+                    continue;
+                if (i >= randomPos.Count)
+                {
+                    child.gameObject.SetActive(false);
+                    continue;
+                }
+                child.gameObject.SetActive(true);
+                child.gameObject.GetComponent<LevelUpBoon>().BigBoon = bigBoons[randomPos[i]];
+                i++;
+            }
             LevelUpPanel.SetActive(true);
         }
+    }
+
+    List<int> RandomPick(int arrayLen)
+    {
+        List<int> res = new List<int>();
+        if (arrayLen < 3)
+        {
+            for (int i = 0; i < arrayLen; i++)
+                res.Add(i);
+        }
+        else
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                int rand = Random.Range(0, arrayLen);
+                while (res.Contains(rand))
+                    rand = Random.Range(0, arrayLen);
+                res.Add(rand);
+            }
+        }
+        return res;
     }
 }
 

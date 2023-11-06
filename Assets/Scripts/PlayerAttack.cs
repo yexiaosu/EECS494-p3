@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    public GameObject Bullet;
+    public bool ProjectileEnabled = false;
+    public float ProjectileCd = 2.0f;
+
     private GameObject attackAreaRight = default;
     private GameObject attackAreaLeft = default;
     private bool attackingRight = false;
@@ -11,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
     private float timeToAttack = .25f;
     private float timerLeft = 0f;
     private float timerRight = 0f;
+    private float timerProjectile = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +26,15 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ProjectileEnabled)
+        {
+            timerProjectile += Time.deltaTime;
+            if (timerProjectile > ProjectileCd)
+            {
+                Projectile();
+                timerProjectile = 0;
+            }
+        }
         if(Input.GetKeyDown(KeyCode.Mouse1)) 
         {
             AttackRight();
@@ -50,14 +64,21 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+
     private void AttackRight()
     {
         attackingRight = true;
         attackAreaRight.SetActive(attackingRight);
     }
+
     private void AttackLeft()
     {
         attackingLeft = true;
         attackAreaLeft.SetActive(attackingLeft);
+    }
+
+    private void Projectile()
+    {
+        GameObject projectile = Instantiate(Bullet, transform.position, Quaternion.identity);
     }
 }
