@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using Unity.VisualScripting;
+using TMPro;
 
 public class LevelUp : MonoBehaviour
 {
@@ -24,17 +25,14 @@ public class LevelUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 20)
+        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100)
         {
             EventBus.Publish<PauseEvent>(new PauseEvent());
             lastScore = UIManagerObject.GetScore();
             List<int> randomPos = RandomPick(bigBoons.Count);
-            Debug.Log(randomPos[0]);
-            Debug.Log(randomPos.Count);
             int i = 0;
             foreach (Transform child in LevelUpPanel.transform)
             {
-                Debug.Log(child.name);
                 if (child.name != "Boon")
                     continue;
                 if (i >= randomPos.Count)
@@ -44,6 +42,7 @@ public class LevelUp : MonoBehaviour
                 }
                 child.gameObject.SetActive(true);
                 child.gameObject.GetComponent<LevelUpBoon>().BigBoon = bigBoons[randomPos[i]];
+                child.GetChild(0).gameObject.GetComponent<TMP_Text>().text = bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
                 i++;
             }
             LevelUpPanel.SetActive(true);
