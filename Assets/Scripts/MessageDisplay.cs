@@ -22,12 +22,6 @@ public class MessageDisplay: MonoBehaviour
 
     void Update()
     {
-        if (!hasDisplayedMessage && UIManagerObject.GetScore() >= 100)
-        {
-            Debug.Log("past if statement");
-            DisplayMessage("congrats");
-        }
-
         if (hasDisplayedMessage && Input.GetKeyDown(KeyCode.Space))
         {
             // Reload the current scene
