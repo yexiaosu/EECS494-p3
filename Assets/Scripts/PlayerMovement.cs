@@ -7,10 +7,12 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed = 5.0f;
     private float jumpForce = 10.0f;
     private bool isJumping = false;
-    private float jumpCast = .155f;
+    private float jumpCast = .17f;
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;
     private Rigidbody2D rb;
+    private float timer;
+    private float timeToWait;
 
     void Start()
     {
@@ -32,7 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 boxSize = new Vector2(.25f, .2f);
         bool isGrounded = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
-        if (isGrounded)
+
+        if (isGrounded && Time.time > timer)
         {
             isJumping = false;
         }
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             isJumping = true;
+            timer = Time.time + .2f;
         }
 
     }
