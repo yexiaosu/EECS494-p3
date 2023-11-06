@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed = 5.0f;
     private float jumpForce = 10.0f;
     private bool isJumping = false;
+    private float jumpCast = .155f;
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;
     private Rigidbody2D rb;
@@ -29,15 +30,24 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
 
+        Vector2 boxSize = new Vector2(.25f, .2f);
+        bool isGrounded = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
+        if (isGrounded)
+        {
+            isJumping = false;
+        }
+
         // Jump Mechanic
         if (Input.GetButtonDown("Jump") && !isJumping)
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             isJumping = true;
         }
+
     }
 
     // Detect collision with ground
+    /*   This allowed player to jump when under or to side of blocks
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.GetComponent<Ground>() != null)
@@ -45,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
         }
     }
+    */
 
     //added this to access speed and jump from external scripts
     public void changeSpeed(float speed)
