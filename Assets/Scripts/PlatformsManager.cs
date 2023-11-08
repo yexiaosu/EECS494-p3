@@ -4,104 +4,93 @@ using UnityEngine;
 
 public class PlatformsManager : MonoBehaviour
 {
-    public float offset;
-    public GameObject platformPrefab;
-    public GameObject boonPrefab;
-    public GameObject itemShopEntryPrefab; // Prefab for the item shop entry platform
-    public GameObject enterPromptUI;
+    [Header("Prefab Lists")]
+    public List<GameObject> roomPrefabs; // List of room prefabs to spawn
+    public GameObject itemShopPrefab; // Prefab for the item shop room
+    public GameObject tutorialPrefab; // Prefab for the tutorial room
+    public GameObject specialPlatformPrefab; // Prefab for the special platform
 
-    private Subscription<RepeatEvent> repeatEventSubscription;
-    private HashSet<int> touchedPlatforms = new HashSet<int>();
-    private int platformIDCounter = 0;
-    private int nextShopSpawnScore = 200; // The score at which the next shop will spawn
+    [Header("Game Flow")]
+    public int roomsUntilShop = 3;
+    public float verticalSpawnOffset = 20f; // Vertical distance between rooms
+
+    private int roomsCounter = 0; // Counter to track the number of spawned rooms
+    private float highestPlatformY; // Y position of the highest platform in the current room
 
     void Start()
     {
-        repeatEventSubscription = EventBus.Subscribe<RepeatEvent>(_OnRepeat);
+        // Spawn the tutorial room first
+        SpawnRoom(tutorialPrefab, Vector3.zero);
     }
 
-    private void _OnRepeat(RepeatEvent e)
+    void Update()
     {
-        Vector3 initPos = e.initPos;
-        Vector3 currPos = e.currPos;
+        // Call your method to check if the player has reached a new room threshold here
+        // For example, using player's Y position or score
+        CheckForNewRoomSpawn();
+    }
 
-        // Destroy old platforms
-        foreach (Transform child in transform)
+    private void CheckForNewRoomSpawn()
+    {
+        // Placeholder condition for when to spawn a new room
+        // You might want to check the player's Y position or a score instead
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player.transform.position.y > highestPlatformY - 5f) // 5 units before reaching the highest platform
         {
-            if (child.position.y > initPos.y - offset / 2 && child.position.y < initPos.y + offset / 2)
-            {
-                Destroy(child.gameObject);
-            }
+            SpawnNextRoom();
         }
+    }
 
-        // Check if it's time to spawn the item shop entry platform
-        int playerScore = UIManager.Instance.GetScore();
-        if (playerScore >= nextShopSpawnScore)
+    private void SpawnNextRoom()
+    {
+        roomsCounter++;
+
+        GameObject nextRoomPrefab;
+        if (roomsCounter % roomsUntilShop == 0)
         {
-            SpawnItemShopEntry(currPos.y);
-            nextShopSpawnScore += 200; // Increment to the next threshold
+            // Every 'roomsUntilShop' rooms, spawn an item shop
+            nextRoomPrefab = itemShopPrefab;
         }
         else
         {
-            // Continue spawning platforms as normal
-            SpawnPlatforms(currPos);
+            // Otherwise, spawn a random regular room
+            nextRoomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
         }
+
+        // Calculate the new room's position
+        Vector3 spawnPosition = new Vector3(0, highestPlatformY + verticalSpawnOffset, 0);
+        SpawnRoom(nextRoomPrefab, spawnPosition);
+
+        // Spawn the special platform at the bottom of the new room
+        SpawnSpecialPlatform(spawnPosition - new Vector3(0, verticalSpawnOffset / 2, 0));
     }
 
-    private void SpawnItemShopEntry(float currentPosY)
+    private void SpawnRoom(GameObject roomPrefab, Vector3 position)
     {
-        // Determine the position for the item shop entry platform
-        Vector3 shopEntryPos = new Vector3(0, currentPosY + 5f, 0); // Adjust Y as needed
-        GameObject shopInstance = Instantiate(itemShopEntryPrefab, shopEntryPos, Quaternion.identity);
+        GameObject room = Instantiate(roomPrefab, position, Quaternion.identity);
+        room.transform.parent = transform;
 
-        // Assuming your item shop prefab has the ItemShopDoor script attached to it
-        ItemShopDoor doorScript = shopInstance.GetComponentInChildren<ItemShopDoor>();
-        if (doorScript != null)
+        // Update the highest platform Y position for next spawn
+        highestPlatformY = GetHighestPlatformY(room);
+    }
+
+    private void SpawnSpecialPlatform(Vector3 position)
+    {
+        Instantiate(specialPlatformPrefab, position, Quaternion.identity);
+    }
+
+    private float GetHighestPlatformY(GameObject room)
+    {
+        // Get all platforms in the room and return the highest Y position
+        Platform[] platforms = room.GetComponentsInChildren<Platform>();
+        float maxY = float.MinValue;
+        foreach (Platform platform in platforms)
         {
-            // Set the reference to the UI element directly
-            doorScript.enterPrompt = enterPromptUI;
+            if (platform.transform.position.y > maxY)
+            {
+                maxY = platform.transform.position.y;
+            }
         }
-    }
-
-    private void SpawnPlatforms(Vector3 currPos)
-    {
-        // Existing logic for spawning platforms
-        Vector3 platformPos = new Vector3(Random.Range(-7.5f, 7.5f), Random.Range(1.0f, 1.5f) + currPos.y - offset / 2, 0);
-        int dir = 1;
-        while (platformPos.y < currPos.y + offset / 2)
-        {
-            GameObject platform = Instantiate(platformPrefab, platformPos, Quaternion.identity);
-            platform.transform.parent = transform;
-            platform.GetComponent<Platform>().PlatformID = platformIDCounter++;
-
-            // Spawn boon on the platform with a chance
-            TrySpawnBoon(platformPos);
-
-            // Determine the next platform's position
-            platformPos = CalculateNextPlatformPosition(platformPos, ref dir);
-        }
-    }
-
-    private void TrySpawnBoon(Vector3 platformPos)
-    {
-        if (Random.value <= 0.025f)
-        {
-            Vector3 boonPos = new Vector3(platformPos.x, platformPos.y + platformPrefab.GetComponent<Renderer>().bounds.size.y, platformPos.z);
-            Instantiate(boonPrefab, boonPos, Quaternion.identity);
-        }
-    }
-
-    private Vector3 CalculateNextPlatformPosition(Vector3 platformPos, ref int dir)
-    {
-        float yOffset = Random.Range(3.5f, 4.2f);
-        platformPos.y += yOffset;
-        float xOffset = Random.Range(5.0f, 8.0f - yOffset);
-        if (platformPos.x + xOffset * dir > 7.5f)
-            dir = -1;
-        else if (platformPos.x + xOffset * dir < -7.5f)
-            dir = 1;
-        platformPos.x += xOffset * dir;
-
-        return platformPos;
+        return maxY;
     }
 }

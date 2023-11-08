@@ -1,3 +1,4 @@
 Health System For Dummies by NoobGameDev: https://assetstore.unity.com/packages/tools/utilities/health-system-for-dummies-215755
 GUI Parts by PONETI: https://assetstore.unity.com/packages/2d/gui/icons/gui-parts-159068
-GothicVania Magic Pack 6 by Ansimuz: https://assetstore.unity.com/packages/2d/textures-materials/abstract/gothicvania-magic-pack-6-195900
+GothicVania Magic Pack 6 by Ansimuz: https://assetstore.unity.com/packages/2ad/textures-materials/abstract/gothicvania-magic-pack-6-195900
+Enviorment Assests:https://ipixl.itch.io/pixel-art-16x16-nature-tiles
