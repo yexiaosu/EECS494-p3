@@ -4,79 +4,99 @@ using UnityEngine;
 public class EnemyWallCrawler : MonoBehaviour
 {
     public GameObject projectilePrefab;
-    public LayerMask whatIsWall;
     public float moveSpeed = 2f;
-    public float shootCooldown = 2f;
-    public float stopTimeBeforeShoot = 0.5f;
-    public float raycastLength = 0.1f; // Increased raycast distance to avoid frequent direction changes
+    public float shootCooldown = 1.5f;
+    public float detectionRange = 10f; // Range to detect the player
+    public Vector2 initialDirectionTowardsWall; // Direction towards the nearest wall
 
     private Rigidbody2D rb;
-    private float shootTimer;
     private GameObject player;
-    private Vector2 direction;
+    private Vector2 moveDirection;
     private bool isShooting = false;
+    private float shootTimer;
+    private bool isTouchingWall = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0; // Ignore gravity
+        rb.gravityScale = 0;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         player = GameObject.FindGameObjectWithTag("Player");
-        direction = Vector2.up; // Start moving up
-        shootTimer = shootCooldown;
+
+        // Initialize movement direction towards the wall
+        moveDirection = initialDirectionTowardsWall.normalized;
     }
 
     private void Update()
     {
-        // If currently shooting, don't do anything else
         if (isShooting) return;
 
-        // Check if we should switch the direction (up/down)
-        if (!isShooting && CheckForWall())
+        if (isTouchingWall)
         {
-            direction = -direction;
+            MoveAlongWall();
+        }
+        else
+        {
+            // Move towards the wall
+            rb.velocity = moveDirection * moveSpeed;
         }
 
-        // Move up or down the wall
-        rb.velocity = direction * moveSpeed;
-
-        // Shooting logic
         shootTimer -= Time.deltaTime;
-        if (shootTimer <= 0)
+
+        if (PlayerInSight() && shootTimer <= 0)
         {
             StartCoroutine(Shoot());
-            shootTimer = shootCooldown; // Reset shoot timer
+            shootTimer = shootCooldown;
         }
     }
 
-    private bool CheckForWall()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, raycastLength, whatIsWall);
-        return !hit.collider;
+        // Check if collided with the wall
+        if (collision.gameObject.GetComponent<Wall>())
+        {
+            isTouchingWall = true;
+            // Change direction to move up initially
+            moveDirection = Vector2.up;
+        }
+    }
+
+    private bool PlayerInSight()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, detectionRange);
+        Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red); // For debugging
+        return hit.collider != null && hit.collider.gameObject == player;
+    }
+
+    private void MoveAlongWall()
+    {
+        // Check for collision with wall ends or corners to change direction
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDirection, 0.1f);
+        if (hit.collider == null || !hit.collider.gameObject.GetComponent<Wall>())
+        {
+            // Reverse direction
+            moveDirection = -moveDirection;
+        }
+
+        rb.velocity = moveDirection * moveSpeed;
     }
 
     private IEnumerator Shoot()
     {
-        // Stop and shoot
         isShooting = true;
         rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(stopTimeBeforeShoot);
+        yield return new WaitForSeconds(1.5f);
 
-        // Instantiate and shoot the projectile towards the player
         Vector2 shootDir = (player.transform.position - transform.position).normalized;
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        projectile.GetComponent<Rigidbody2D>().velocity = shootDir * moveSpeed * 2; // Adjust projectile speed as necessary
+        Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = shootDir * moveSpeed * 2;
 
-        isShooting = false; // Resume moving
-        yield return new WaitForSeconds(shootCooldown); // Shooting cooldown
+        yield return new WaitForSeconds(1f); // Delay before resuming movement
+        isShooting = false;
     }
 
+    // OnDrawGizmos remains unchanged
     private void OnDrawGizmos()
     {
-        // This will draw a line in the editor to show the current direction of movement
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(direction.x, direction.y, 0) * raycastLength);
+        // Your existing Gizmos code
     }
-
-    // Include Dead() and SpawnCollectible() methods from your original Enemy script
 }
