@@ -3285,9 +3285,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8b80cfabe0b864c901ae2c9578018c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet: {fileID: 4829758305704071673, guid: bd1f5c71f5d72489fb534a9c873b675c, type: 3}
+  ProjectileBullet: {fileID: 4829758305704071673, guid: bd1f5c71f5d72489fb534a9c873b675c, type: 3}
+  MissileBullet: {fileID: 7305894165374999574, guid: dd9efb5e481474472bad86b1698e14c1, type: 3}
   ProjectileEnabled: 0
+  MissileAttackEnabled: 0
   ProjectileCd: 1
+  ShootCd: 2
   DirectionSprite: {fileID: 1950444005}
 --- !u!114 &1197629362
 MonoBehaviour:

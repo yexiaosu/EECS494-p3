@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class TrackingBullet : MonoBehaviour
 {
-    public int amount = -200;
     public float speed = 3.0f;
 
     private GameObject minDisEnemy;
@@ -47,6 +46,7 @@ public class Bullet : MonoBehaviour
 
         if (gameObject.CompareTag("Enemy"))
         {
+            int amount = GameObject.Find("Player").GetComponent<Player>().attack / 5 * 2;
             gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(amount);
             gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
             if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)

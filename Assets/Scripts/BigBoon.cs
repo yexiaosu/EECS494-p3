@@ -34,3 +34,24 @@ public class RangedProjectiles : BigBoon
         throw new System.NotImplementedException();
     }
 }
+
+public class MissileAttack : BigBoon
+{
+    public MissileAttack()
+    {
+        Name = "Missile Attack";
+        Description = "Get missile attack ability. Right click to shoot.";
+        CanLevelUp = true;
+    }
+
+    public override void GetBoon()
+    {
+        GameObject player = GameObject.Find("Player");
+        player.GetComponent<PlayerAttack>().MissileAttackEnabled = true;
+    }
+
+    public override void LevelUpBoon()
+    {
+        throw new System.NotImplementedException();
+    }
+}

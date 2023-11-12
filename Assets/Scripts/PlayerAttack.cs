@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject Bullet;
+    public GameObject ProjectileBullet;
+    public GameObject MissileBullet;
     public bool ProjectileEnabled = false;
+    public bool MissileAttackEnabled = false;
     public float ProjectileCd = 2.0f;
+    public float ShootCd = 2.0f;
     public GameObject DirectionSprite;
 
     private GameObject meeleAttackArea = default;
     private bool meeleAttacking = false;
+    private bool ableToMissile = false;
     private float timeToAttack = .3f;
     private float timerMeeleAttack = 0f;
+    private float timerMissileAttack = 0f;
     private float timerProjectile = 0f;
     // Start is called before the first frame update
     void Start()
@@ -42,6 +47,17 @@ public class PlayerAttack : MonoBehaviour
                 timerProjectile = 0;
             }
         }
+        if (MissileAttackEnabled)
+        {
+            timerMissileAttack += Time.deltaTime;
+            if (timerMissileAttack > ShootCd)
+                ableToMissile = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1) && ableToMissile)
+        {
+            Shoot(vectorAttack);
+            timerMissileAttack = 0;
+        }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             MeeleAttack(vectorAttack);
@@ -69,6 +85,13 @@ public class PlayerAttack : MonoBehaviour
 
     private void Projectile()
     {
-        GameObject projectile = Instantiate(Bullet, transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(ProjectileBullet, transform.position, Quaternion.identity);
+    }
+
+    private void Shoot(Vector3 vectorAttack)
+    {
+        GameObject bullet = Instantiate(MissileBullet, transform.position + vectorAttack, Quaternion.identity);
+        bullet.transform.RotateAround(bullet.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
+        bullet.GetComponent<ShootingBullet>().dir = vectorAttack;
     }
 }
