@@ -13,7 +13,7 @@ public class LevelUp : MonoBehaviour
     public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() };
 
     private UIManager UIManagerObject;
-    private int lastScore = 0;
+    private int lastScore = -100;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +27,10 @@ public class LevelUp : MonoBehaviour
     {
         if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100)
         {
+            if (lastScore < 0)
+                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";
+            else
+                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Level Up";
             EventBus.Publish<PauseEvent>(new PauseEvent());
             lastScore = UIManagerObject.GetScore();
             List<int> randomPos = RandomPick(bigBoons.Count);
