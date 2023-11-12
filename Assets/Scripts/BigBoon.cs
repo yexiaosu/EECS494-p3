@@ -55,3 +55,46 @@ public class MissileAttack : BigBoon
         throw new System.NotImplementedException();
     }
 }
+
+public class DoubleJump : BigBoon
+{
+    public DoubleJump()
+    {
+        Name = "Double Jump";
+        Description = "Get the ability to double jump.";
+        CanLevelUp = false;
+    }
+
+    public override void GetBoon()
+    {
+        GameObject player = GameObject.Find("Player");
+        player.GetComponent<PlayerMovement>().DoubleJumpEnabled = true;
+    }
+
+    public override void LevelUpBoon()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
+public class Shield : BigBoon
+{
+    public Shield()
+    {
+        Name = "Shield";
+        Description = "The shield will protect you from damage. It will be regenerated after a while if it's broken.";
+        CanLevelUp = true;
+    }
+
+    public override void GetBoon()
+    {
+        GameObject player = GameObject.Find("Player");
+        player.GetComponent<PlayerShield>().ShieldEnabled = true;
+        player.GetComponent<PlayerShield>().Shield.SetActive(true);
+    }
+
+    public override void LevelUpBoon()
+    {
+        throw new System.NotImplementedException();
+    }
+}
