@@ -171,11 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c644ac65024b04844967417d669fa28a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1483790374611084749, guid: 2bca3dcfbf5ff9f41872c5b4158ff2b3, type: 3}
-  whatIsWall:
-    serializedVersion: 2
-    m_Bits: 0
+  projectilePrefab: {fileID: 5078723799102091064, guid: 039d9abd506f7534a84ab09bdb42c4d2, type: 3}
   moveSpeed: 2
   shootCooldown: 2
-  stopTimeBeforeShoot: 0.5
-  raycastLength: 0.1
+  detectionRange: 10
+  initialDirectionTowardsWall: {x: 0, y: 0}

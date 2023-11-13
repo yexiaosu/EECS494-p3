@@ -6,8 +6,8 @@ public class EnemyWallCrawler : MonoBehaviour
     public GameObject projectilePrefab;
     public float moveSpeed = 2f;
     public float shootCooldown = 1.5f;
-    public float detectionRange = 10f; // Range to detect the player
-    public Vector2 initialDirectionTowardsWall; // Direction towards the nearest wall
+    public float detectionRange = 10f;
+    public Vector2 initialDirectionTowardsWall;
 
     private Rigidbody2D rb;
     private GameObject player;
@@ -22,8 +22,6 @@ public class EnemyWallCrawler : MonoBehaviour
         rb.gravityScale = 0;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         player = GameObject.FindGameObjectWithTag("Player");
-
-        // Initialize movement direction towards the wall
         moveDirection = initialDirectionTowardsWall.normalized;
     }
 
@@ -37,7 +35,6 @@ public class EnemyWallCrawler : MonoBehaviour
         }
         else
         {
-            // Move towards the wall
             rb.velocity = moveDirection * moveSpeed;
         }
 
@@ -45,6 +42,7 @@ public class EnemyWallCrawler : MonoBehaviour
 
         if (PlayerInSight() && shootTimer <= 0)
         {
+            Debug.Log("Player in sight, attempting to shoot."); // Debug line
             StartCoroutine(Shoot());
             shootTimer = shootCooldown;
         }
@@ -52,11 +50,9 @@ public class EnemyWallCrawler : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if collided with the wall
         if (collision.gameObject.GetComponent<Wall>())
         {
             isTouchingWall = true;
-            // Change direction to move up initially
             moveDirection = Vector2.up;
         }
     }
@@ -64,17 +60,15 @@ public class EnemyWallCrawler : MonoBehaviour
     private bool PlayerInSight()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, detectionRange);
-        Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red); // For debugging
+        Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red); 
         return hit.collider != null && hit.collider.gameObject == player;
     }
 
     private void MoveAlongWall()
     {
-        // Check for collision with wall ends or corners to change direction
         RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDirection, 0.1f);
         if (hit.collider == null || !hit.collider.gameObject.GetComponent<Wall>())
         {
-            // Reverse direction
             moveDirection = -moveDirection;
         }
 
@@ -83,20 +77,18 @@ public class EnemyWallCrawler : MonoBehaviour
 
     private IEnumerator Shoot()
     {
+        Debug.Log("Shooting coroutine started.");
         isShooting = true;
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1.5f);
 
+        Debug.Log("Shooting now."); 
         Vector2 shootDir = (player.transform.position - transform.position).normalized;
-        Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = shootDir * moveSpeed * 2;
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        projectile.GetComponent<Rigidbody2D>().velocity = shootDir * moveSpeed * 2;
 
-        yield return new WaitForSeconds(1f); // Delay before resuming movement
+        yield return new WaitForSeconds(1f);
         isShooting = false;
     }
 
-    // OnDrawGizmos remains unchanged
-    private void OnDrawGizmos()
-    {
-        // Your existing Gizmos code
-    }
 }

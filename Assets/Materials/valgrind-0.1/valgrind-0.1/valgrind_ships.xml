@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<sprites>
+
+<sprite name='A0' x='0' y='0' w='16' h='16' />
+<sprite name='B0' x='0' y='16' w='16' h='16' />
+<sprite name='C0' x='0' y='64' w='16' h='16' />
+<sprite name='D0' x='0' y='80' w='16' h='16' />
+<sprite name='E0' x='0' y='128' w='16' h='16' />
+<sprite name='F0' x='0' y='144' w='16' h='16' />
+<sprite name='G0' x='16' y='0' w='16' h='32' />
+<sprite name='H0' x='16' y='64' w='16' h='32' />
+<sprite name='I0' x='16' y='128' w='16' h='32' />
+<sprite name='J0' x='0' y='32' w='32' h='32' />
+<sprite name='K0' x='0' y='96' w='32' h='32' />
+<sprite name='L0' x='0' y='160' w='32' h='32' />
+
+<sprite name='A1' x='32' y='0' w='16' h='16' />
+<sprite name='B1' x='32' y='16' w='16' h='16' />
+<sprite name='C1' x='32' y='64' w='16' h='16' />
+<sprite name='D1' x='32' y='80' w='16' h='16' />
+<sprite name='E1' x='32' y='128' w='16' h='16' />
+<sprite name='F1' x='32' y='144' w='16' h='16' />
+<sprite name='G1' x='48' y='0' w='16' h='32' />
+<sprite name='H1' x='48' y='64' w='16' h='32' />
+<sprite name='I1' x='48' y='128' w='16' h='32' />
+<sprite name='J1' x='32' y='32' w='32' h='32' />
+<sprite name='K1' x='32' y='96' w='32' h='32' />
+<sprite name='L1' x='32' y='160' w='32' h='32' />
+
+<sprite name='A2' x='64' y='0' w='16' h='16' />
+<sprite name='B2' x='64' y='16' w='16' h='16' />
+<sprite name='C2' x='64' y='64' w='16' h='16' />
+<sprite name='D2' x='64' y='80' w='16' h='16' />
+<sprite name='E2' x='64' y='128' w='16' h='16' />
+<sprite name='F2' x='64' y='144' w='16' h='16' />
+<sprite name='G2' x='80' y='0' w='16' h='32' />
+<sprite name='H2' x='80' y='64' w='16' h='32' />
+<sprite name='I2' x='80' y='128' w='16' h='32' />
+<sprite name='J2' x='64' y='32' w='32' h='32' />
+<sprite name='K2' x='64' y='96' w='32' h='32' />
+<sprite name='L2' x='64' y='160' w='32' h='32' />
+
+<sprite name='A3' x='96' y='0' w='16' h='16' />
+<sprite name='B3' x='96' y='16' w='16' h='16' />
+<sprite name='C3' x='96' y='64' w='16' h='16' />
+<sprite name='D3' x='96' y='80' w='16' h='16' />
+<sprite name='E3' x='96' y='128' w='16' h='16' />
+<sprite name='F3' x='96' y='144' w='16' h='16' />
+<sprite name='G3' x='112' y='0' w='16' h='32' />
+<sprite name='H3' x='112' y='64' w='16' h='32' />
+<sprite name='I3' x='112' y='128' w='16' h='32' />
+<sprite name='J3' x='96' y='32' w='32' h='32' />
+<sprite name='K3' x='96' y='96' w='32' h='32' />
+<sprite name='L3' x='96' y='160' w='32' h='32' />
+
+<sprite name='A4' x='128' y='0' w='16' h='16' />
+<sprite name='B4' x='128' y='16' w='16' h='16' />
+<sprite name='C4' x='128' y='64' w='16' h='16' />
+<sprite name='D4' x='128' y='80' w='16' h='16' />
+<sprite name='E4' x='128' y='128' w='16' h='16' />
+<sprite name='F4' x='128' y='144' w='16' h='16' />
+<sprite name='G4' x='144' y='0' w='16' h='32' />
+<sprite name='H4' x='144' y='64' w='16' h='32' />
+<sprite name='I4' x='144' y='128' w='16' h='32' />
+<sprite name='J4' x='128' y='32' w='32' h='32' />
+<sprite name='K4' x='128' y='96' w='32' h='32' />
+<sprite name='L4' x='128' y='160' w='32' h='32' />
+
+<sprite name='A5' x='160' y='0' w='16' h='16' />
+<sprite name='B5' x='160' y='16' w='16' h='16' />
+<sprite name='C5' x='160' y='64' w='16' h='16' />
+<sprite name='D5' x='160' y='80' w='16' h='16' />
+<sprite name='E5' x='160' y='128' w='16' h='16' />
+<sprite name='F5' x='160' y='144' w='16' h='16' />
+<sprite name='G5' x='176' y='0' w='16' h='32' />
+<sprite name='H5' x='176' y='64' w='16' h='32' />
+<sprite name='I5' x='176' y='128' w='16' h='32' />
+<sprite name='J5' x='160' y='32' w='32' h='32' />
+<sprite name='K5' x='160' y='96' w='32' h='32' />
+<sprite name='L5' x='160' y='160' w='32' h='32' />
+
+<sprite name='A6' x='192' y='0' w='16' h='16' />
+<sprite name='B6' x='192' y='16' w='16' h='16' />
+<sprite name='C6' x='192' y='64' w='16' h='16' />
+<sprite name='D6' x='192' y='80' w='16' h='16' />
+<sprite name='E6' x='192' y='128' w='16' h='16' />
+<sprite name='F6' x='192' y='144' w='16' h='16' />
+<sprite name='G6' x='208' y='0' w='16' h='32' />
+<sprite name='H6' x='208' y='64' w='16' h='32' />
+<sprite name='I6' x='208' y='128' w='16' h='32' />
+<sprite name='J6' x='192' y='32' w='32' h='32' />
+<sprite name='K6' x='192' y='96' w='32' h='32' />
+<sprite name='L6' x='192' y='160' w='32' h='32' />
+
+<sprite name='A7' x='224' y='0' w='16' h='16' />
+<sprite name='B7' x='224' y='16' w='16' h='16' />
+<sprite name='C7' x='224' y='64' w='16' h='16' />
+<sprite name='D7' x='224' y='80' w='16' h='16' />
+<sprite name='E7' x='224' y='128' w='16' h='16' />
+<sprite name='F7' x='224' y='144' w='16' h='16' />
+<sprite name='G7' x='240' y='0' w='16' h='32' />
+<sprite name='H7' x='240' y='64' w='16' h='32' />
+<sprite name='I7' x='240' y='128' w='16' h='32' />
+<sprite name='J7' x='224' y='32' w='32' h='32' />
+<sprite name='K7' x='224' y='96' w='32' h='32' />
+<sprite name='L7' x='224' y='160' w='32' h='32' />
+
+<sprite name='A8' x='256' y='0' w='16' h='16' />
+<sprite name='B8' x='256' y='16' w='16' h='16' />
+<sprite name='C8' x='256' y='64' w='16' h='16' />
+<sprite name='D8' x='256' y='80' w='16' h='16' />
+<sprite name='E8' x='256' y='128' w='16' h='16' />
+<sprite name='F8' x='256' y='144' w='16' h='16' />
+<sprite name='G8' x='272' y='0' w='16' h='32' />
+<sprite name='H8' x='272' y='64' w='16' h='32' />
+<sprite name='I8' x='272' y='128' w='16' h='32' />
+<sprite name='J8' x='256' y='32' w='32' h='32' />
+<sprite name='K8' x='256' y='96' w='32' h='32' />
+<sprite name='L8' x='256' y='160' w='32' h='32' />
+
+<sprite name='A9' x='288' y='0' w='16' h='16' />
+<sprite name='B9' x='288' y='16' w='16' h='16' />
+<sprite name='C9' x='288' y='64' w='16' h='16' />
+<sprite name='D9' x='288' y='80' w='16' h='16' />
+<sprite name='E9' x='288' y='128' w='16' h='16' />
+<sprite name='F9' x='288' y='144' w='16' h='16' />
+<sprite name='G9' x='304' y='0' w='16' h='32' />
+<sprite name='H9' x='304' y='64' w='16' h='32' />
+<sprite name='I9' x='304' y='128' w='16' h='32' />
+<sprite name='J9' x='288' y='32' w='32' h='32' />
+<sprite name='K9' x='288' y='96' w='32' h='32' />
+<sprite name='L9' x='288' y='160' w='32' h='32' />
+
+<sprite name='A10' x='320' y='0' w='16' h='16' />
+<sprite name='B10' x='320' y='16' w='16' h='16' />
+<sprite name='C10' x='320' y='64' w='16' h='16' />
+<sprite name='D10' x='320' y='80' w='16' h='16' />
+<sprite name='E10' x='320' y='128' w='16' h='16' />
+<sprite name='F10' x='320' y='144' w='16' h='16' />
+<sprite name='G10' x='336' y='0' w='16' h='32' />
+<sprite name='H10' x='336' y='64' w='16' h='32' />
+<sprite name='I10' x='336' y='128' w='16' h='32' />
+<sprite name='J10' x='320' y='32' w='32' h='32' />
+<sprite name='K10' x='320' y='96' w='32' h='32' />
+<sprite name='L10' x='320' y='160' w='32' h='32' />
+
+<sprite name='A11' x='352' y='0' w='16' h='16' />
+<sprite name='B11' x='352' y='16' w='16' h='16' />
+<sprite name='C11' x='352' y='64' w='16' h='16' />
+<sprite name='D11' x='352' y='80' w='16' h='16' />
+<sprite name='E11' x='352' y='128' w='16' h='16' />
+<sprite name='F11' x='352' y='144' w='16' h='16' />
+<sprite name='G11' x='368' y='0' w='16' h='32' />
+<sprite name='H11' x='368' y='64' w='16' h='32' />
+<sprite name='I11' x='368' y='128' w='16' h='32' />
+<sprite name='J11' x='352' y='32' w='32' h='32' />
+<sprite name='K11' x='352' y='96' w='32' h='32' />
+<sprite name='L11' x='352' y='160' w='32' h='32' />
+
+<sprite name='A12' x='384' y='0' w='16' h='16' />
+<sprite name='B12' x='384' y='16' w='16' h='16' />
+<sprite name='C12' x='384' y='64' w='16' h='16' />
+<sprite name='D12' x='384' y='80' w='16' h='16' />
+<sprite name='E12' x='384' y='128' w='16' h='16' />
+<sprite name='F12' x='384' y='144' w='16' h='16' />
+<sprite name='G12' x='400' y='0' w='16' h='32' />
+<sprite name='H12' x='400' y='64' w='16' h='32' />
+<sprite name='I12' x='400' y='128' w='16' h='32' />
+<sprite name='J12' x='384' y='32' w='32' h='32' />
+<sprite name='K12' x='384' y='96' w='32' h='32' />
+<sprite name='L12' x='384' y='160' w='32' h='32' />
+
+</sprites>
