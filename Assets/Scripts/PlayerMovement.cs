@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private float timer;
     private float timeToWait;
 
+    [SerializeField] private AudioSource jumpSoundEffect;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -57,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded && Time.time > timer)
             {
+                jumpSoundEffect.Play();
                 rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 timer = Time.time + .2f;
             }
@@ -64,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (DoubleJumpEnabled && canDoubleJump)
                 {
+                    jumpSoundEffect.Play();
                     rb.velocity = new Vector2(rb.velocity.x, 0);
                     rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                     canDoubleJump = false;
