@@ -126,6 +126,29 @@ public class DoubleJump : BigBoon
     }
 }
 
+public class Dash : BigBoon
+{
+    public Dash()
+    {
+        Name = "Dash";
+        Description = "Get the ability to dash to left or right.";
+        CanLevelUp = false;
+    }
+
+    public override void GetBoon()
+    {
+        GameObject player = GameObject.Find("Player");
+        player.GetComponent<PlayerMovement>().DashEnabled = true;
+        if (CanLevelUp)
+            CurrLevel++;
+    }
+
+    public override void LevelUpBoon()
+    {
+        return;
+    }
+}
+
 public class Shield : BigBoon
 {
     public Shield()
