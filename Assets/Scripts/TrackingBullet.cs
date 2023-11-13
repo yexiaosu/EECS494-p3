@@ -15,7 +15,7 @@ public class TrackingBullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        float minDistance = 100.0f;
+        float minDistance = 20.0f;
         GameObject enemyManager = GameObject.Find("Enemies");
         foreach (Transform child in enemyManager.transform)
         {
