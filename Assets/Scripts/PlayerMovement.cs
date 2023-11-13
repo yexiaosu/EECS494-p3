@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool DoubleJumpEnabled = false;
+
     private float moveSpeed = 5.0f;
     private float jumpForce = 10.0f;
-    private bool isJumping = false;
+    private bool canDoubleJump = false;
     private float jumpCast = .17f;
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;
@@ -35,19 +37,30 @@ public class PlayerMovement : MonoBehaviour
         Vector2 boxSize = new Vector2(.25f, .2f);
         bool isGrounded = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
 
-        if (isGrounded && Time.time > timer)
+        if (isGrounded && Time.time > timer && DoubleJumpEnabled)
         {
-            isJumping = false;
+            canDoubleJump = true;
         }
 
-        // Jump Mechanic
-        if (Input.GetButtonDown("Jump") && !isJumping)
+        //// Jump Mechanic
+        if (Input.GetButtonDown("Jump"))
         {
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            isJumping = true;
-            timer = Time.time + .2f;
-        }
+            if (isGrounded && Time.time > timer)
+            {
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                timer = Time.time + .2f;
+            }
+            else if (Time.time > timer)
+            {
+                if (DoubleJumpEnabled && canDoubleJump)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, 0);
+                    rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                    canDoubleJump = false;
+                }
+            }
 
+        }
     }
 
     // Detect collision with ground

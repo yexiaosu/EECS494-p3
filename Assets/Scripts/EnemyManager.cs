@@ -128,14 +128,17 @@ public class EnemyManager : MonoBehaviour
 
     private List<GameObject> GetPlatformsInView()
     {
-        GameObject platforms = GameObject.Find("Platforms");
         List<GameObject> platformsInView = new List<GameObject>();
-        foreach (Transform child in platforms.transform)
+        foreach (Transform child in GameObject.Find("Game Controller").transform)
         {
-            if (IsInView(child.position))
+            GameObject platforms = child.gameObject;
+            foreach (Transform c in platforms.transform)
             {
-                // the platform is in view
-                platformsInView.Add(child.gameObject);
+                if (IsInView(c.position))
+                {
+                    // the platform is in view
+                    platformsInView.Add(c.gameObject);
+                }
             }
         }
         return platformsInView;

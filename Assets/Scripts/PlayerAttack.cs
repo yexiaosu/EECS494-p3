@@ -1,31 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject Bullet;
+    public GameObject ProjectileBullet;
+    public GameObject MissileBullet;
+    public GameObject DirectionSprite;
+    // tracking projectile
     public bool ProjectileEnabled = false;
     public float ProjectileCd = 2.0f;
+    public float ProjectileDamageFactor = 0.4f;
+    public float ProjectileSpeed = 3.0f;
+    // missile attack
+    public bool MissileAttackEnabled = false;
+    public float ShootCd = 3.0f;
+    public float MissileAttackSpeed = 5.0f;
+    public float MissileAttackDamageFactor = 1.0f;
 
-    private GameObject attackAreaRight = default;
-    private GameObject attackAreaLeft = default;
-    private bool attackingRight = false;
-    private bool attackingLeft = false;
-    private float timeToAttack = .25f;
-    private float timerLeft = 0f;
-    private float timerRight = 0f;
+    private GameObject meeleAttackArea = default;
+    private bool meeleAttacking = false;
+    private bool ableToMissile = false;
+    private float timeToAttack = .3f;
+    private float timerMeeleAttack = 0f;
+    private float timerMissileAttack = 0f;
     private float timerProjectile = 0f;
     // Start is called before the first frame update
     void Start()
     {
-        attackAreaRight = transform.GetChild(0).gameObject;
-        attackAreaLeft = transform.GetChild(1).gameObject;
+        meeleAttackArea = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // get mouse direction
+        Vector3 positionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // make the Z position equal to the player for a fully 2D comparison
+        positionMouse.z = transform.position.z;
+        Vector3 vectorAttack = (positionMouse - transform.position).normalized;
+        // make direction visualization point to the mouse direction
+        DirectionSprite.transform.position = transform.position + vectorAttack;
+        DirectionSprite.transform.rotation = new Quaternion(0,0,0,0);
+        DirectionSprite.transform.RotateAround(DirectionSprite.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
         if (ProjectileEnabled)
         {
             timerProjectile += Time.deltaTime;
@@ -35,50 +53,55 @@ public class PlayerAttack : MonoBehaviour
                 timerProjectile = 0;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Mouse1)) 
+        if (MissileAttackEnabled)
         {
-            AttackRight();
+            timerMissileAttack += Time.deltaTime;
+            if (timerMissileAttack > ShootCd)
+                ableToMissile = true;
         }
-        if(attackingRight)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && ableToMissile)
         {
-            timerRight += Time.deltaTime;
-            if(timerRight >= timeToAttack ) 
-            { 
-                timerRight = 0f;
-                attackingRight = false;
-                attackAreaRight.SetActive(false);
-            }
+            Shoot(vectorAttack);
+            timerMissileAttack = 0;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            AttackLeft();
+            MeeleAttack(vectorAttack);
         }
-        if (attackingLeft)
+        if (meeleAttacking)
         {
-            timerLeft += Time.deltaTime;
-            if (timerLeft >= timeToAttack)
+            timerMeeleAttack += Time.deltaTime;
+            if (timerMeeleAttack >= timeToAttack)
             {
-                timerLeft = 0f;
-                attackingLeft = false;
-                attackAreaLeft.SetActive(false);
+                timerMeeleAttack = 0f;
+                meeleAttacking = false;
+                meeleAttackArea.SetActive(false);
             }
         }
     }
 
-    private void AttackRight()
+    private void MeeleAttack(Vector3 vectorAttack)
     {
-        attackingRight = true;
-        attackAreaRight.SetActive(attackingRight);
-    }
-
-    private void AttackLeft()
-    {
-        attackingLeft = true;
-        attackAreaLeft.SetActive(attackingLeft);
+        meeleAttackArea.transform.position = transform.position + vectorAttack;
+        meeleAttackArea.transform.rotation = new Quaternion(0, 0, 0, 0);
+        meeleAttackArea.transform.RotateAround(meeleAttackArea.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
+        meeleAttacking = true;
+        meeleAttackArea.SetActive(meeleAttacking);
     }
 
     private void Projectile()
     {
-        GameObject projectile = Instantiate(Bullet, transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(ProjectileBullet, transform.position, Quaternion.identity);
+        bullet.GetComponent<TrackingBullet>().damageFactor = ProjectileDamageFactor;
+        bullet.GetComponent<TrackingBullet>().speed = ProjectileSpeed;
+    }
+
+    private void Shoot(Vector3 vectorAttack)
+    {
+        GameObject bullet = Instantiate(MissileBullet, transform.position + vectorAttack, Quaternion.identity);
+        bullet.transform.RotateAround(bullet.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
+        bullet.GetComponent<ShootingBullet>().dir = vectorAttack;
+        bullet.GetComponent<ShootingBullet>().damageFactor = MissileAttackDamageFactor;
+        bullet.GetComponent<ShootingBullet>().speed = MissileAttackSpeed;
     }
 }

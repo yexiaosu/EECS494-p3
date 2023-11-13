@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class AttackArea : MonoBehaviour
 {
-    private int damage = 500;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<KnockBack>() != null)
@@ -14,6 +12,7 @@ public class AttackArea : MonoBehaviour
         if (collision.GetComponent<HealthSystemForDummies>() != null)
         {
             HealthSystemForDummies health = collision.GetComponent<HealthSystemForDummies>();
+            int damage = GameObject.Find("Player").GetComponent<Player>().attack;
             health.AddToCurrentHealth(-damage);
             if (health.CurrentHealth <= 0)
             {
@@ -21,10 +20,5 @@ public class AttackArea : MonoBehaviour
             }
         }
     }
-    public void increaseDamage(int damageInc)
-    {
-        damage += damageInc;
-    }
-
 }
 

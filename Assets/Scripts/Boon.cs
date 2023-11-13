@@ -16,10 +16,8 @@ public class Boon : MonoBehaviour
         if (player)
         {
             BoonText bt = collision.gameObject.GetComponent<BoonText>();
-            GameObject attackLeft = collision.transform.GetChild(0).gameObject;
-            GameObject attackRight = collision.transform.GetChild(1).gameObject;
-            AttackArea atkLeft = attackLeft.GetComponent<AttackArea>();
-            AttackArea atkRight = attackRight.GetComponent<AttackArea>();
+            GameObject attackArea = collision.transform.GetChild(0).gameObject;
+            AttackArea atk = attackArea.GetComponent<AttackArea>();
             HealthSystemForDummies playerHP = collision.gameObject.GetComponent<HealthSystemForDummies>();
             //maybe add attack size and speed change
             //add hp change
@@ -38,14 +36,12 @@ public class Boon : MonoBehaviour
             }
             else if (roll == 3) 
             {
-                attackLeft.gameObject.transform.localScale = attackLeft.gameObject.transform.localScale * 1.2f;
-                attackRight.gameObject.transform.localScale = attackRight.gameObject.transform.localScale * 1.2f;
+                attackArea.transform.localScale = attackArea.transform.localScale * 1.2f;
                 bt.getBoon("Attack Area");
             }
             else if(roll ==  4)
             {
-                atkLeft.increaseDamage(250);
-                atkRight.increaseDamage(250);
+                collision.gameObject.GetComponent<Player>().IncreaseAttack(250);
                 bt.getBoon("Attack Damage");
             }
             else if(roll == 5)
