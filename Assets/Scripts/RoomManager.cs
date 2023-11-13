@@ -53,7 +53,7 @@ public class RoomManager : MonoBehaviour
             float upperBoundary = platformTilemap.CellToWorld(new Vector3Int(0, bounds.yMax, 0)).y;
             float playerY = player.transform.position.y;
 
-            Debug.Log($"Player Y position: {playerY}, Upper boundary: {upperBoundary}, Threshold: {spawnThreshold}");
+            //Debug.Log($"Player Y position: {playerY}, Upper boundary: {upperBoundary}, Threshold: {spawnThreshold}");
             return playerY > (upperBoundary - spawnThreshold);
         }
         return false;
@@ -84,6 +84,10 @@ public class RoomManager : MonoBehaviour
     private void SpawnRoomAt(Vector3 position, bool isTutorial, GameObject roomPrefab)
     {
         GameObject roomInstance = Instantiate(roomPrefab, new Vector3(0f, -1000f, 0f), Quaternion.identity);
+        foreach(Transform child in roomInstance.transform)
+        {
+            child.parent = GameObject.Find("Enemies").transform;
+        }
 
         if (!isTutorial)
         {
