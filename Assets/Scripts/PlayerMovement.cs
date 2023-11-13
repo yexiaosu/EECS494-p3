@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float DashCd = 1.0f;
 
     private float moveSpeed = 5.0f;
-    private float jumpForce = 10.0f;
+    private float jumpForce = 10.2f;
     private bool canDoubleJump = false;
     private float jumpCast = .17f;
     private bool canDash = true;

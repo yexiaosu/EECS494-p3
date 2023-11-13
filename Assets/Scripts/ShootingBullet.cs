@@ -26,18 +26,26 @@ public class ShootingBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject gameObject = collision.gameObject;
+        GameObject collidedObject = collision.gameObject;
         GameObject sender = this.gameObject;
 
-        if (gameObject.CompareTag("Enemy"))
+        // Check if the collided object has a Platform script
+        if (collidedObject.GetComponent<Platform>() != null)
+        {
+            Destroy(sender);
+            return; // Early exit to prevent further execution
+        }
+
+        if (collidedObject.CompareTag("Enemy"))
         {
             int amount = Mathf.FloorToInt(GameObject.Find("Player").GetComponent<Player>().attack * damageFactor);
-            gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
+            collidedObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
             collision.GetComponent<Enemy>().GetMissleHit(dir, sender.transform.position);
-            gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
-            if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
-                gameObject.GetComponent<Enemy>().Dead();
+            collidedObject.GetComponent<KnockBack>().PlayFeedback(sender);
+            if (collidedObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
+                collidedObject.GetComponent<Enemy>().Dead();
             Destroy(sender);
         }
     }
+
 }

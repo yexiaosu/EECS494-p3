@@ -50,5 +50,11 @@ What we have done:
 6. Sprites and visual effects are added:
    i. Sprites and animations are added to meele attack, projectiles, missle attack and the shield
    ii. Animations are added to indicate that the enemies are being attacked
-   <ADD MORE HERE>
+7. Room Generation replaced procedualy generated platforms. This gives a more human and thought out element to the game. And allows us to pump out many more rooms for the next iteration.
+   i. Currently 10 rooms are supported and cycled through
+8. A boss room is added once the player has passed 10 room spawns (this occours around score 238)
+   i. The boss is tougher than any other enemy the player has faced.
+9. After the boss is defeated the player is allowed to repeat the whole process and cycle through another 10 rooms getting stronger until they die.
+10. Vertical Parallaxing was implemented in the background to give the illusion of upward movement for the player.
+11. Player sprite was added.
 <ADD MORE HERE>

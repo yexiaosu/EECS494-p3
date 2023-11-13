@@ -9,17 +9,32 @@ public class AttackArea : MonoBehaviour
     {
         if (collision.GetComponent<KnockBack>() != null)
             collision.GetComponent<KnockBack>().PlayFeedback(gameObject);
+
         if (collision.GetComponent<HealthSystemForDummies>() != null)
         {
             HealthSystemForDummies health = collision.GetComponent<HealthSystemForDummies>();
             int damage = GameObject.Find("Player").GetComponent<Player>().attack;
-            collision.GetComponent<Enemy>().GetMeeleHit();
-            health.AddToCurrentHealth(-damage);
-            if (health.CurrentHealth <= 0)
+
+            // Check if the collided object is an Enemy
+            if (collision.GetComponent<Enemy>() != null)
             {
-                collision.GetComponent<Enemy>().Dead();
+                collision.GetComponent<Enemy>().GetMeeleHit();
+                health.AddToCurrentHealth(-damage);
+                if (health.CurrentHealth <= 0)
+                {
+                    collision.GetComponent<Enemy>().Dead();
+                }
+            }
+            // Check if the collided object is a BossEnemy
+            else if (collision.GetComponent<BossEnemy>() != null)
+            {
+                collision.GetComponent<BossEnemy>().GetMeeleHit();
+                health.AddToCurrentHealth(-damage);
+                if (health.CurrentHealth <= 0)
+                {
+                    collision.GetComponent<BossEnemy>().Dead();
+                }
             }
         }
     }
 }
-

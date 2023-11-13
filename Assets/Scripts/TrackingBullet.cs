@@ -7,6 +7,7 @@ public class TrackingBullet : MonoBehaviour
 {
     public float speed = 3.0f;
     public float damageFactor = 0.4f;
+    public Camera mainCamera;
 
     private GameObject minDisEnemy;
     private Rigidbody2D rb;
@@ -15,28 +16,79 @@ public class TrackingBullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        float minDistance = 20.0f;
+        FindCamera();
+
+        FindClosestVisibleEnemy();
+    }
+
+
+    void FindCamera()
+    {
+        GameObject cameraByName = GameObject.Find("Main Camera");
+        if (cameraByName != null)
+            mainCamera = cameraByName.GetComponent<Camera>();
+
+        if (mainCamera == null)
+        {
+            GameObject cameraByTag = GameObject.FindGameObjectWithTag("Main Camera");
+            if (cameraByTag != null)
+                mainCamera = cameraByTag.GetComponent<Camera>();
+        }
+
+        if (mainCamera == null)
+        {
+            CameraTracking cameraTrackingScript = FindObjectOfType<CameraTracking>();
+            if (cameraTrackingScript != null)
+                mainCamera = cameraTrackingScript.GetComponent<Camera>();
+        }
+
+        if (mainCamera == null)
+        {
+            Debug.LogError("Main Camera not found. Make sure it's tagged correctly or has the right script.");
+        }
+    }
+
+    void FindClosestVisibleEnemy()
+    {
         GameObject enemyManager = GameObject.Find("Enemies");
+        float minDistance = Mathf.Infinity;
+        minDisEnemy = null;
+
         foreach (Transform child in enemyManager.transform)
         {
-            if (Vector2.Distance(transform.position, child.position) < minDistance)
+            if (IsEnemyVisible(child.gameObject))
             {
-                minDistance = Vector2.Distance(transform.position, child.position);
-                minDisEnemy = child.gameObject;
+                float distance = Vector2.Distance(transform.position, child.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    minDisEnemy = child.gameObject;
+                }
             }
         }
+    }
+
+    bool IsEnemyVisible(GameObject enemy)
+    {
+        Vector3 viewPos = mainCamera.WorldToViewportPoint(enemy.transform.position);
+        return viewPos.x > 0 && viewPos.x < 1 && viewPos.y > 0 && viewPos.y < 1 && viewPos.z > 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (minDisEnemy == null || Vector2.Distance(transform.position, GameObject.Find("Player").transform.position) > 20.0f)
+        if (minDisEnemy == null)
         {
-            Destroy(gameObject);
+            FindClosestVisibleEnemy();
+        }
+
+        if (minDisEnemy != null)
+        {
+            rb.velocity = speed * (minDisEnemy.transform.position - transform.position).normalized;
         }
         else
         {
-            rb.velocity = speed * (minDisEnemy.transform.position - transform.position).normalized;
+            Destroy(gameObject);
         }
     }
 
@@ -54,6 +106,13 @@ public class TrackingBullet : MonoBehaviour
             if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
                 gameObject.GetComponent<Enemy>().Dead();
             Destroy(sender);
+        }
+        else if (gameObject.GetComponent<Platform>() != null)
+            Destroy(sender);
+
+        {
+
+
         }
     }
 }

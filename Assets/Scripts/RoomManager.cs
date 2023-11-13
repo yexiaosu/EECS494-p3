@@ -7,7 +7,9 @@ public class RoomManager : MonoBehaviour
 {
     public List<GameObject> roomPrefabs;
     public GameObject transitionPlatformPrefab;
+    private bool stopSpawning = false;
     public float fixedRoomOffset = 0f;
+    public GameObject bossDoorPrefab;
     public Tilemap platformTilemap; // Assign this in the Unity Inspector
 
     public float spawnThreshold = 10f; // Customizable threshold
@@ -36,13 +38,18 @@ public class RoomManager : MonoBehaviour
         SpawnRoomAt(tutorialRoomPosition, true, tutorialRoomPrefab);
     }
 
-    void Update()
+    private void Update()
     {
-        if (currentRoom != null && PlayerNearEndOfRoom())
+        if (!stopSpawning && currentRoom != null && PlayerNearEndOfRoom())
         {
             Debug.Log("Spawning Transition Platform");
             SpawnTransitionPlatform();
         }
+    }
+
+    public void ToggleRoomSpawning(bool shouldSpawn)
+    {
+        stopSpawning = !shouldSpawn;
     }
 
     private bool PlayerNearEndOfRoom()
@@ -77,10 +84,11 @@ public class RoomManager : MonoBehaviour
             lastSpawnedPlatform.transform.SetParent(roomGridTransform, false);
         }
 
-        GameObject nextRoomPrefab = GetRandomRoomPrefab();
+        GameObject nextRoomPrefab = roomCount < 10 ? GetRandomRoomPrefab() : bossDoorPrefab;
         Vector3 nextRoomPosition = new Vector3(0f, lastSpawnedPlatform.transform.position.y + fixedRoomOffset, 0f);
         SpawnRoomAt(nextRoomPosition, false, nextRoomPrefab);
     }
+
 
     private void SpawnRoomAt(Vector3 position, bool isTutorial, GameObject roomPrefab)
     {
@@ -158,4 +166,11 @@ public class RoomManager : MonoBehaviour
         Vector3 highestWorldPos = platformTilemap.CellToWorld(highestTilePos);
         return highestWorldPos;
     }
+
+    public void ResetRoomCount()
+    {
+        roomCount = 0;
+        ToggleRoomSpawning(true); // Assuming this method exists as discussed earlier
+    }
+
 }
