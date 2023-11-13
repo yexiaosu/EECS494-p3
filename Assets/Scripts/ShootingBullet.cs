@@ -33,6 +33,7 @@ public class ShootingBullet : MonoBehaviour
         {
             int amount = Mathf.FloorToInt(GameObject.Find("Player").GetComponent<Player>().attack * damageFactor);
             gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
+            collision.GetComponent<Enemy>().GetMissleHit(dir);
             gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
             if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
                 gameObject.GetComponent<Enemy>().Dead();

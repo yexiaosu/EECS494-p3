@@ -13,6 +13,7 @@ public class AttackArea : MonoBehaviour
         {
             HealthSystemForDummies health = collision.GetComponent<HealthSystemForDummies>();
             int damage = GameObject.Find("Player").GetComponent<Player>().attack;
+            collision.GetComponent<Enemy>().GetMeeleHit();
             health.AddToCurrentHealth(-damage);
             if (health.CurrentHealth <= 0)
             {
