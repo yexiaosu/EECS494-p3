@@ -5,14 +5,21 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public bool DoubleJumpEnabled = false;
+    public bool DashEnabled = false;
+    public float DashCd = 1.0f;
 
     private float moveSpeed = 5.0f;
     private float jumpForce = 10.0f;
     private bool canDoubleJump = false;
     private float jumpCast = .17f;
+    private bool canDash = true;
+    private bool isDashing = false;
+    private float dashingPower = 20.0f;
+    private float dashingTime = 0.2f;
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;
     private Rigidbody2D rb;
+    private TrailRenderer tr;
     private float timer;
     private float timeToWait;
 
@@ -24,12 +31,15 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("Rigidbody2D component missing");
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
+        tr = GetComponent<TrailRenderer>();
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
 
     void Update()
     {
+        if (isDashing)
+            return;
         // Horizontal Movement
         float moveX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
@@ -59,7 +69,10 @@ public class PlayerMovement : MonoBehaviour
                     canDoubleJump = false;
                 }
             }
-
+        }
+        if (Input.GetKey(KeyCode.LeftShift) && canDash && DashEnabled)
+        {
+            StartCoroutine(Dash(new Vector2(rb.velocity.x, 0).normalized));
         }
     }
 
@@ -93,6 +106,22 @@ public class PlayerMovement : MonoBehaviour
     public float GetJumpForce()
     {
         return jumpForce;
+    }
+
+    private IEnumerator Dash(Vector2 dir)
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        rb.velocity = dir * dashingPower;
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(DashCd);
+        canDash = true;
     }
 
     private void _OnPause(PauseEvent e)
