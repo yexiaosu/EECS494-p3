@@ -32,6 +32,10 @@ public class Enemy : MonoBehaviour
         MissleHitEffectObject = Instantiate(MissleHitEffect, transform.position, Quaternion.identity);
         MissleHitEffectObject.transform.parent = transform;
         MissleHitEffectObject.SetActive(false);
+
+        HealthSystemForDummies health = GetComponent<HealthSystemForDummies>();
+        health.MaximumHealth = Mathf.Round(1000+(1000 * (gameObject.transform.position.y / 100)));
+        health.CurrentHealth = Mathf.Round(1000 + (1000 * (gameObject.transform.position.y / 100)));
     }
 
     // Update is called once per frame

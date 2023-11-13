@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Damage : MonoBehaviour
@@ -27,7 +28,7 @@ public class Damage : MonoBehaviour
             }
             else
             {
-                gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(amount);
+                gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(Mathf.Round((amount * (gameObject.transform.position.y / 100))+amount));
                 gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
                 if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
                     gameObject.GetComponent<Player>().Dead();
