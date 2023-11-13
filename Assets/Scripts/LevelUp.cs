@@ -13,7 +13,7 @@ public class LevelUp : MonoBehaviour
     public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() , new MissileAttack(), new DoubleJump(), new Shield() };
 
     private UIManager UIManagerObject;
-    private int lastScore = -100;
+    private int lastScore = -50;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class LevelUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100)
+        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 50)
         {
             if (lastScore < 0)
                 LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";
