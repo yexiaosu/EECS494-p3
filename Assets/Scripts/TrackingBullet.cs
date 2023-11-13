@@ -6,6 +6,7 @@ using UnityEngine;
 public class TrackingBullet : MonoBehaviour
 {
     public float speed = 3.0f;
+    public float damageFactor = 0.4f;
 
     private GameObject minDisEnemy;
     private Rigidbody2D rb;
@@ -46,8 +47,8 @@ public class TrackingBullet : MonoBehaviour
 
         if (gameObject.CompareTag("Enemy"))
         {
-            int amount = GameObject.Find("Player").GetComponent<Player>().attack / 5 * 2;
-            gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(amount);
+            int amount = Mathf.FloorToInt(GameObject.Find("Player").GetComponent<Player>().attack * damageFactor);
+            gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
             gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
             if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
                 gameObject.GetComponent<Enemy>().Dead();

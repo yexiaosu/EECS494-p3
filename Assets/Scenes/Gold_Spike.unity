@@ -3446,11 +3446,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectileBullet: {fileID: 4829758305704071673, guid: bd1f5c71f5d72489fb534a9c873b675c, type: 3}
   MissileBullet: {fileID: 7305894165374999574, guid: dd9efb5e481474472bad86b1698e14c1, type: 3}
-  ProjectileEnabled: 0
-  MissileAttackEnabled: 0
-  ProjectileCd: 1
-  ShootCd: 2
   DirectionSprite: {fileID: 1950444005}
+  ProjectileEnabled: 0
+  ProjectileCd: 1
+  ProjectileDamageFactor: 0.5
+  ProjectileSpeed: 3
+  MissileAttackEnabled: 0
+  ShootCd: 3
+  MissileAttackSpeed: 5
+  MissileAttackDamageFactor: 1
 --- !u!114 &1197629362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3521,6 +3525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shield: {fileID: 55351653}
   ReGeneratedCd: 2
+  MaxShieldTimes: 1
   ShieldEnabled: 0
 --- !u!1 &1200931214
 GameObject:
@@ -3987,7 +3992,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.6555433, y: 0}
+  m_Offset: {x: 1.053525, y: 0.98511255}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.50555557, y: 0.005}
@@ -3998,7 +4003,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31383952, y: 1}
+  m_Size: {x: 0.31502962, y: 2.0159366}
   m_EdgeRadius: 0
 --- !u!61 &1267287376
 BoxCollider2D:
@@ -4032,7 +4037,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.65554327, y: 0}
+  m_Offset: {x: -1.0535247, y: 0.98511255}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.50555557, y: 0.005}
@@ -4043,7 +4048,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31383952, y: 1}
+  m_Size: {x: 0.31502962, y: 2.0159366}
   m_EdgeRadius: 0
 --- !u!1 &1272871383
 GameObject:
@@ -5250,7 +5255,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.6555433, y: 0}
+  m_Offset: {x: 1.053525, y: 0.9851125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.50555557, y: 0.005}
@@ -5261,7 +5266,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31383952, y: 1}
+  m_Size: {x: 0.3150296, y: 2.015937}
   m_EdgeRadius: 0
 --- !u!61 &2137809910
 BoxCollider2D:
@@ -5295,7 +5300,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.65554327, y: 0}
+  m_Offset: {x: -1.0535247, y: 0.98511255}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.50555557, y: 0.005}
@@ -5306,7 +5311,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31383952, y: 1}
+  m_Size: {x: 0.31502962, y: 2.0159366}
   m_EdgeRadius: 0
 --- !u!1001 &1644421348740852373
 PrefabInstance:

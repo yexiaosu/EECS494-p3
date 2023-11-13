@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShootingBullet : MonoBehaviour
 {
     public float speed = 5.0f;
+    public float damageFactor = 1.0f;
     public Vector2 dir = new Vector2(0, 0);
 
     private Rigidbody2D rb;
@@ -30,7 +31,7 @@ public class ShootingBullet : MonoBehaviour
 
         if (gameObject.CompareTag("Enemy"))
         {
-            int amount = GameObject.Find("Player").GetComponent<Player>().attack;
+            int amount = Mathf.FloorToInt(GameObject.Find("Player").GetComponent<Player>().attack * damageFactor);
             gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
             gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
             if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)

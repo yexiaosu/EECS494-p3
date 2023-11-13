@@ -6,6 +6,7 @@ public class PlayerShield : MonoBehaviour
 {
     public GameObject Shield;
     public float ReGeneratedCd = 2.0f;
+    public int MaxShieldTimes = 1;
     public bool ShieldEnabled = false;
 
     private Subscription<ShieldBrokenEvent> shieldBrokenEventSubscription;
