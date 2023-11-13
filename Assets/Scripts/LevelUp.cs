@@ -45,7 +45,7 @@ public class LevelUp : MonoBehaviour
                     continue;
                 }
                 child.gameObject.SetActive(true);
-                child.gameObject.GetComponent<LevelUpBoon>().BigBoon = bigBoons[randomPos[i]];
+                child.gameObject.GetComponent<LevelUpChoice>().BigBoon = bigBoons[randomPos[i]];
                 child.GetChild(0).gameObject.GetComponent<TMP_Text>().text = bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
                 i++;
             }

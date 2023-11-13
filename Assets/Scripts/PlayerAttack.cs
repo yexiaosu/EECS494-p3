@@ -7,11 +7,17 @@ public class PlayerAttack : MonoBehaviour
 {
     public GameObject ProjectileBullet;
     public GameObject MissileBullet;
-    public bool ProjectileEnabled = false;
-    public bool MissileAttackEnabled = false;
-    public float ProjectileCd = 2.0f;
-    public float ShootCd = 2.0f;
     public GameObject DirectionSprite;
+    // tracking projectile
+    public bool ProjectileEnabled = false;
+    public float ProjectileCd = 2.0f;
+    public float ProjectileDamageFactor = 0.4f;
+    public float ProjectileSpeed = 3.0f;
+    // missile attack
+    public bool MissileAttackEnabled = false;
+    public float ShootCd = 3.0f;
+    public float MissileAttackSpeed = 5.0f;
+    public float MissileAttackDamageFactor = 1.0f;
 
     private GameObject meeleAttackArea = default;
     private bool meeleAttacking = false;
@@ -86,6 +92,8 @@ public class PlayerAttack : MonoBehaviour
     private void Projectile()
     {
         GameObject bullet = Instantiate(ProjectileBullet, transform.position, Quaternion.identity);
+        bullet.GetComponent<TrackingBullet>().damageFactor = ProjectileDamageFactor;
+        bullet.GetComponent<TrackingBullet>().speed = ProjectileSpeed;
     }
 
     private void Shoot(Vector3 vectorAttack)
@@ -93,5 +101,7 @@ public class PlayerAttack : MonoBehaviour
         GameObject bullet = Instantiate(MissileBullet, transform.position + vectorAttack, Quaternion.identity);
         bullet.transform.RotateAround(bullet.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
         bullet.GetComponent<ShootingBullet>().dir = vectorAttack;
+        bullet.GetComponent<ShootingBullet>().damageFactor = MissileAttackDamageFactor;
+        bullet.GetComponent<ShootingBullet>().speed = MissileAttackSpeed;
     }
 }
