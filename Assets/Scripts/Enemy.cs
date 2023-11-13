@@ -82,10 +82,10 @@ public class Enemy : MonoBehaviour
         isPlayingProjectileHitEffect = true;
     }
 
-    public void GetMissleHit(Vector3 vectorAttack)
+    public void GetMissleHit(Vector3 vectorAttack, Vector3 attackPos)
     {
         MissleHitEffectObject.SetActive(true);
-        MissleHitEffectObject.transform.position -= vectorAttack * 0.5f;
+        MissleHitEffectObject.transform.position = attackPos;
         MissleHitEffectObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         MissleHitEffectObject.transform.RotateAround(MissleHitEffectObject.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(-vectorAttack.y, -vectorAttack.x) / Mathf.PI * 180.0f);
         isPlayingMissleHitEffect = true;

@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.88, y: 2.19, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8261062201082028524}
@@ -150,6 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectiblePrefabs: []
+  MeeleHitEffect: {fileID: 9115905929294437790, guid: 7e193c01359f24619b8a47b0d04909e6, type: 3}
+  ProjectileHitEffect: {fileID: 4630442315206089233, guid: 5e7d5732b1fe74731b5bcfb1424b13c3, type: 3}
+  MissleHitEffect: {fileID: 1806077149544477206, guid: 15f285dc843ab400ca140f3a4e0c50c2, type: 3}
 --- !u!50 &2063937718095537469
 Rigidbody2D:
   serializedVersion: 4
