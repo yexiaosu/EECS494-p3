@@ -24,3 +24,31 @@ What we have done:
 * A basic level-up functionality is done, where the player can choose an ability to become stronger
 * More boons are added
 * A basic item shop is added
+
+-----------------------------------------------------------------------------------------------
+
+P3 Milestone 2
+Issues/Feedbacks of how to improve:
+1. Having the direction of the mouse reflect where the player is attacking
+2. Create some way to attack upwards
+3. Play around with jumping on heads as a way to deal damage
+4. Create more big boons
+5. Let the play players start out picking a random big boon
+6. Add sprites wherever sprites can be added
+<ADD MORE HERE>
+What we have done:
+1&2. Meele attack is now done by attacking the direction of the mouse, so it can also attack upwards. An arrow is also added to indicate the attack direction.
+3. Player can now jump on enemies' heads to attack them.
+4. More big boons are added, and some of them can be upgraded if players get them again.
+   The big boons we have now includes:
+   i. Auto tracking projectiles (upgrade to increase damage/reduce CD/increase projectiles speed)
+   ii. Missle attack (right click to use; also shoot to the direction of the mouse; upgrade to increase damage/reduce CD/increase projectiles speed)
+   iii. Double jump (cannot upgrade)
+   iv. Dash (left shift to use; cannot upgrade)
+   v. Temporary shield (avoid damage for several times; recover after cool down; upgrade to increase the shield times/reduce CD)
+5. Now the player can get an initial big boon when the game start
+6. Sprites and visual effects are added:
+   i. Sprites and animations are added to meele attack, projectiles, missle attack and the shield
+   ii. Animations are added to indicate that the enemies are being attacked
+   <ADD MORE HERE>
+<ADD MORE HERE>
