@@ -35,7 +35,8 @@ Issues/Feedbacks of how to improve:
 4. Create more big boons
 5. Let the play players start out picking a random big boon
 6. Add sprites wherever sprites can be added
-<ADD MORE HERE>
+7. Generate pre-made rooms instead of procedualy generated platforms
+8. Add a boss room
 What we have done:
 1&2. Meele attack is now done by attacking the direction of the mouse, so it can also attack upwards. An arrow is also added to indicate the attack direction.
 3. Player can now jump on enemies' heads to attack them.
@@ -50,11 +51,10 @@ What we have done:
 6. Sprites and visual effects are added:
    i. Sprites and animations are added to meele attack, projectiles, missle attack and the shield
    ii. Animations are added to indicate that the enemies are being attacked
+   iii. Player sprite was added
 7. Room Generation replaced procedualy generated platforms. This gives a more human and thought out element to the game. And allows us to pump out many more rooms for the next iteration.
    i. Currently 10 rooms are supported and cycled through
 8. A boss room is added once the player has passed 10 room spawns (this occours around score 238)
    i. The boss is tougher than any other enemy the player has faced.
 9. After the boss is defeated the player is allowed to repeat the whole process and cycle through another 10 rooms getting stronger until they die.
 10. Vertical Parallaxing was implemented in the background to give the illusion of upward movement for the player.
-11. Player sprite was added.
-<ADD MORE HERE>
