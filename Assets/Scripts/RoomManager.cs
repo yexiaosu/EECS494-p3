@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using Unity.VisualScripting;
 
 public class RoomManager : MonoBehaviour
 {
@@ -84,10 +85,6 @@ public class RoomManager : MonoBehaviour
     private void SpawnRoomAt(Vector3 position, bool isTutorial, GameObject roomPrefab)
     {
         GameObject roomInstance = Instantiate(roomPrefab, new Vector3(0f, -1000f, 0f), Quaternion.identity);
-        foreach(Transform child in roomInstance.transform)
-        {
-            child.parent = GameObject.Find("Enemies").transform;
-        }
 
         if (!isTutorial)
         {
@@ -115,6 +112,20 @@ public class RoomManager : MonoBehaviour
         if (platformTilemap == null)
         {
             Debug.LogError("No Tilemap found in the spawned room.");
+        }
+
+        if (roomInstance.transform.childCount > 0)
+        {
+            List<Transform> enemies = new List<Transform>();
+            for (int i = 0; i < roomInstance.transform.GetChild(0).childCount; i++)
+            {
+                Transform child = roomInstance.transform.GetChild(0).GetChild(i);
+                enemies.Add(child);
+            }
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].parent = GameObject.Find("Enemies").transform;
+            }
         }
     }
 

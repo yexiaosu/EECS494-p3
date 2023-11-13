@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
                 SpawnCollectible(collectiblePrefabs[Random.Range(0, collectiblePrefabs.Length)], gameObject.transform.position);
             }
         }
-        Destroy(gameObject);
+        Destroy(gameObject, 0.25f);
     }
 
     private void SpawnCollectible(GameObject collectible, Vector3 pos)
