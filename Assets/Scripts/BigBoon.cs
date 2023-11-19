@@ -83,7 +83,7 @@ public class MissileAttack : BigBoon
         else
             return;
         if (CurrLevel % 2 == 0)
-            playerAttack.MissileAttackDamageFactor += 0.4f;
+            playerAttack.MissileAttackDamageFactor += 0.3f;
         else
         {
             if (playerAttack.ShootCd > 1.0f)
@@ -97,7 +97,7 @@ public class MissileAttack : BigBoon
                 return;
             }
             else
-                playerAttack.MissileAttackDamageFactor += 0.4f;
+                playerAttack.MissileAttackDamageFactor += 0.3f;
         }
     }
 }
@@ -179,7 +179,7 @@ public class Shield : BigBoon
         {
             if (playerShield.ReGeneratedCd > 1.0f)
             {
-                playerShield.ReGeneratedCd -= 0.3f;
+                playerShield.ReGeneratedCd -= 0.2f;
                 return;
             }
             else
