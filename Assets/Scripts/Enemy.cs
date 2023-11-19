@@ -31,10 +31,6 @@ public class Enemy : MonoBehaviour
         MissleHitEffectObject = Instantiate(MissleHitEffect, transform.position, Quaternion.identity);
         MissleHitEffectObject.transform.parent = transform;
         MissleHitEffectObject.SetActive(false);
-
-        HealthSystemForDummies health = GetComponent<HealthSystemForDummies>();
-        health.MaximumHealth = Mathf.Round(1000+(1000 * (gameObject.transform.position.y / 100)));
-        health.CurrentHealth = Mathf.Round(1000 + (1000 * (gameObject.transform.position.y / 100)));
     }
 
     // Update is called once per frame
@@ -96,6 +92,7 @@ public class Enemy : MonoBehaviour
 
     public void Dead()
     {
+        EventBus.Publish<EnemyDeadEvent>(new EnemyDeadEvent(gameObject));
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         if (collectiblePrefabs.Length > 0)
         {
@@ -112,4 +109,10 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(collectible, pos, Quaternion.identity);
     }
+}
+
+public class EnemyDeadEvent
+{
+    GameObject enemy;
+    public EnemyDeadEvent(GameObject _enemy) { enemy = _enemy; }
 }
