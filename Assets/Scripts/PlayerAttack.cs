@@ -18,25 +18,28 @@ public class PlayerAttack : MonoBehaviour
     public float ShootCd = 3.0f;
     public float MissileAttackSpeed = 5.0f;
     public float MissileAttackDamageFactor = 1.0f;
-
+    // meele attack
     private GameObject meeleAttackArea = default;
     private bool meeleAttacking = false;
     private bool ableToMissile = false;
-    private float timeToAttack = .3f;
-    private float timerMeeleAttack = 0f;
-    private float timerMissileAttack = 0f;
     private float timerProjectile = 0f;
 
 
-    public float MeeleAttackCooldown = 1.0f;
-    public float MissileAttackCooldown = 1.0f;
+    private float MeeleAttackCooldown = 1.0f;
+    private float MissileAttackCooldown = 1.0f;
 
     private float meeleAttackTimer = 0f;
     private float missileAttackTimer = 0f;
+
+    private Subscription<PauseEvent> pauseEventSubscription;
+    private Subscription<ResumeEvent> resumeEventSubscription;
+
     // Start is called before the first frame update
     void Start()
     {
         meeleAttackArea = transform.GetChild(0).gameObject;
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
 
     // Update is called once per frame
@@ -134,5 +137,15 @@ public class PlayerAttack : MonoBehaviour
             ableToMissile = false;
             missileAttackTimer = 0f; // Start the missile attack timer
         }
+    }
+
+    private void _OnPause(PauseEvent e)
+    {
+        this.enabled = false;
+    }
+
+    private void _OnResume(ResumeEvent e)
+    {
+        this.enabled = true;
     }
 }
