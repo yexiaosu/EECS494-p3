@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossDoor : MonoBehaviour
@@ -58,13 +59,25 @@ public class BossDoor : MonoBehaviour
         {
             // Spawn the Boss Room 5 units below the player's position
             Vector3 spawnPosition = new Vector3(0, player.transform.position.y - 15f, 0);
-            Instantiate(bossRoomPrefab, spawnPosition, Quaternion.identity, roomGridTransform);
+            GameObject roomInstance = Instantiate(bossRoomPrefab, spawnPosition, Quaternion.identity, roomGridTransform);
             Debug.Log("Boss Room spawned at: " + spawnPosition);
+            if (roomInstance.transform.childCount > 0)
+            {
+                List<Transform> enemies = new List<Transform>();
+                for (int i = 0; i < roomInstance.transform.GetChild(0).childCount; i++)
+                {
+                    Transform child = roomInstance.transform.GetChild(0).GetChild(i);
+                    enemies.Add(child);
+                }
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    enemies[i].parent = GameObject.Find("Enemies").transform;
+                }
+            }
         }
         else
         {
             Debug.LogError("Boss Room Prefab, Room Grid Transform, or Player not found.");
         }
     }
-
 }

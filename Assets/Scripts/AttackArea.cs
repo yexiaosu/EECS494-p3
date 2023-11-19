@@ -26,13 +26,13 @@ public class AttackArea : MonoBehaviour
                 }
             }
             // Check if the collided object is a BossEnemy
-            else if (collision.GetComponent<BossEnemy>() != null)
+            else if (collision.GetComponent<BossAI>() != null)
             {
-                collision.GetComponent<BossEnemy>().GetMeeleHit();
+                collision.GetComponent<BossAI>().GetMeleeHit();
                 health.AddToCurrentHealth(-damage);
                 if (health.CurrentHealth <= 0)
                 {
-                    collision.GetComponent<BossEnemy>().Dead();
+                    collision.GetComponent<BossAI>().Dead();
                 }
             }
         }
