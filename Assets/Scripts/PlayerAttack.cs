@@ -18,25 +18,25 @@ public class PlayerAttack : MonoBehaviour
     public float ShootCd = 3.0f;
     public float MissileAttackSpeed = 5.0f;
     public float MissileAttackDamageFactor = 1.0f;
-
+    // meele attack
     private GameObject meeleAttackArea = default;
     private bool meeleAttacking = false;
+    private float meeleAttackingTime = .3f;
+
     private bool ableToMissile = false;
-    private float timeToAttack = .3f;
     private float timerMeeleAttack = 0f;
     private float timerMissileAttack = 0f;
     private float timerProjectile = 0f;
 
+    private Subscription<PauseEvent> pauseEventSubscription;
+    private Subscription<ResumeEvent> resumeEventSubscription;
 
-    public float MeeleAttackCooldown = 1.0f;
-    public float MissileAttackCooldown = 1.0f;
-
-    private float meeleAttackTimer = 0f;
-    private float missileAttackTimer = 0f;
     // Start is called before the first frame update
     void Start()
     {
         meeleAttackArea = transform.GetChild(0).gameObject;
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
 
     // Update is called once per frame
@@ -61,57 +61,41 @@ public class PlayerAttack : MonoBehaviour
                 timerProjectile = 0;
             }
         }
-
-        // Missile attack cooldown check
-        if (MissileAttackEnabled && !ableToMissile)
+        if (MissileAttackEnabled)
         {
-            missileAttackTimer += Time.deltaTime;
-            if (missileAttackTimer > MissileAttackCooldown)
-            {
+            timerMissileAttack += Time.deltaTime;
+            if (timerMissileAttack > ShootCd)
                 ableToMissile = true;
-                missileAttackTimer = 0f; // Reset the missile attack timer
-            }
         }
-
-        // Check for missile attack input
         if (Input.GetKeyDown(KeyCode.Mouse1) && ableToMissile)
         {
             Shoot(vectorAttack);
+            timerMissileAttack = 0;
             ableToMissile = false;
         }
-
-        // Melee attack cooldown check
-        if (meeleAttacking)
-        {
-            meeleAttackTimer += Time.deltaTime;
-            if (meeleAttackTimer >= MeeleAttackCooldown)
-            {
-                meeleAttacking = false;
-                meeleAttackArea.SetActive(false);
-                meeleAttackTimer = 0f; // Reset the melee attack timer
-            }
-        }
-
-        // Check for melee attack input
         if (Input.GetKeyDown(KeyCode.Mouse0) && !meeleAttacking)
         {
             MeeleAttack(vectorAttack);
-            meeleAttackTimer = 0f; // Start the melee attack timer
+        }
+        if (meeleAttacking)
+        {
+            timerMeeleAttack += Time.deltaTime;
+            if (timerMeeleAttack >= meeleAttackingTime)
+            {
+                timerMeeleAttack = 0f;
+                meeleAttacking = false;
+                meeleAttackArea.SetActive(false);
+            }
         }
     }
 
-
     private void MeeleAttack(Vector3 vectorAttack)
     {
-        if (!meeleAttacking) // Check if melee attack is available
-        {
-            meeleAttackArea.transform.position = transform.position + vectorAttack;
-            meeleAttackArea.transform.rotation = new Quaternion(0, 0, 0, 0);
-            meeleAttackArea.transform.RotateAround(meeleAttackArea.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
-            meeleAttacking = true;
-            meeleAttackArea.SetActive(meeleAttacking);
-            meeleAttackTimer = 0f; // Start the melee attack timer
-        }
+        meeleAttackArea.transform.position = transform.position + vectorAttack;
+        meeleAttackArea.transform.rotation = new Quaternion(0, 0, 0, 0);
+        meeleAttackArea.transform.RotateAround(meeleAttackArea.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
+        meeleAttacking = true;
+        meeleAttackArea.SetActive(meeleAttacking);
     }
 
     private void Projectile()
@@ -123,16 +107,20 @@ public class PlayerAttack : MonoBehaviour
 
     private void Shoot(Vector3 vectorAttack)
     {
-        if (ableToMissile) // Check if missile attack is available
-        {
-            GameObject bullet = Instantiate(MissileBullet, transform.position + vectorAttack, Quaternion.identity);
-            bullet.transform.RotateAround(bullet.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
-            bullet.GetComponent<ShootingBullet>().dir = vectorAttack;
-            bullet.GetComponent<ShootingBullet>().damageFactor = MissileAttackDamageFactor;
-            bullet.GetComponent<ShootingBullet>().speed = MissileAttackSpeed;
+        GameObject bullet = Instantiate(MissileBullet, transform.position + vectorAttack, Quaternion.identity);
+        bullet.transform.RotateAround(bullet.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
+        bullet.GetComponent<ShootingBullet>().dir = vectorAttack;
+        bullet.GetComponent<ShootingBullet>().damageFactor = MissileAttackDamageFactor;
+        bullet.GetComponent<ShootingBullet>().speed = MissileAttackSpeed;
+    }
 
-            ableToMissile = false;
-            missileAttackTimer = 0f; // Start the missile attack timer
-        }
+    private void _OnPause(PauseEvent e)
+    {
+        this.enabled = false;
+    }
+
+    private void _OnResume(ResumeEvent e)
+    {
+        this.enabled = true;
     }
 }

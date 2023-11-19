@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1138608795440084916}
   - component: {fileID: 3745856171362228329}
   - component: {fileID: 7590022792697221594}
+  - component: {fileID: 3592218580484483553}
   m_Layer: 6
   m_Name: SampleFlyEnemy
   m_TagString: Enemy
@@ -260,6 +261,19 @@ MonoBehaviour:
   OnDone:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3592218580484483553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2994935649063905116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1895d91d1dc964347ab4d5a35d7a8753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitialMaxHealth: 1000
 --- !u!1001 &559057991277357390
 PrefabInstance:
   m_ObjectHideFlags: 0

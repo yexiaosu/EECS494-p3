@@ -8,13 +8,13 @@ public class PlayerMovement : MonoBehaviour
     public bool DashEnabled = false;
     public float DashCd = 1.0f;
 
-    private float moveSpeed = 5.0f;
+    private float moveSpeed = 3.5f;
     private float jumpForce = 10.2f;
     private bool canDoubleJump = false;
     private float jumpCast = .17f;
     private bool canDash = true;
     private bool isDashing = false;
-    private float dashingPower = 20.0f;
+    private float dashingPower = 25.0f;
     private float dashingTime = 0.2f;
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;

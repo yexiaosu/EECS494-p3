@@ -78,6 +78,7 @@ public class HealthSystemForDummies : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
+            CurrentHealth = 0;
             IsAlive = false;
             OnIsAliveChanged.Invoke(IsAlive);
         }

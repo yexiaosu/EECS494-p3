@@ -13,7 +13,7 @@ public class LevelUp : MonoBehaviour
     public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() , new MissileAttack(), new DoubleJump(), new Dash(), new Shield() };
 
     private UIManager UIManagerObject;
-    private int lastScore = -50;
+    private int lastScore = -100;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class LevelUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 50)
+        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100)
         {
             if (lastScore < 0)
                 LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";
@@ -46,7 +46,8 @@ public class LevelUp : MonoBehaviour
                 }
                 child.gameObject.SetActive(true);
                 child.gameObject.GetComponent<LevelUpChoice>().BigBoon = bigBoons[randomPos[i]];
-                child.GetChild(0).gameObject.GetComponent<TMP_Text>().text = bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
+                string levelPrefix = bigBoons[randomPos[i]].CanLevelUp ? "[Lv." + (bigBoons[randomPos[i]].CurrLevel + 1).ToString() + "] " : "";
+                child.GetChild(0).gameObject.GetComponent<TMP_Text>().text = levelPrefix + bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
                 i++;
             }
             LevelUpPanel.SetActive(true);

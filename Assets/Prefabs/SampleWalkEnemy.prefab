@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7378799214367883478}
   - component: {fileID: 6886937744512222296}
   - component: {fileID: 5459664860212572326}
+  - component: {fileID: 8559963467274108181}
   m_Layer: 6
   m_Name: SampleWalkEnemy
   m_TagString: Enemy
@@ -285,6 +286,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &8559963467274108181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974341857172255828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1895d91d1dc964347ab4d5a35d7a8753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3269200572137723868
 PrefabInstance:
   m_ObjectHideFlags: 0

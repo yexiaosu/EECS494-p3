@@ -25,16 +25,6 @@ public class AttackArea : MonoBehaviour
                     collision.GetComponent<Enemy>().Dead();
                 }
             }
-            // Check if the collided object is a BossEnemy
-            else if (collision.GetComponent<BossAI>() != null)
-            {
-                collision.GetComponent<BossAI>().GetMeleeHit();
-                health.AddToCurrentHealth(-damage);
-                if (health.CurrentHealth <= 0)
-                {
-                    collision.GetComponent<BossAI>().Dead();
-                }
-            }
         }
     }
 }

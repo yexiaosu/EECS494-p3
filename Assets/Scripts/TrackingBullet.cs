@@ -6,11 +6,15 @@ using UnityEngine;
 public class TrackingBullet : MonoBehaviour
 {
     public float speed = 3.0f;
-    public float damageFactor = 0.4f;
-    public Camera mainCamera;
+    public float damageFactor = 0.2f;
 
+    private Camera mainCamera;
     private GameObject minDisEnemy;
     private Rigidbody2D rb;
+    private Subscription<PauseEvent> pauseEventSubscription;
+    private Subscription<ResumeEvent> resumeEventSubscription;
+    private bool isPause = false;
+    private Vector2 recordSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +23,9 @@ public class TrackingBullet : MonoBehaviour
         FindCamera();
 
         FindClosestVisibleEnemy();
+
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
 
 
@@ -77,6 +84,9 @@ public class TrackingBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPause)
+            return;
+
         if (minDisEnemy == null)
         {
             FindClosestVisibleEnemy();
@@ -101,18 +111,27 @@ public class TrackingBullet : MonoBehaviour
         {
             int amount = Mathf.FloorToInt(GameObject.Find("Player").GetComponent<Player>().attack * damageFactor);
             gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
-            collision.GetComponent<Enemy>().GetProjectileHit(sender.transform.position);
-            gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
+            if (collision.GetComponent<Enemy>() != null)
+                collision.GetComponent<Enemy>().GetProjectileHit(sender.transform.position);
+            if (collision.GetComponent<KnockBack>() != null)
+                gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
             if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
                 gameObject.GetComponent<Enemy>().Dead();
             Destroy(sender);
         }
         else if (gameObject.GetComponent<Platform>() != null)
             Destroy(sender);
+    }
 
-        {
+    private void _OnPause(PauseEvent e)
+    {
+        isPause = true;
+        recordSpeed = rb.velocity;
+    }
 
-
-        }
+    private void _OnResume(ResumeEvent e)
+    {
+        isPause = false;
+        rb.velocity = recordSpeed;
     }
 }

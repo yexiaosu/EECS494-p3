@@ -173,7 +173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  damageFactor: 0.5
+  damageFactor: 0.2
+  mainCamera: {fileID: 0}
 --- !u!95 &7804991144444181696
 Animator:
   serializedVersion: 5
