@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 29709586864878453}
   - component: {fileID: 3231520532811617133}
   - component: {fileID: 7988884038942632833}
-  - component: {fileID: 3860143503023965364}
   - component: {fileID: 3164045614614470806}
   - component: {fileID: 6561939709578106502}
   m_Layer: 6
@@ -249,25 +248,6 @@ MonoBehaviour:
   rangedAttackCooldown: 3
   rushSpeed: 16
   bossRoomStage2Prefab: {fileID: 3046328759814843388, guid: 89ec6a431e31637448a56686440d9ecb, type: 3}
---- !u!114 &3860143503023965364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2785121329801479360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2d7586bf85a24661bc49593f00f0ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isStunned: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  speed: 2
-  maxDirectionChangeTime: 0.5
-  minDirectionChangeTime: 2
 --- !u!114 &3164045614614470806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -947,9 +927,59 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 3840057970605024287}
+    m_ColliderPaths:
+    - - X: 20000000
+        Y: 140000000
+      - X: -20000000
+        Y: 140000000
+      - X: -20000000
+        Y: 130000000
+      - X: 20000000
+        Y: 130000000
+    - - X: 70000000
+        Y: 110000000
+      - X: 30000000
+        Y: 110000000
+      - X: 30000000
+        Y: 100000000
+      - X: 70000000
+        Y: 100000000
+    - - X: -30000000
+        Y: 110000000
+      - X: -70000000
+        Y: 110000000
+      - X: -70000000
+        Y: 100000000
+      - X: -30000000
+        Y: 100000000
+    - - X: 90000000
+        Y: 70000000
+      - X: -90000000
+        Y: 70000000
+      - X: -90000000
+        Y: 60000000
+      - X: 90000000
+        Y: 60000000
   m_CompositePaths:
-    m_Paths: []
+    m_Paths:
+    - - {x: 1.9999708, y: 13}
+      - {x: 1.9999708, y: 14}
+      - {x: -2, y: 13.999971}
+      - {x: -1.9999708, y: 13}
+    - - {x: 6.9999704, y: 10}
+      - {x: 6.9999704, y: 11}
+      - {x: 3, y: 10.99997}
+      - {x: 3.0000293, y: 10}
+    - - {x: -3.0000293, y: 10}
+      - {x: -3.0000293, y: 11}
+      - {x: -7, y: 10.99997}
+      - {x: -6.9999704, y: 10}
+    - - {x: 8.99997, y: 6}
+      - {x: 8.99997, y: 7}
+      - {x: -9, y: 6.9999704}
+      - {x: -8.99997, y: 6}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0

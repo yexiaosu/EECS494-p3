@@ -40,6 +40,7 @@ public class BossAI : MonoBehaviour
     private bool isTransforming = false; // To control the transformation process
     public GameObject bossRoomStage2Prefab; // Assign this in the Inspector
     private GameObject roomGrid; // Assign or find this in Start()
+    private bool transformationTriggered = false;
 
 
     void Start()
@@ -110,8 +111,9 @@ public class BossAI : MonoBehaviour
         {
             currentState = BossState.Dead;
         }
-        else if (healthSystem.CurrentHealthPercentage <= 50 && !isTransforming)
+        else if (healthSystem.CurrentHealthPercentage <= 50 && !transformationTriggered)
         {
+            transformationTriggered = true; // Set the flag
             StartCoroutine(TransformAndDestroyPlatforms());
         }
         else if (healthSystem.CurrentHealthPercentage <= 20 && !isEnraged)
@@ -123,17 +125,34 @@ public class BossAI : MonoBehaviour
     IEnumerator TransformAndDestroyPlatforms()
     {
         isTransforming = true;
-
-        // Stop moving and delete the Boss Room
         currentState = BossState.Idle;
-        Destroy(GameObject.Find("Boss Room"));
+
+        // Move to x = 0, y += 3.5
+        Vector3 initialTargetPosition = new Vector3(0, transform.position.y + 3.5f, transform.position.z);
+        float elapsedTime = 0;
+        while (elapsedTime < 3f)
+        {
+            transform.position = Vector3.Lerp(transform.position, initialTargetPosition, (elapsedTime / 3f));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        foreach (Transform child in roomGrid.transform)
+        {
+            if (child.name.Contains("Boss Room"))
+            {
+                Destroy(child.gameObject);
+                break; // Exit the loop once the boss room is found and destroyed
+            }
+        }
 
         // Instantiate Boss Room Stage 2
-        GameObject bossRoomStage2 = Instantiate(bossRoomStage2Prefab, roomGrid.transform);
+        Vector3 spawnPosition = new Vector3(0f, playerTransform.position.y - 10, playerTransform.position.z);
+        Instantiate(bossRoomStage2Prefab, spawnPosition, Quaternion.identity, roomGrid.transform);
 
         // Move enemies to the Enemies parent object
         GameObject enemiesParent = GameObject.Find("Enemies");
-        foreach (Transform child in bossRoomStage2.transform)
+        foreach (Transform child in bossRoomStage2Prefab.transform)
         {
             if (child.GetComponent<Enemy>() != null)
             {
@@ -141,27 +160,9 @@ public class BossAI : MonoBehaviour
             }
         }
 
-        // Wait for all enemies to be defeated
-        yield return new WaitUntil(() => AreAllEnemiesDefeated(enemiesParent));
-
-        // Move back down and resume attacking
-        Vector3 targetPosition = new Vector3(transform.position.x, 0, transform.position.z);
-        float elapsedTime = 0;
-        while (elapsedTime < 3f)
-        {
-            transform.position = Vector3.Lerp(transform.position, targetPosition, (elapsedTime / 3f));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
+        yield return new WaitForSeconds(10f);
+        currentState = BossState.Walking;
         isTransforming = false;
-        currentState = BossState.Idle;
-    }
-
-    private bool AreAllEnemiesDefeated(GameObject enemiesParent)
-    {
-        // Check if there are any Enemy components under the enemiesParent
-        return enemiesParent.GetComponentsInChildren<Enemy>().Length == 0;
     }
 
 
