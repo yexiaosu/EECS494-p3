@@ -6,9 +6,9 @@ using UnityEngine;
 public class TrackingBullet : MonoBehaviour
 {
     public float speed = 3.0f;
-    public float damageFactor = 0.4f;
-    public Camera mainCamera;
+    public float damageFactor = 0.2f;
 
+    private Camera mainCamera;
     private GameObject minDisEnemy;
     private Rigidbody2D rb;
 

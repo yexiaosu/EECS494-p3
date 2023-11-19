@@ -47,9 +47,9 @@ public class RangedProjectiles : BigBoon
                 playerAttack.ProjectileCd -= 0.3f;
                 return;
             }
-            else if (playerAttack.ProjectileSpeed < 4.0f)
+            else if (playerAttack.ProjectileSpeed < 2.0f)
             {
-                playerAttack.ProjectileSpeed += 0.4f;
+                playerAttack.ProjectileSpeed += 0.2f;
                 return;
             }
             else
