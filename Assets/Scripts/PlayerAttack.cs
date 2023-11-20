@@ -18,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
     public float ShootCd = 3.0f;
     public float MissileAttackSpeed = 5.0f;
     public float MissileAttackDamageFactor = 1.0f;
+    public GameObject MissileAttackIcon;
     // meele attack
     private GameObject meeleAttackArea = default;
     private bool meeleAttacking = false;
@@ -37,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
         meeleAttackArea = transform.GetChild(0).gameObject;
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
+        MissileAttackIcon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -65,13 +67,19 @@ public class PlayerAttack : MonoBehaviour
         {
             timerMissileAttack += Time.deltaTime;
             if (timerMissileAttack > ShootCd)
+            {
                 ableToMissile = true;
+                MissileAttackIcon.transform.GetChild(1).gameObject.SetActive(false);
+            }
         }
         if (Input.GetKeyDown(KeyCode.Mouse1) && ableToMissile)
         {
             Shoot(vectorAttack);
             timerMissileAttack = 0;
             ableToMissile = false;
+            GameObject coolDown = MissileAttackIcon.transform.GetChild(1).gameObject;
+            coolDown.SetActive(true);
+            coolDown.GetComponent<Animator>().speed = 4.0f / ShootCd;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0) && !meeleAttacking)
         {

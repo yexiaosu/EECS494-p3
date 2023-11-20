@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerShield : MonoBehaviour
 {
     public GameObject Shield;
-    public float ReGeneratedCd = 2.0f;
+    public float ReGeneratedCd = 4.0f;
     public int MaxShieldTimes = 1;
     public bool ShieldEnabled = false;
+    public GameObject ShieldIcon;
 
     private Subscription<ShieldBrokenEvent> shieldBrokenEventSubscription;
     private float timer = 0;
@@ -18,6 +19,7 @@ public class PlayerShield : MonoBehaviour
     {
         shieldBrokenEventSubscription = EventBus.Subscribe<ShieldBrokenEvent>(_OnShieldBroken);
         Shield.SetActive(false);
+        ShieldIcon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,6 +31,7 @@ public class PlayerShield : MonoBehaviour
             if (timer > ReGeneratedCd)
             {
                 Shield.SetActive(true);
+                ShieldIcon.transform.GetChild(1).gameObject.SetActive(false);
                 EventBus.Publish<ShieldRecoverEvent>(new ShieldRecoverEvent());
                 timer = 0;
                 isTimerStart = false;
@@ -40,6 +43,9 @@ public class PlayerShield : MonoBehaviour
     {
         isTimerStart = true;
         Shield.SetActive(false);
+        GameObject coolDown = ShieldIcon.transform.GetChild(1).gameObject;
+        coolDown.SetActive(true);
+        coolDown.GetComponent<Animator>().speed = 4.0f / ReGeneratedCd;
     }
 }
 

@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public bool DoubleJumpEnabled = false;
     public bool DashEnabled = false;
     public float DashCd = 1.0f;
+    public GameObject DashIcon;
 
     private float moveSpeed = 3.5f;
     private float jumpForce = 10.2f;
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         tr = GetComponent<TrailRenderer>();
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
+        DashIcon.SetActive(false);
     }
 
     void Update()
@@ -77,6 +79,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && canDash && DashEnabled)
         {
             StartCoroutine(Dash(new Vector2(rb.velocity.x, 0).normalized));
+            GameObject coolDown = DashIcon.transform.GetChild(1).gameObject;
+            coolDown.SetActive(true);
+            coolDown.GetComponent<Animator>().speed = 4.0f / DashCd;
         }
     }
 
@@ -126,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(DashCd);
         canDash = true;
+        DashIcon.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     private void _OnPause(PauseEvent e)
