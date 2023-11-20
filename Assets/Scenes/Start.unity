@@ -1123,8 +1123,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Smile is a slime who is curious about the sky. One day, it gets a chance
-    to reach the sky by jumping higher and higher through platforms. What advantures
-    await it ahead?
+    to reach the sky by jumping higher and higher through platforms. What adventures
+    await ahead?
 --- !u!222 &751096146
 CanvasRenderer:
   m_ObjectHideFlags: 0
