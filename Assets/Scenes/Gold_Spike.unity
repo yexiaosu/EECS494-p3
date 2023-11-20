@@ -4365,7 +4365,7 @@ Rigidbody2D:
     m_Bits: 512
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1197629354
 MonoBehaviour:
@@ -4596,6 +4596,7 @@ MonoBehaviour:
   MissileAttackSpeed: 5
   MissileAttackDamageFactor: 1
   MissileAttackIcon: {fileID: 510523166}
+  StompEnabled: 0
 --- !u!114 &1197629362
 MonoBehaviour:
   m_ObjectHideFlags: 0

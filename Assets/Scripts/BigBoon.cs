@@ -131,7 +131,7 @@ public class Dash : BigBoon
     public Dash()
     {
         Name = "Dash";
-        Description = "Get the ability to dash to left or right.";
+        Description = "Get the ability to dash to left or right. Left Shift to dash.";
         CanLevelUp = false;
     }
 
@@ -194,5 +194,28 @@ public class Shield : BigBoon
                 }
             }
         }
+    }
+}
+
+public class Stomp : BigBoon
+{
+    public Stomp()
+    {
+        Name = "Stomp";
+        Description = "Get the ability to stomp down on enemies.";
+        CanLevelUp = false;
+    }
+
+    public override void GetBoon()
+    {
+        GameObject player = GameObject.Find("Player");
+        player.GetComponent<PlayerAttack>().StompEnabled = true;
+        if (CanLevelUp)
+            CurrLevel++;
+    }
+
+    public override void LevelUpBoon()
+    {
+        return;
     }
 }
