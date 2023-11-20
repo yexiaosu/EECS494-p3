@@ -32,8 +32,10 @@ public abstract class EnemyMovement : MonoBehaviour
         if (isStunned)
             yield break;
         isStunned = true;
+        enabled = false;
         yield return new WaitForSeconds(waitTime);
         isStunned = false;
+        enabled = true;
     }
 
     protected abstract Vector2 GetInput(Vector2 rawInput);

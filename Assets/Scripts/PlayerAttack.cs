@@ -28,6 +28,9 @@ public class PlayerAttack : MonoBehaviour
     private bool canStomp = true;
     private bool isStomping = false;
     private float stompingPower = 25.0f;
+    public float radius = 1.0f;
+    public float stompingDamageForce = 15.0f;
+    public GameObject StompAnimation;
 
     private bool ableToMissile = false;
     private float timerMeeleAttack = 0f;
@@ -70,6 +73,9 @@ public class PlayerAttack : MonoBehaviour
             GetComponent<Player>().IsInvincible = false;
             canStomp = true;
             GetComponent<PlayerMovement>().enabled = true;
+            StompDamage(new Vector2(transform.position.x, transform.position.y - transform.lossyScale.y / 2));
+            StompAnimation.SetActive(true);
+            StartCoroutine(SetAnimation());
         }
 
         if (ProjectileEnabled)
@@ -104,7 +110,7 @@ public class PlayerAttack : MonoBehaviour
         {
             MeeleAttack(vectorAttack);
         }
-        if (Input.GetKey(KeyCode.S) && canStomp && StompEnabled)
+        if (Input.GetKey(KeyCode.S) && canStomp && StompEnabled && !GetComponent<PlayerMovement>().GetIsGrounded())
         {
             Stomp();
         }
@@ -167,5 +173,33 @@ public class PlayerAttack : MonoBehaviour
         tr.emitting = true;
         GetComponent<Player>().IsInvincible = true;
         GetComponent<PlayerMovement>().enabled = false;
+    }
+
+    private void StompDamage(Vector2 pos)
+    {
+        GameObject enemyManager = GameObject.Find("Enemies");
+
+        foreach (Transform child in enemyManager.transform)
+        {
+            if (Vector2.Distance(pos, child.position) < radius)
+            {
+                Vector2 dir = (new Vector2(child.position.x, child.position.y) - pos).normalized;
+                child.gameObject.GetComponent<EnemyMovement>().Stun(0.1f);
+                child.gameObject.GetComponent<Rigidbody2D>().AddForce(dir * stompingDamageForce, ForceMode2D.Impulse);
+                HealthSystemForDummies health = child.gameObject.GetComponent<HealthSystemForDummies>();
+                int damage = GetComponent<Player>().attack;
+                health.AddToCurrentHealth(-damage);
+                if (health.CurrentHealth <= 0)
+                {
+                    child.GetComponent<Enemy>().Dead();
+                }
+            }
+        }
+    }
+
+    private IEnumerator SetAnimation()
+    {
+        yield return new WaitForSeconds(0.5f);
+        StompAnimation.SetActive(false);
     }
 }
