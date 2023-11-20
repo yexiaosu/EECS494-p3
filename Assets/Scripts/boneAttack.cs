@@ -42,7 +42,7 @@ public class boneAttack : MonoBehaviour
             Vector3 directionToPlayer = playerTransform.position - transform.position;
             float distanceToPlayer = directionToPlayer.magnitude;
 
-            if (distanceToPlayer <= 20f)
+            if (distanceToPlayer <= 15f)
             {
                 directionToPlayer.Normalize();
 
