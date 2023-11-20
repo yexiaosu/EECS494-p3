@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6886937744512222296}
   - component: {fileID: 5459664860212572326}
   - component: {fileID: 8559963467274108181}
+  - component: {fileID: 5640724924724446069}
   m_Layer: 6
   m_Name: SampleWalkEnemy
   m_TagString: Enemy
@@ -299,6 +300,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitialMaxHealth: 1000
+--- !u!114 &5640724924724446069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974341857172255828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964c41bffd58a354091913bcfd547845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotatingPrefab: {fileID: 6558527954570519300, guid: a1c06effcf9b8f340adb5e8a546601de, type: 3}
+  playerTransform: {fileID: 0}
+  spawnCooldown: 3.5
 --- !u!1001 &3269200572137723868
 PrefabInstance:
   m_ObjectHideFlags: 0
