@@ -8,6 +8,8 @@ public class boneAttack : MonoBehaviour
     private Transform playerTransform; // Assign the player's transform in the Inspector
     public float spawnCooldown = 3.5f; // Time between spawns
     private float spawnTimer = 0f;
+    private Subscription<PauseEvent> pauseEventSubscription;
+    private Subscription<ResumeEvent> resumeEventSubscription;
 
     void Start()
     {
@@ -17,6 +19,8 @@ public class boneAttack : MonoBehaviour
         {
             Debug.LogError("Player not found!");
         }
+        pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
+        resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
     }
     void Update()
     {
@@ -61,5 +65,15 @@ public class boneAttack : MonoBehaviour
         {
             Debug.LogError("Prefab or player transform not assigned!");
         }
-        }
     }
+
+    private void _OnPause(PauseEvent e)
+    {
+        enabled = false;
+    }
+
+    private void _OnResume(ResumeEvent e)
+    {
+        enabled = true;
+    }
+}
