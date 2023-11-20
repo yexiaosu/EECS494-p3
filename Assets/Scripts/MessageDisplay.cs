@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MessageDisplay: MonoBehaviour
 {
-    public Text UIManagerText; 
+    public Text UIManagerText;
     private UIManager UIManagerObject;
     public GameObject panel; // The UI text component to display the message
     public GameObject death;
@@ -25,7 +25,7 @@ public class MessageDisplay: MonoBehaviour
         if (hasDisplayedMessage && Input.GetKeyDown(KeyCode.Space))
         {
             // Reload the current scene
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("Start");
         }
     }
 
@@ -35,7 +35,10 @@ public class MessageDisplay: MonoBehaviour
         panel.SetActive(true);
         death.SetActive(false);
         if (type == "death")
+        {
             death.SetActive(true);
+            death.GetComponent<Text>().text = "You are dead!\nYou get score of: " + UIManagerObject.GetScore().ToString() + " \nSpace to restart!";
+        }
         hasDisplayedMessage = true;
     }
 }

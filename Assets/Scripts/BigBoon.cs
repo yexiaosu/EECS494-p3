@@ -202,7 +202,7 @@ public class Stomp : BigBoon
     public Stomp()
     {
         Name = "Stomp";
-        Description = "Get the ability to stomp down on enemies.";
+        Description = "Get the ability to use 'S' to stomp down on enemies.";
         CanLevelUp = false;
     }
 
