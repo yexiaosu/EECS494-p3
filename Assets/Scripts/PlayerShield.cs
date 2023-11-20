@@ -43,9 +43,18 @@ public class PlayerShield : MonoBehaviour
     {
         isTimerStart = true;
         Shield.SetActive(false);
+        StartCoroutine(SetInvincible());
         GameObject coolDown = ShieldIcon.transform.GetChild(1).gameObject;
         coolDown.SetActive(true);
         coolDown.GetComponent<Animator>().speed = 4.0f / ReGeneratedCd;
+    }
+
+    private IEnumerator SetInvincible()
+    {
+        Player player = GetComponent<Player>();
+        player.IsInvincible = true;
+        yield return new WaitForSeconds(0.5f);
+        player.IsInvincible = false;
     }
 }
 

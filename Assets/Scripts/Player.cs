@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int attack = 500;
+    public bool IsInvincible = false;
 
     public void Dead()
     {

@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float DashCd = 1.0f;
     public GameObject DashIcon;
 
-    private float moveSpeed = 3.5f;
+    private float moveSpeed = 4.0f;
     private float jumpForce = 10.2f;
     private bool canDoubleJump = false;
     private float jumpCast = .17f;
@@ -131,10 +131,13 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0;
         rb.velocity = dir * dashingPower;
         tr.emitting = true;
+        Player player = GetComponent<Player>();
+        player.IsInvincible = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
         rb.gravityScale = originalGravity;
         isDashing = false;
+        player.IsInvincible = false;
         yield return new WaitForSeconds(DashCd);
         canDash = true;
         DashIcon.transform.GetChild(1).gameObject.SetActive(false);
