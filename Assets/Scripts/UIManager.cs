@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
     private void UpdateScoreAndLevelText()
     {
         int displayScore = Mathf.Max(0, Mathf.FloorToInt(highestYValue));
-        scoreAndLevelText.text = $"Score: {displayScore - 9}"; // Assuming you want to start scoring from 0
+        scoreAndLevelText.text = $"Score: {displayScore - 6}"; // Assuming you want to start scoring from 0
     }
 
     // Public getter for the score

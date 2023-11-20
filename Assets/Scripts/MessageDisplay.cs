@@ -14,6 +14,7 @@ public class MessageDisplay: MonoBehaviour
     void Start()
     {
         // Assuming the LevelUpManager script is attached to the player object
+        GameObject UIManagerText = GameObject.Find("UIText");
         UIManagerObject = UIManagerText.GetComponent<UIManager>();
 
         // Initially hide the message
