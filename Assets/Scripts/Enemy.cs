@@ -96,7 +96,18 @@ public class Enemy : MonoBehaviour
     {
         if (!hasDied)
         {
-            EventBus.Publish<EnemyDeadEvent>(new EnemyDeadEvent(gameObject));
+            // Check if the GameObject's name contains 'Boss'
+            if (gameObject.name.ToLower().Contains("boss"))
+            {
+                // If the enemy is a boss, publish BossKilledEvent
+                EventBus.Publish(new BossKilledEvent());
+            }
+            else
+            {
+                // If the enemy is not a boss, publish EnemyDeadEvent
+                EventBus.Publish(new EnemyDeadEvent(gameObject));
+            }
+
             GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             if (collectiblePrefabs.Length > 0)
             {
@@ -111,6 +122,10 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject, 0.2f);
     }
 
+
+
+
+
     private void SpawnCollectible(GameObject collectible, Vector3 pos)
     {
         Instantiate(collectible, pos, Quaternion.identity);
@@ -119,6 +134,12 @@ public class Enemy : MonoBehaviour
 
 public class EnemyDeadEvent
 {
-    GameObject enemy;
-    public EnemyDeadEvent(GameObject _enemy) { enemy = _enemy; }
+    public GameObject Enemy { get; private set; }
+
+    public EnemyDeadEvent(GameObject enemy)
+    {
+        Enemy = enemy;
+    }
 }
+
+

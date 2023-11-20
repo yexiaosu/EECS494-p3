@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ba25b9d98ea41b1a221ac96f413e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: -150
+  amount: -100
 --- !u!114 &7988884038942632833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,8 +243,8 @@ MonoBehaviour:
   projectileHitEffect: {fileID: 4630442315206089233, guid: 5e7d5732b1fe74731b5bcfb1424b13c3, type: 3}
   missileHitEffect: {fileID: 1806077149544477206, guid: 15f285dc843ab400ca140f3a4e0c50c2, type: 3}
   moveSpeed: 3
-  attackRange: 5
-  meleeAttackCooldown: 2
+  attackRange: 1
+  meleeAttackCooldown: 0.2
   rangedAttackCooldown: 3
   rushSpeed: 16
   bossRoomStage2Prefab: {fileID: 3046328759814843388, guid: 89ec6a431e31637448a56686440d9ecb, type: 3}
@@ -924,7 +924,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:

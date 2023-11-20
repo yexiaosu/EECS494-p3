@@ -14,23 +14,19 @@ public class Damage : MonoBehaviour
 
         if (gameObject.CompareTag("Player"))
         {
-            // player jump on the enemy's head
-            if (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + sender.transform.lossyScale.y / 2)
+            Spike spikeComponent = sender.GetComponent<Spike>();
+
+            // Check for Spike component
+            if (spikeComponent != null ||
+                (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + sender.transform.lossyScale.y / 2))
             {
-                HealthSystemForDummies health = sender.GetComponent<HealthSystemForDummies>();
-                int damage = GameObject.Find("Player").GetComponent<Player>().attack;
-                health.AddToCurrentHealth(-damage);
-                if (health.CurrentHealth <= 0)
-                {
-                    sender.GetComponent<Enemy>().Dead();
-                }
-                gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
+                ApplyDamageToPlayer(gameObject);
             }
             else
             {
                 if (gameObject.GetComponent<Player>().IsInvincible)
                     return;
-                gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(Mathf.Round((amount * (gameObject.transform.position.y / 100))+amount));
+                gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(Mathf.Round((amount * (gameObject.transform.position.y / 100)) + amount));
                 gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
                 gameObject.GetComponent<Animator>().SetBool("Hit", true);
                 StartCoroutine(SetAnimation(gameObject.GetComponent<Animator>()));
@@ -47,17 +43,13 @@ public class Damage : MonoBehaviour
 
         if (gameObject.CompareTag("Player"))
         {
-            // player jump on the enemy's head
-            if (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + sender.transform.lossyScale.y / 2)
+            Spike spikeComponent = sender.GetComponent<Spike>();
+
+            // Check for Spike component
+            if (spikeComponent != null ||
+                (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + sender.transform.lossyScale.y / 2))
             {
-                HealthSystemForDummies health = sender.GetComponent<HealthSystemForDummies>();
-                int damage = GameObject.Find("Player").GetComponent<Player>().attack;
-                health.AddToCurrentHealth(-damage);
-                if (health.CurrentHealth <= 0)
-                {
-                    sender.GetComponent<Enemy>().Dead();
-                }
-                gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
+                ApplyDamageToPlayer(gameObject);
             }
             else
             {
@@ -71,6 +63,18 @@ public class Damage : MonoBehaviour
                     gameObject.GetComponent<Player>().Dead();
             }
         }
+    }
+
+    private void ApplyDamageToPlayer(GameObject player)
+    {
+        if (player.GetComponent<Player>().IsInvincible)
+            return;
+        player.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(amount);
+        player.GetComponent<KnockBack>().PlayFeedback(this.gameObject);
+        player.GetComponent<Animator>().SetBool("Hit", true);
+        StartCoroutine(SetAnimation(player.GetComponent<Animator>()));
+        if (player.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
+            player.GetComponent<Player>().Dead();
     }
 
     private IEnumerator SetAnimation(Animator animator)

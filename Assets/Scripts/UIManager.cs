@@ -5,9 +5,10 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; } // Singleton pattern
     public Text scoreAndLevelText;
-    public Transform playerTransform;
+    private Transform playerTransform;
     private float highestYValue = 0f;
     private int nextShopSpawnThreshold = 200; // Initial threshold for spawning the item shop
+    public int scoreOffset = 0;
 
     private void Awake()
     {
@@ -23,6 +24,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerTransform = player.transform;
+
         if (playerTransform == null)
         {
             Debug.LogError("Player Transform is not assigned in UIManager!");
@@ -38,9 +42,9 @@ public class UIManager : MonoBehaviour
         // Check the current Y value of the player
         float currentY = playerTransform.position.y;
 
-        if (currentY > highestYValue)
+        if (currentY + scoreOffset > highestYValue)
         {
-            highestYValue = currentY;
+            highestYValue = currentY + scoreOffset;
             UpdateScoreAndLevelText();
 
             // Check if the player has reached a new shop spawn threshold
@@ -65,6 +69,11 @@ public class UIManager : MonoBehaviour
     public int GetScore()
     {
         return Mathf.Max(0, Mathf.FloorToInt(highestYValue));
+    }
+
+    public void ChangeOffset(int i)
+    {
+        scoreOffset += i;
     }
 }
 

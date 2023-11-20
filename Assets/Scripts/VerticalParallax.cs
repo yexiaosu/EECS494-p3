@@ -4,24 +4,23 @@ public class VerticalParallax : MonoBehaviour
 {
     public Transform cameraTransform;
     public float parallaxEffectMultiplier;
+    public float smoothness = 10f; // Adjust this value to control the movement speed
 
-    private float startPosition;
-    private float length;
+    private float lastCameraY;
 
     void Start()
     {
-        startPosition = transform.position.y;
-        length = GetComponent<SpriteRenderer>().bounds.size.y;
+        lastCameraY = cameraTransform.position.y;
     }
 
     void LateUpdate()
     {
-        float temp = (cameraTransform.position.y * (1 - parallaxEffectMultiplier));
-        float dist = (cameraTransform.position.y * parallaxEffectMultiplier);
+        float deltaY = (cameraTransform.position.y - lastCameraY) * parallaxEffectMultiplier;
+        Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y + deltaY, transform.position.z);
 
-        transform.position = new Vector3(transform.position.x, startPosition + dist, transform.position.z);
+        // Interpolate towards the target position
+        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothness * Time.deltaTime);
 
-        if (temp > startPosition + length) startPosition += length;
-        else if (temp < startPosition - length) startPosition -= length;
+        lastCameraY = cameraTransform.position.y;
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraTracking : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
     public Vector3 offset;
 
     [Tooltip("Higher values make the camera follow the player more quickly.")]
@@ -17,6 +17,17 @@ public class CameraTracking : MonoBehaviour
     {
         // Get the camera component
         cam = GetComponent<Camera>();
+
+        // Find the player GameObject by tag and get its transform
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("Player not found. Ensure the player GameObject is tagged as 'Player'.");
+        }
     }
 
     void LateUpdate()

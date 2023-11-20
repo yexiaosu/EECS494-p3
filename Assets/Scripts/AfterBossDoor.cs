@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AfterBossDoor : MonoBehaviour
 {
@@ -14,42 +15,11 @@ public class AfterBossDoor : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            TeleportPlayer();
-            SpawnAfterBossPlatform();
-            ResetRoomManager();
+
+            SceneManager.LoadScene("Level_2");
+
         }
     }
 
-    private void TeleportPlayer()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            player.transform.position = new Vector3(0, player.transform.position.y + 15f, 0);
-        }
-    }
-    private void SpawnAfterBossPlatform()
-    {
-        GameObject roomGridObject = GameObject.Find("Room Grid");
-        if (afterBossPlatformPrefab != null && roomGridObject != null)
-        {
-            Transform roomGridTransform = roomGridObject.transform;
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            GameObject afterBossPlatform = Instantiate(afterBossPlatformPrefab, new Vector3(0, player.transform.position.y - 10f, 0), Quaternion.identity);
-            afterBossPlatform.transform.SetParent(roomGridTransform, false); // Set the parent to Room Grid
-        }
-        else
-        {
-            Debug.LogError("After Boss Platform Prefab or Room Grid is not set.");
-        }
-    }
-
-
-    private void ResetRoomManager()
-    {
-        if (roomManager != null)
-        {
-            roomManager.ResetRoomCount(); // Reset the room count and enable room spawning
-        }
-    }
+    
 }

@@ -265,6 +265,8 @@ Transform:
   m_Children:
   - {fileID: 7085419950259062793}
   - {fileID: 1112114728197144157}
+  - {fileID: 8204094457739890123}
+  - {fileID: 7534082473172240199}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &5524267651288946317
@@ -605,10 +607,148 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 67406002286014920}
+    m_ColliderPaths:
+    - - X: 30000000
+        Y: 110000000
+      - X: -30000000
+        Y: 110000000
+      - X: -30000000
+        Y: 100000000
+      - X: 30000000
+        Y: 100000000
   m_CompositePaths:
-    m_Paths: []
+    m_Paths:
+    - - {x: 2.999971, y: 10}
+      - {x: 2.999971, y: 11}
+      - {x: -3, y: 10.99997}
+      - {x: -2.999971, y: 10}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 8187529809649727624}
+--- !u!1001 &7476943729302577092
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7090176163471695532}
+    m_Modifications:
+    - target: {fileID: 1483790374611084749, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_Name
+      value: Pickup (Health)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.0427737
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.049718
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+--- !u!4 &8204094457739890123 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+  m_PrefabInstance: {fileID: 7476943729302577092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9121984779792799048
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7090176163471695532}
+    m_Modifications:
+    - target: {fileID: 1483790374611084749, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_Name
+      value: Pickup (Health) (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.4762921
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.114276
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+--- !u!4 &7534082473172240199 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1592511494325293583, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+  m_PrefabInstance: {fileID: 9121984779792799048}
+  m_PrefabAsset: {fileID: 0}

@@ -7,6 +7,10 @@ public class Player : MonoBehaviour
     public int attack = 500;
     public bool IsInvincible = false;
 
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     public void Dead()
     {
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;

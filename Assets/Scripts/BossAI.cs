@@ -6,10 +6,6 @@ public class BossAI : MonoBehaviour
     public enum BossState { Idle, Walking, Attacking, Damaged, Dead }
     public BossState currentState = BossState.Idle;
 
-    public GameObject meleeHitEffect;
-    public GameObject projectileHitEffect;
-    public GameObject missileHitEffect;
-
     private Transform playerTransform; // Assign the player's transform here
     public float moveSpeed = 3.0f;
     public float attackRange = 5.0f;
@@ -24,17 +20,7 @@ public class BossAI : MonoBehaviour
     private float invulnerabilityTime = 1.0f;
     private float lastDamageTime;
 
-    private GameObject meleeHitEffectObject;
-    private GameObject projectileHitEffectObject;
-    private GameObject missileHitEffectObject;
-
     private float timeToAttack = 0.25f;
-    private bool isPlayingMeleeHitEffect = false;
-    private bool isPlayingProjectileHitEffect = false;
-    private bool isPlayingMissileHitEffect = false;
-    private float timerMeleeAttack = 0;
-    private float timerProjectileAttack = 0;
-    private float timerMissileAttack = 0;
 
     public float rushSpeed = 16.0f;
     private bool isTransforming = false; // To control the transformation process
@@ -58,18 +44,7 @@ public class BossAI : MonoBehaviour
         healthSystem = GetComponent<HealthSystemForDummies>();
         roomGrid = GameObject.Find("Room Grid");
 
-        // Instantiate effect objects
-        meleeHitEffectObject = Instantiate(meleeHitEffect, transform.position + new Vector3(0.4f, 0.3f, 0), Quaternion.identity);
-        meleeHitEffectObject.transform.parent = transform;
-        meleeHitEffectObject.SetActive(false);
-
-        projectileHitEffectObject = Instantiate(projectileHitEffect, transform.position, Quaternion.identity);
-        projectileHitEffectObject.transform.parent = transform;
-        projectileHitEffectObject.SetActive(false);
-
-        missileHitEffectObject = Instantiate(missileHitEffect, transform.position, Quaternion.identity);
-        missileHitEffectObject.transform.parent = transform;
-        missileHitEffectObject.SetActive(false);
+        
     }
 
     void Update()
@@ -102,7 +77,6 @@ public class BossAI : MonoBehaviour
                 break;
         }
 
-        UpdateHitEffects();
     }
 
     void CheckHealth()
@@ -160,10 +134,14 @@ public class BossAI : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(10f);
+        // Teleport boss to new position above the player
+        Vector3 teleportPosition = new Vector3(0f, playerTransform.position.y + 20f, transform.position.z);
+        transform.position = teleportPosition;
+
         currentState = BossState.Walking;
         isTransforming = false;
     }
+
 
 
     void EnterPhaseTwo()
@@ -250,69 +228,11 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    // Methods for handling different types of hits
-    public void GetMeleeHit()
-    {
-        meleeHitEffectObject.SetActive(true);
-        isPlayingMeleeHitEffect = true;
-    }
-
-    public void GetProjectileHit(Vector3 attackPos)
-    {
-        projectileHitEffectObject.SetActive(true);
-        projectileHitEffectObject.transform.position = attackPos;
-        isPlayingProjectileHitEffect = true;
-    }
-
-    public void GetMissileHit(Vector3 vectorAttack, Vector3 attackPos)
-    {
-        missileHitEffectObject.SetActive(true);
-        missileHitEffectObject.transform.position = attackPos;
-        missileHitEffectObject.transform.rotation = Quaternion.identity;
-        missileHitEffectObject.transform.RotateAround(missileHitEffectObject.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(-vectorAttack.y, -vectorAttack.x) * Mathf.Rad2Deg);
-        isPlayingMissileHitEffect = true;
-    }
-
-    void UpdateHitEffects()
-    {
-        if (isPlayingMeleeHitEffect)
-        {
-            timerMeleeAttack += Time.deltaTime;
-            if (timerMeleeAttack >= timeToAttack)
-            {
-                timerMeleeAttack = 0f;
-                isPlayingMeleeHitEffect = false;
-                meleeHitEffectObject.SetActive(false);
-            }
-        }
-
-        if (isPlayingProjectileHitEffect)
-        {
-            timerProjectileAttack += Time.deltaTime;
-            if (timerProjectileAttack >= timeToAttack)
-            {
-                timerProjectileAttack = 0f;
-                isPlayingProjectileHitEffect = false;
-                projectileHitEffectObject.SetActive(false);
-            }
-        }
-
-        if (isPlayingMissileHitEffect)
-        {
-            timerMissileAttack += Time.deltaTime;
-            if (timerMissileAttack >= timeToAttack)
-            {
-                timerMissileAttack = 0f;
-                isPlayingMissileHitEffect = false;
-                missileHitEffectObject.SetActive(false);
-            }
-        }
-    }
-
     public void Dead()
     {
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         animator.SetTrigger("Death");
         Destroy(gameObject, 1.25f);
+       
     }
 }

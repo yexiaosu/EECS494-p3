@@ -5,9 +5,14 @@ using UnityEngine;
 public class Repeat : MonoBehaviour
 {
     public float offset;
-    public GameObject player;
+    private GameObject player;
 
     // Update is called once per frame
+
+    private void Start()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+    }
     void Update()
     {
         if (Mathf.Abs(player.transform.position.y - transform.position.y) > offset)
