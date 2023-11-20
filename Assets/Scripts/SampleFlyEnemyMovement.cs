@@ -5,6 +5,11 @@ using UnityEngine.Windows;
 
 public class SampleFlyEnemyMovement : FlyMovement
 {
+
+    private Transform playerTransform;
+    private float dashTimer = 0f;
+    private float dashCooldown = 3f; // Time between dashes
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,11 +19,40 @@ public class SampleFlyEnemyMovement : FlyMovement
         StartCoroutine(Fly());
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move();
+        if (playerTransform != null)
+        {
+            // Calculate direction towards the player
+            Vector3 directionToPlayer = playerTransform.position - transform.position;
+            directionToPlayer.Normalize();
+
+            dashTimer += Time.deltaTime;
+
+            if (dashTimer >= dashCooldown)
+            {
+                dashTimer = 0f;
+                rb.velocity = directionToPlayer * speed * 3;
+            }
+            else if(dashTimer < .15f)
+            {
+                rb.velocity = directionToPlayer * speed * 3;
+            }
+            else
+            {
+                rb.velocity = directionToPlayer * speed;
+            }
+
+
+            
+        }
+        else
+        {
+            Move();
+        }
     }
 }
