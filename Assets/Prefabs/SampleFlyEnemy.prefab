@@ -152,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectiblePrefabs:
   - {fileID: 1483790374611084749, guid: 2bca3dcfbf5ff9f41872c5b4158ff2b3, type: 3}
+  - {fileID: 1483790374611084749, guid: da62b06a5f50a194b84e82ffb670b958, type: 3}
+  - {fileID: 1483790374611084749, guid: 0e6bb3efa6db6e740b3335f6b1717df5, type: 3}
   MeeleHitEffect: {fileID: 9115905929294437790, guid: 7e193c01359f24619b8a47b0d04909e6, type: 3}
   ProjectileHitEffect: {fileID: 4630442315206089233, guid: 5e7d5732b1fe74731b5bcfb1424b13c3, type: 3}
   MissleHitEffect: {fileID: 1806077149544477206, guid: 15f285dc843ab400ca140f3a4e0c50c2, type: 3}

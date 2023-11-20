@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4545624503435592554}
   - component: {fileID: 5118102810483713282}
   m_Layer: 3
-  m_Name: Pickup
+  m_Name: Pickup (Attack)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7826414989339140851, guid: 6ca38ddcae6c9d9478ece8a218e899b9, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9528302, g: 0.21647827, b: 0.15730685, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

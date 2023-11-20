@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //using UnityEngine.UI;
 
-public class Boon : MonoBehaviour
+public class BoonAttack : MonoBehaviour
 {
     private float speedBoost = 1f;  // The additional speed the player gains
     private float jumpBoost = .5f;   // The additional jump force the player gains
@@ -23,7 +23,7 @@ public class Boon : MonoBehaviour
             //add hp change
             // make random
             // Increase player's speed and jump
-            int roll = Random.Range(1, 6);
+            int roll = Random.Range(2, 4);
             if(roll == 1)
             {
                 player.changeSpeed(player.GetMoveSpeed() + speedBoost);
@@ -32,8 +32,8 @@ public class Boon : MonoBehaviour
             else if(roll == 2)
             
             {
-                playerHP.AddToCurrentHealth(500);
-                bt.getBoon("Current Player Health");
+                collision.gameObject.GetComponent<Player>().IncreaseAttack(250);
+                bt.getBoon("Attack Damage");
                 /*
                 player.changeJump(player.GetJumpForce() + jumpBoost);
                 bt.getBoon("Jump");
@@ -47,8 +47,8 @@ public class Boon : MonoBehaviour
             }
             else if(roll ==  4)
             {
-                collision.gameObject.GetComponent<Player>().IncreaseAttack(250);
-                bt.getBoon("Attack Damage");
+                playerHP.AddToCurrentHealth(500);
+                bt.getBoon("Current Player Health");
             }
             else if(roll == 5)
             {
