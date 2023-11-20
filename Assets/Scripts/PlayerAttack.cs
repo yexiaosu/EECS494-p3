@@ -23,11 +23,17 @@ public class PlayerAttack : MonoBehaviour
     private GameObject meeleAttackArea = default;
     private bool meeleAttacking = false;
     private float meeleAttackingTime = .3f;
+    // stomp
+    public bool StompEnabled = false;
+    private bool canStomp = true;
+    private bool isStomping = false;
+    private float stompingPower = 25.0f;
 
     private bool ableToMissile = false;
     private float timerMeeleAttack = 0f;
     private float timerMissileAttack = 0f;
     private float timerProjectile = 0f;
+    private float originalGravity;
 
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;
@@ -54,6 +60,18 @@ public class PlayerAttack : MonoBehaviour
         DirectionSprite.transform.rotation = new Quaternion(0, 0, 0, 0);
         DirectionSprite.transform.RotateAround(DirectionSprite.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
 
+        if (isStomping && GetComponent<PlayerMovement>().GetIsGrounded())
+        {
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            TrailRenderer tr = GetComponent<TrailRenderer>();
+            tr.emitting = false;
+            rb.gravityScale = originalGravity;
+            isStomping = false;
+            GetComponent<Player>().IsInvincible = false;
+            canStomp = true;
+            GetComponent<PlayerMovement>().enabled = true;
+        }
+
         if (ProjectileEnabled)
         {
             timerProjectile += Time.deltaTime;
@@ -72,6 +90,7 @@ public class PlayerAttack : MonoBehaviour
                 MissileAttackIcon.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
+
         if (Input.GetKeyDown(KeyCode.Mouse1) && ableToMissile)
         {
             Shoot(vectorAttack);
@@ -84,6 +103,10 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && !meeleAttacking)
         {
             MeeleAttack(vectorAttack);
+        }
+        if (Input.GetKey(KeyCode.S) && canStomp && StompEnabled)
+        {
+            Stomp();
         }
         if (meeleAttacking)
         {
@@ -130,5 +153,19 @@ public class PlayerAttack : MonoBehaviour
     private void _OnResume(ResumeEvent e)
     {
         this.enabled = true;
+    }
+
+    private void Stomp()
+    {
+        canStomp = false;
+        isStomping = true;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        TrailRenderer tr = GetComponent<TrailRenderer>();
+        originalGravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        rb.velocity = new Vector2(0, -1) * stompingPower;
+        tr.emitting = true;
+        GetComponent<Player>().IsInvincible = true;
+        GetComponent<PlayerMovement>().enabled = false;
     }
 }

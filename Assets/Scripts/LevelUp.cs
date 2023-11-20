@@ -10,7 +10,7 @@ public class LevelUp : MonoBehaviour
     public Text UIManagerText;
     public GameObject LevelUpPanel;
     public bool hasDisplayed = false;
-    public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() , new MissileAttack(), new DoubleJump(), new Dash(), new Shield() };
+    public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() , new MissileAttack(), new DoubleJump(), new Dash(), new Shield(), new Stomp() };
 
     private UIManager UIManagerObject;
     private int lastScore = -100;
