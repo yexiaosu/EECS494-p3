@@ -37,6 +37,7 @@ public class PlayerAttack : MonoBehaviour
     private float timerMissileAttack = 0f;
     private float timerProjectile = 0f;
     private float originalGravity;
+    private Rigidbody2D rb;
 
     private Subscription<PauseEvent> pauseEventSubscription;
     private Subscription<ResumeEvent> resumeEventSubscription;
@@ -48,6 +49,7 @@ public class PlayerAttack : MonoBehaviour
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
         MissileAttackIcon.SetActive(false);
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -65,7 +67,6 @@ public class PlayerAttack : MonoBehaviour
 
         if (isStomping && GetComponent<PlayerMovement>().GetIsGrounded())
         {
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
             TrailRenderer tr = GetComponent<TrailRenderer>();
             tr.emitting = false;
             rb.gravityScale = originalGravity;
@@ -76,6 +77,9 @@ public class PlayerAttack : MonoBehaviour
             StompDamage(new Vector2(transform.position.x, transform.position.y - transform.lossyScale.y / 2));
             StompAnimation.SetActive(true);
             StartCoroutine(SetAnimation());
+        } else if (isStomping)
+        {
+            rb.velocity = new Vector2(0, -1) * stompingPower;
         }
 
         if (ProjectileEnabled)
@@ -165,7 +169,6 @@ public class PlayerAttack : MonoBehaviour
     {
         canStomp = false;
         isStomping = true;
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         TrailRenderer tr = GetComponent<TrailRenderer>();
         originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
