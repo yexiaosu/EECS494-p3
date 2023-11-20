@@ -14,18 +14,20 @@ public class LevelUp : MonoBehaviour
 
     private UIManager UIManagerObject;
     private int lastScore = -100;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
         UIManagerObject = UIManagerText.GetComponent<UIManager>();
         LevelUpPanel.SetActive(false);
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100)
+        if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 100)
         {
             if (lastScore < 0)
                 LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";

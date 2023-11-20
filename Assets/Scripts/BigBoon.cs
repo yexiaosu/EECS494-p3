@@ -71,6 +71,7 @@ public class MissileAttack : BigBoon
     {
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerAttack>().MissileAttackEnabled = true;
+        player.GetComponent<PlayerAttack>().MissileAttackIcon.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
     }
@@ -138,6 +139,7 @@ public class Dash : BigBoon
     {
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerMovement>().DashEnabled = true;
+        player.GetComponent<PlayerMovement>().DashIcon.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
     }
@@ -162,6 +164,7 @@ public class Shield : BigBoon
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerShield>().ShieldEnabled = true;
         player.GetComponent<PlayerShield>().Shield.SetActive(true);
+        player.GetComponent<PlayerShield>().ShieldIcon.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
     }
@@ -177,7 +180,7 @@ public class Shield : BigBoon
             playerShield.MaxShieldTimes += 1;
         else
         {
-            if (playerShield.ReGeneratedCd > 1.0f)
+            if (playerShield.ReGeneratedCd > 3.0f)
             {
                 playerShield.ReGeneratedCd -= 0.2f;
                 return;
