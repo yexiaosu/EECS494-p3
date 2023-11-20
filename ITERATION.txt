@@ -58,38 +58,3 @@ What we have done:
    i. The boss is tougher than any other enemy the player has faced.
 9. After the boss is defeated the player is allowed to repeat the whole process and cycle through another 10 rooms getting stronger until they die.
 10. Vertical Parallaxing was implemented in the background to give the illusion of upward movement for the player.
-
-Title: Slime Adventures - Weekly Update 11/20
-
-What’s New?
-
-Quick rundown for the new things in Slime Adventures:
-
-Adjusted Controls to allow throwing items over conveyor belts easier
-Fixed the issue with items piling up and not being incinerated at the ends of conveyor belts
-Overhauled the sound system for cleaner development
-Created a new Main Menu screen that now utilizes a gamepad
-Created new levels that introduce mechanics at a steadier pace
-Added tutorial prompts and [Tutorial Man] to help players learn the game, name’s a work in progress
-Balanced disaster frequency and win conditions based off recent playtests
-Added tools to the toolbox, each tool being used for a specific disaster
-Added particle effects for better visual feedback when interacting with machines
-Improved level visuals and lighting
-
-What’s the Motivation?
-
-Our primary goal this week was to improve player guidance through more visual and audio feedback, a better tutorial prompt system, and a relatable [Tutorial Man] to help the player out. By dividing the resources, recipes, and disasters into their own levels we aim to increase the associations between different resources, machines, and their uses.
- Mock Anger
-What’s Next?
-
-For the next iteration, we’re planning to:
-
-Add co-op disasters that require teamwork to overcome
-Implement QTEs to add depth to di
-Enhance player guidance
-Add really juicy feedback and visuals
-Collect tons more feedback from playtesters and the community
-
-We’re always open to suggestions and feedback, so feel free to reach out!
-
-Game Builds and Links:
