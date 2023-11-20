@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     private GameObject ProjectileHitEffectObject;
     private GameObject MissleHitEffectObject;
 
+    private bool hasDied = false;
+
     void Start()
     {
         MeeleHitEffectObject = Instantiate(MeeleHitEffect, transform.position + new Vector3(0.4f, 0.3f, 0), Quaternion.identity);
@@ -92,15 +94,19 @@ public class Enemy : MonoBehaviour
 
     public void Dead()
     {
-        EventBus.Publish<EnemyDeadEvent>(new EnemyDeadEvent(gameObject));
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        if (collectiblePrefabs.Length > 0)
+        if (!hasDied)
         {
-            int roll = Random.Range(0, 100);
-            if (roll < 60)
+            EventBus.Publish<EnemyDeadEvent>(new EnemyDeadEvent(gameObject));
+            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            if (collectiblePrefabs.Length > 0)
             {
-                SpawnCollectible(collectiblePrefabs[Random.Range(0, collectiblePrefabs.Length)], gameObject.transform.position);
+                int roll = Random.Range(0, 100);
+                if (roll < 60)
+                {
+                    SpawnCollectible(collectiblePrefabs[Random.Range(0, collectiblePrefabs.Length)], gameObject.transform.position);
+                }
             }
+            hasDied = true;
         }
         Destroy(gameObject, 0.2f);
     }

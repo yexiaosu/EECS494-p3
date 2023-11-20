@@ -30,10 +30,16 @@ public class Boon : MonoBehaviour
                 bt.getBoon("Speed");
             }
             else if(roll == 2)
+            
             {
+                playerHP.AddToCurrentHealth(500);
+                bt.getBoon("Current Player Health");
+                /*
                 player.changeJump(player.GetJumpForce() + jumpBoost);
                 bt.getBoon("Jump");
+                */
             }
+          
             else if (roll == 3) 
             {
                 attackArea.transform.localScale = attackArea.transform.localScale * 1.2f;
@@ -52,8 +58,7 @@ public class Boon : MonoBehaviour
             }
             else if(roll == 6)
             {
-                playerHP.AddToCurrentHealth(500);
-                bt.getBoon("Current Player Health");
+                
             }
 
             
