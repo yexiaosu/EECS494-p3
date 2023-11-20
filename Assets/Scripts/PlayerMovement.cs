@@ -117,6 +117,12 @@ public class PlayerMovement : MonoBehaviour
         return jumpForce;
     }
 
+    public bool GetIsGrounded()
+    {
+        Vector2 boxSize = new Vector2(.25f, .2f);
+        return Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
+    }
+
     private IEnumerator Dash(Vector2 dir)
     {
         canDash = false;
