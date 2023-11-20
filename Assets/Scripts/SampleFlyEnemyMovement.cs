@@ -29,6 +29,11 @@ public class SampleFlyEnemyMovement : FlyMovement
         {
             // Calculate direction towards the player
             Vector3 directionToPlayer = playerTransform.position - transform.position;
+            float distanceToPlayer = directionToPlayer.magnitude;
+            if(distanceToPlayer > 15)
+            {
+                return;
+            }
             directionToPlayer.Normalize();
 
             dashTimer += Time.deltaTime;
