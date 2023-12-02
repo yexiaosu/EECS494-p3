@@ -56,7 +56,7 @@ public abstract class EnemyMovement : MonoBehaviour
 
     protected void _OnDead(EnemyDeadEvent e)
     {
-        this.enabled = false;
+        e.Enemy.GetComponent<EnemyMovement>().enabled = false;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
     }
