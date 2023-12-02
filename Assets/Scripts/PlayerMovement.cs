@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpSoundEffect.Play();
                 rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                GetComponent<PlayerAttack>().StompAnimation.SetActive(false);
                 timer = Time.time + .2f;
             }
             else if (Time.time > timer)

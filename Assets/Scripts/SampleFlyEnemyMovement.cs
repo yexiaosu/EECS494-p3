@@ -19,6 +19,7 @@ public class SampleFlyEnemyMovement : FlyMovement
         StartCoroutine(Fly());
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
+        deadEventSubscription = EventBus.Subscribe<EnemyDeadEvent>(_OnDead);
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 

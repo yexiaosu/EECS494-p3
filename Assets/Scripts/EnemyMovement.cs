@@ -11,6 +11,7 @@ public abstract class EnemyMovement : MonoBehaviour
     protected Vector2 input;
     protected Subscription<PauseEvent> pauseEventSubscription;
     protected Subscription<ResumeEvent> resumeEventSubscription;
+    protected Subscription<EnemyDeadEvent> deadEventSubscription;
 
     protected virtual Vector2 GenerateInput()
     {
@@ -51,5 +52,12 @@ public abstract class EnemyMovement : MonoBehaviour
     {
         this.enabled = true;
         rb.gravityScale = 1;
+    }
+
+    protected void _OnDead(EnemyDeadEvent e)
+    {
+        this.enabled = false;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
     }
 }

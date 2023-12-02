@@ -12,6 +12,7 @@ public class SampleEnemyMovement : WalkMovement
         changeDirectionTime = 0;
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
+        deadEventSubscription = EventBus.Subscribe<EnemyDeadEvent>(_OnDead);
     }
 
     // Update is called once per frame
