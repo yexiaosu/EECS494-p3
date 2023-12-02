@@ -118,13 +118,11 @@ public class Enemy : MonoBehaviour
                 }
             }
             hasDied = true;
+            Destroy(gameObject.GetComponent<Rigidbody2D>());
+            Destroy(gameObject.GetComponent<BoxCollider2D>());
         }
         Destroy(gameObject, 0.2f);
     }
-
-
-
-
 
     private void SpawnCollectible(GameObject collectible, Vector3 pos)
     {
