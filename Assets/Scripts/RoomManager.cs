@@ -169,16 +169,31 @@ public class RoomManager : MonoBehaviour
         Transform roomEnemies = roomInstance.transform.Find("Room Enemies");
         if (roomEnemies != null)
         {
-            foreach (Transform enemy in roomEnemies)
+            // DON'T CHANGE THE TWO FOR LOOPS!!!
+            /*
+             * if we use something like:
+             * foreach (Transform child in roomEnemies)
+                   child.SetParent(enemiesContainer.transform, true);
+             * as the child is moved out of roomEnemies, the length of roomEnemies decreases and the loop
+             * will be broken, with a result of only moving half of the children out of roomEnemies and 
+             * remaining the other half.
+             * 
+             */
+            List<Transform> enemies = new List<Transform>();
+            for (int i = 0; i < roomEnemies.childCount; i++)
             {
-                // Check if the enemy is a Spike or has a Spike script
-                if (enemy.name == "Spike" || enemy.GetComponent<Spike>() != null)
+                Transform child = roomEnemies.GetChild(i);
+                enemies.Add(child);
+            }
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i].name == "Spike" || enemies[i].GetComponent<Spike>() != null)
                 {
-                    enemy.SetParent(spikeGrid, true);
+                    enemies[i].SetParent(spikeGrid, true);
                 }
                 else
                 {
-                    enemy.SetParent(enemiesContainer.transform, false);
+                    enemies[i].SetParent(enemiesContainer.transform, true);
                 }
             }
         }

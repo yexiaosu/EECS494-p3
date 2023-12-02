@@ -104,22 +104,22 @@ public class TrackingBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject gameObject = collision.gameObject;
+        GameObject target = collision.gameObject;
         GameObject sender = this.gameObject;
 
-        if (gameObject.CompareTag("Enemy"))
+        if (target.CompareTag("Enemy") && target.GetComponent<Enemy>() != null)
         {
             int amount = Mathf.FloorToInt(GameObject.Find("Player").GetComponent<Player>().attack * damageFactor);
-            gameObject.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
-            if (collision.GetComponent<Enemy>() != null)
-                collision.GetComponent<Enemy>().GetProjectileHit(sender.transform.position);
-            if (collision.GetComponent<KnockBack>() != null)
-                gameObject.GetComponent<KnockBack>().PlayFeedback(sender);
-            if (gameObject.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
-                gameObject.GetComponent<Enemy>().Dead();
+            target.GetComponent<HealthSystemForDummies>().AddToCurrentHealth(-amount);
+            if (target.GetComponent<Enemy>() != null)
+                target.GetComponent<Enemy>().GetProjectileHit(sender.transform.position);
+            if (target.GetComponent<KnockBack>() != null)
+                target.GetComponent<KnockBack>().PlayFeedback(sender);
+            if (target.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
+                target.GetComponent<Enemy>().Dead();
             Destroy(sender);
         }
-        else if (gameObject.GetComponent<Platform>() != null)
+        else if (target.GetComponent<Platform>() != null)
             Destroy(sender);
     }
 
