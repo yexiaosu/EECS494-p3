@@ -16,7 +16,7 @@ public class SceneInitializer : MonoBehaviour
         if (player != null)
         {
             // Set player position to (0, 1, 0)
-            player.transform.position = new Vector3(0, 9, 0);
+            player.transform.position = new Vector3(0, 7.75f, 0);
         }
         else
         {
