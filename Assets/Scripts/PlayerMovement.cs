@@ -10,9 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public GameObject DashIcon;
 
     private float moveSpeed = 4.0f;
-    private float jumpForce = 10.2f;
+    private float jumpForce = 5.5f;
     private bool canDoubleJump = false;
     private float jumpCast = .17f;
+    private bool isJumping = false;
+    private float maxJumpingTime = 0.5f;
+    private float jumpTimer = 0f;
     private bool canDash = true;
     private bool isDashing = false;
     private float dashingPower = 25.0f;
@@ -21,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private Subscription<ResumeEvent> resumeEventSubscription;
     private Rigidbody2D rb;
     private TrailRenderer tr;
-    private float timer;
     private float timeToWait;
 
     [SerializeField] private AudioSource jumpSoundEffect;
@@ -51,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 boxSize = new Vector2(.25f, .2f);
         bool isGrounded = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
 
-        if (isGrounded && Time.time > timer && DoubleJumpEnabled)
+        if (isGrounded && DoubleJumpEnabled)
         {
             canDoubleJump = true;
         }
@@ -59,24 +61,41 @@ public class PlayerMovement : MonoBehaviour
         //// Jump Mechanic
         if (Input.GetButtonDown("Jump"))
         {
-            if (isGrounded && Time.time > timer)
+            if (isGrounded)
             {
+                isJumping = true;
+                jumpTimer = maxJumpingTime;
                 jumpSoundEffect.Play();
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 GetComponent<PlayerAttack>().StompAnimation.SetActive(false);
-                timer = Time.time + .2f;
             }
-            else if (Time.time > timer)
+            else if (DoubleJumpEnabled && canDoubleJump)
             {
-                if (DoubleJumpEnabled && canDoubleJump)
-                {
-                    jumpSoundEffect.Play();
-                    rb.velocity = new Vector2(rb.velocity.x, 0);
-                    rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                    canDoubleJump = false;
-                }
+                isJumping = true;
+                jumpTimer = maxJumpingTime;
+                jumpSoundEffect.Play();
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                canDoubleJump = false;
             }
         }
+        if (Input.GetButton("Jump") && isJumping)
+        {
+            if (jumpTimer > 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce*1.2f);
+                jumpTimer -= Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
+        if (Input.GetButtonUp("Jump"))
+        {
+            isJumping = false;
+        }
+
+        // Dash
         if (Input.GetKey(KeyCode.LeftShift) && canDash && DashEnabled)
         {
             StartCoroutine(Dash(new Vector2(rb.velocity.x, 0).normalized));
