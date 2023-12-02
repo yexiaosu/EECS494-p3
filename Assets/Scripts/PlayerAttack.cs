@@ -114,7 +114,7 @@ public class PlayerAttack : MonoBehaviour
         {
             MeeleAttack(vectorAttack);
         }
-        if (Input.GetKey(KeyCode.S) && canStomp && StompEnabled && !GetComponent<PlayerMovement>().GetIsGrounded())
+        if (Input.GetButtonDown("Stomp") && canStomp && StompEnabled && !GetComponent<PlayerMovement>().GetIsGrounded())
         {
             Stomp();
         }
