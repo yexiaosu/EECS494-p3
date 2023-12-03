@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpForce = 5.5f;
     private bool canDoubleJump = false;
     private float jumpCast = .17f;
-    private bool isJumping = false;
+    private bool isApplyingJumping = false;
     private float maxJumpingTime = 0.5f;
     private float jumpTimer = 0f;
     private bool canDash = true;
@@ -63,7 +63,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded)
             {
-                isJumping = true;
+                isApplyingJumping = true;
+                tr.emitting = true;
+                Debug.Log("set true");
                 jumpTimer = maxJumpingTime;
                 jumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -72,14 +74,15 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (DoubleJumpEnabled && canDoubleJump)
             {
-                isJumping = true;
+                isApplyingJumping = true;
+                tr.emitting = true;
                 jumpTimer = maxJumpingTime;
                 jumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 canDoubleJump = false;
             }
         }
-        if (Input.GetButton("Jump") && isJumping)
+        if (Input.GetButton("Jump") && isApplyingJumping)
         {
             if (jumpTimer > 0)
             {
@@ -88,12 +91,14 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                isJumping = false;
+                isApplyingJumping = false;
+                tr.emitting = false;
             }
         }
         if (Input.GetButtonUp("Jump"))
         {
-            isJumping = false;
+            isApplyingJumping = false;
+            tr.emitting = false;
         }
 
         // Dash
