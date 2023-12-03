@@ -81,9 +81,18 @@ public class RoomManager : MonoBehaviour
 
     private GameObject GetRandomRoomPrefab()
     {
-        int randomIndex = Random.Range(0, roomPrefabs.Count);
+        // Ensure there is more than one prefab to choose from
+        if (roomPrefabs.Count <= 1)
+        {
+            Debug.LogError("Not enough room prefabs to choose from.");
+            return null;
+        }
+
+        // Select a random index from 1 onwards, skipping the tutorial room
+        int randomIndex = Random.Range(1, roomPrefabs.Count);
         return roomPrefabs[randomIndex];
     }
+
 
     private void SpawnTransitionPlatform()
 {
@@ -101,7 +110,7 @@ public class RoomManager : MonoBehaviour
     GameObject nextRoomPrefab;
     Vector3 nextRoomPosition = new Vector3(0f, lastSpawnedPlatform.transform.position.y + fixedRoomOffset, 0f);
 
-    if (!bossRoomDoorSpawned && roomCount >= 10)
+    if (!bossRoomDoorSpawned && roomCount >= 5)
     {
         // Spawn boss door and stop further spawning
         nextRoomPrefab = bossDoorPrefab;
