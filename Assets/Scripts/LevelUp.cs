@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using Unity.VisualScripting;
-using TMPro;
 
 public class LevelUp : MonoBehaviour
 {
@@ -40,9 +38,9 @@ public class LevelUp : MonoBehaviour
         if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 50)
             {
             if (lastScore < 0)
-                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";
+                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Initial Boon";
             else
-                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Level Up";
+                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Up";
             EventBus.Publish<PauseEvent>(new PauseEvent());
             lastScore = UIManagerObject.GetScore();
             List<int> randomPos = RandomPick(bigBoons.Count);
@@ -59,7 +57,7 @@ public class LevelUp : MonoBehaviour
                 child.gameObject.SetActive(true);
                 child.gameObject.GetComponent<LevelUpChoice>().BigBoon = bigBoons[randomPos[i]];
                 string levelPrefix = bigBoons[randomPos[i]].CanLevelUp ? "[Lv." + (bigBoons[randomPos[i]].CurrLevel + 1).ToString() + "] " : "";
-                child.GetChild(0).gameObject.GetComponent<TMP_Text>().text = levelPrefix + bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
+                child.GetChild(0).gameObject.GetComponent<Text>().text = levelPrefix + bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
                 i++;
             }
             LevelUpPanel.SetActive(true);
