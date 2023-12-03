@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public bool DashEnabled = false;
     public float DashCd = 1.0f;
     public GameObject DashIcon;
+    public GameObject DoubleJumpIcon;
 
     private float moveSpeed = 4.0f;
     private float jumpForce = 5.5f;
@@ -39,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
         tr = GetComponent<TrailRenderer>();
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
-        DashIcon.SetActive(false);
     }
 
     void Update()
@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && canDash && DashEnabled)
         {
             StartCoroutine(Dash(new Vector2(rb.velocity.x, 0).normalized));
-            GameObject coolDown = DashIcon.transform.GetChild(1).gameObject;
+            GameObject coolDown = DashIcon.transform.Find("cooldown").gameObject;
             coolDown.SetActive(true);
             coolDown.GetComponent<Animator>().speed = 4.0f / DashCd;
         }
@@ -165,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         player.IsInvincible = false;
         yield return new WaitForSeconds(DashCd);
         canDash = true;
-        DashIcon.transform.GetChild(1).gameObject.SetActive(false);
+        DashIcon.transform.Find("cooldown").gameObject.SetActive(false);
     }
 
     private void _OnPause(PauseEvent e)

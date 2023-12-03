@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Numerics;
 
@@ -27,8 +28,12 @@ public class RangedProjectiles : BigBoon
     {
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerAttack>().ProjectileEnabled = true;
+        player.GetComponent<PlayerAttack>().ProjectileIcon.transform.Find("Image").gameObject.SetActive(true);
+        GameObject levelText = player.GetComponent<PlayerAttack>().ProjectileIcon.transform.Find("level").gameObject;
+        levelText.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
+        levelText.GetComponent<Text>().text = "lv." + CurrLevel.ToString();
     }
 
     public override void LevelUpBoon()
@@ -38,6 +43,7 @@ public class RangedProjectiles : BigBoon
             CurrLevel++;
         else
             return;
+        GameObject.Find("Player").GetComponent<PlayerAttack>().ProjectileIcon.transform.Find("level").gameObject.GetComponent<Text>().text = "lv." + CurrLevel.ToString();
         if (CurrLevel % 2 == 0)
             playerAttack.ProjectileDamageFactor += 0.4f;
         else
@@ -71,9 +77,12 @@ public class MissileAttack : BigBoon
     {
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerAttack>().MissileAttackEnabled = true;
-        player.GetComponent<PlayerAttack>().MissileAttackIcon.SetActive(true);
+        player.GetComponent<PlayerAttack>().MissileAttackIcon.transform.Find("Image").gameObject.SetActive(true);
+        GameObject levelText = player.GetComponent<PlayerAttack>().MissileAttackIcon.transform.Find("level").gameObject;
+        levelText.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
+        levelText.GetComponent<Text>().text = "lv." + CurrLevel.ToString();
     }
 
     public override void LevelUpBoon()
@@ -83,6 +92,7 @@ public class MissileAttack : BigBoon
             CurrLevel++;
         else
             return;
+        GameObject.Find("Player").GetComponent<PlayerAttack>().MissileAttackIcon.transform.Find("level").gameObject.GetComponent<Text>().text = "lv." + CurrLevel.ToString();
         if (CurrLevel % 2 == 0)
             playerAttack.MissileAttackDamageFactor += 0.3f;
         else
@@ -116,6 +126,7 @@ public class DoubleJump : BigBoon
     {
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerMovement>().DoubleJumpEnabled = true;
+        player.GetComponent<PlayerMovement>().DoubleJumpIcon.transform.Find("Image").gameObject.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
     }
@@ -139,7 +150,7 @@ public class Dash : BigBoon
     {
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerMovement>().DashEnabled = true;
-        player.GetComponent<PlayerMovement>().DashIcon.SetActive(true);
+        player.GetComponent<PlayerMovement>().DashIcon.transform.Find("Image").gameObject.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
     }
@@ -164,9 +175,12 @@ public class Shield : BigBoon
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerShield>().ShieldEnabled = true;
         player.GetComponent<PlayerShield>().Shield.SetActive(true);
-        player.GetComponent<PlayerShield>().ShieldIcon.SetActive(true);
+        player.GetComponent<PlayerShield>().ShieldIcon.transform.Find("Image").gameObject.SetActive(true);
+        GameObject levelText = player.GetComponent<PlayerShield>().ShieldIcon.transform.Find("level").gameObject;
+        levelText.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
+        levelText.GetComponent<Text>().text = "lv." + CurrLevel.ToString();
     }
 
     public override void LevelUpBoon()
@@ -176,6 +190,7 @@ public class Shield : BigBoon
             CurrLevel++;
         else
             return;
+        GameObject.Find("Player").GetComponent<PlayerShield>().ShieldIcon.transform.Find("level").gameObject.GetComponent<Text>().text = "lv." + CurrLevel.ToString();
         if (CurrLevel % 2 == 0)
             playerShield.MaxShieldTimes += 1;
         else
@@ -210,6 +225,7 @@ public class Stomp : BigBoon
     {
         GameObject player = GameObject.Find("Player");
         player.GetComponent<PlayerAttack>().StompEnabled = true;
+        player.GetComponent<PlayerAttack>().StompIcon.transform.Find("Image").gameObject.SetActive(true);
         if (CanLevelUp)
             CurrLevel++;
     }

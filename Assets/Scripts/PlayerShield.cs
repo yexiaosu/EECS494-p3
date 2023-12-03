@@ -19,7 +19,6 @@ public class PlayerShield : MonoBehaviour
     {
         shieldBrokenEventSubscription = EventBus.Subscribe<ShieldBrokenEvent>(_OnShieldBroken);
         Shield.SetActive(false);
-        ShieldIcon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,7 +30,7 @@ public class PlayerShield : MonoBehaviour
             if (timer > ReGeneratedCd)
             {
                 Shield.SetActive(true);
-                ShieldIcon.transform.GetChild(1).gameObject.SetActive(false);
+                ShieldIcon.transform.Find("cooldown").gameObject.SetActive(false);
                 EventBus.Publish<ShieldRecoverEvent>(new ShieldRecoverEvent());
                 timer = 0;
                 isTimerStart = false;
@@ -44,7 +43,7 @@ public class PlayerShield : MonoBehaviour
         isTimerStart = true;
         Shield.SetActive(false);
         StartCoroutine(SetInvincible());
-        GameObject coolDown = ShieldIcon.transform.GetChild(1).gameObject;
+        GameObject coolDown = ShieldIcon.transform.Find("cooldown").gameObject;
         coolDown.SetActive(true);
         coolDown.GetComponent<Animator>().speed = 4.0f / ReGeneratedCd;
     }
