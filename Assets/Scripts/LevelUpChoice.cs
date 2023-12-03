@@ -30,6 +30,7 @@ public class LevelUpChoice : MonoBehaviour
         }
         EventBus.Publish<ResumeEvent>(new ResumeEvent());
         LevelUpPanel.SetActive(false);
+        GameObject.Find("Player").GetComponent<LevelUp>().LevelUpText.SetActive(false);
         lu.hasDisplayed = false;
     }
 }

@@ -65,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 isApplyingJumping = true;
                 tr.emitting = true;
-                Debug.Log("set true");
                 jumpTimer = maxJumpingTime;
                 jumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -86,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (jumpTimer > 0)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce*1.2f);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce*1.5f);
                 jumpTimer -= Time.deltaTime;
             }
             else

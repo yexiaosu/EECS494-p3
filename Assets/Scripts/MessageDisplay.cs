@@ -26,10 +26,10 @@ public class MessageDisplay: MonoBehaviour
         if (hasDisplayedMessage && Input.GetKeyDown(KeyCode.Space))
         {
             // Reload the current scene
-            if (GameObject.Find("Player"))
-                Destroy(GameObject.Find("Player"));
-            if (GameObject.Find("Canvas"))
-                Destroy(GameObject.Find("Canvas"));
+            Debug.Log(GameObject.Find("Player") != null);
+            Debug.Log(GameObject.Find("CanvasMain") != null);
+            Destroy(GameObject.Find("Player").gameObject);
+            Destroy(GameObject.Find("CanvasMain").gameObject);
             SceneManager.LoadScene("Start");
         }
     }
