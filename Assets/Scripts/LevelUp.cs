@@ -32,7 +32,7 @@ public class LevelUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100 && !isAnimePlayed)
+        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100 && !isAnimePlayed && lastScore >= 0)
         {
             StartCoroutine(LevelUpAnimation());
             isAnimePlayed = true;
