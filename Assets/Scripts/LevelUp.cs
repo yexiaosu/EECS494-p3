@@ -17,7 +17,7 @@ public class LevelUp : MonoBehaviour
     public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() , new MissileAttack(), new DoubleJump(), new Dash(), new Shield(), new Stomp() };
 
     private UIManager UIManagerObject;
-    private int lastScore = -100;
+    private int lastScore = -50;
     private GameObject player;
     private bool isAnimePlayed = false;
 
@@ -37,7 +37,7 @@ public class LevelUp : MonoBehaviour
             StartCoroutine(LevelUpAnimation());
             isAnimePlayed = true;
         }
-        if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 100)
+        if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 50)
             {
             if (lastScore < 0)
                 LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";

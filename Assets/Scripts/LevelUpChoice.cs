@@ -27,18 +27,9 @@ public class LevelUpChoice : MonoBehaviour
                 if (itemToRemove != null)
                     lu.bigBoons.Remove(itemToRemove);
             }
-            StopAllCoroutines();
-            StartCoroutine(HideGetAbilityText());
         }
         EventBus.Publish<ResumeEvent>(new ResumeEvent());
         LevelUpPanel.SetActive(false);
         lu.hasDisplayed = false;
-    }
-
-    private IEnumerator HideGetAbilityText()
-    {
-        yield return new WaitForSeconds(1f);
-        Debug.Log("debug");
-        GetAbilityText.SetActive(false);
     }
 }

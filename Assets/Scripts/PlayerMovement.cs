@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 GetComponent<PlayerAttack>().StompAnimation.SetActive(false);
+                transform.Find("Canvas").Find("get ability").gameObject.SetActive(false);
             }
             else if (DoubleJumpEnabled && canDoubleJump)
             {
