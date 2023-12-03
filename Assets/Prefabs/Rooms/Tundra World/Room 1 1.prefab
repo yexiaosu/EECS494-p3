@@ -240,7 +240,6 @@ Transform:
   - {fileID: 2699264387996613728}
   - {fileID: 4935329768254600224}
   - {fileID: 7969836619828121813}
-  - {fileID: 3571773512673941761}
   m_Father: {fileID: 4243394805328514774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215517367854001296
@@ -1478,6 +1477,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 14783912352225607}
+  - {fileID: 3571773512673941761}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &6239286458732489667
@@ -2384,7 +2384,6 @@ GameObject:
   - component: {fileID: 6044358559213283362}
   - component: {fileID: 7044679709233483481}
   - component: {fileID: 6160403864675646169}
-  - component: {fileID: 470118296539517270}
   - component: {fileID: 130667573000660218}
   m_Layer: 6
   m_Name: Spikes
@@ -2406,7 +2405,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 14783912352225607}
+  m_Father: {fileID: 4243394805328514774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &528305492963778954
 Tilemap:
@@ -3758,22 +3757,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: -50
---- !u!114 &470118296539517270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7954213126967947044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c602df8fbca024de58b4bfdc98f9c9a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectiblePrefabs: []
-  MeeleHitEffect: {fileID: 0}
-  ProjectileHitEffect: {fileID: 0}
-  MissleHitEffect: {fileID: 0}
 --- !u!114 &130667573000660218
 MonoBehaviour:
   m_ObjectHideFlags: 0
