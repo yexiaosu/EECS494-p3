@@ -10,11 +10,16 @@ public class LevelUp : MonoBehaviour
     public Text UIManagerText;
     public GameObject LevelUpPanel;
     public bool hasDisplayed = false;
+    public GameObject LevelUpText;
+    public GameObject BackLevelUpAnime;
+    public GameObject FrontLevelUpAnime;
+
     public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() , new MissileAttack(), new DoubleJump(), new Dash(), new Shield(), new Stomp() };
 
     private UIManager UIManagerObject;
     private int lastScore = -100;
     private GameObject player;
+    private bool isAnimePlayed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +32,13 @@ public class LevelUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 100)
+        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 100 && !isAnimePlayed)
         {
+            StartCoroutine(LevelUpAnimation());
+            isAnimePlayed = true;
+        }
+        if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 100)
+            {
             if (lastScore < 0)
                 LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";
             else
@@ -53,6 +63,7 @@ public class LevelUp : MonoBehaviour
                 i++;
             }
             LevelUpPanel.SetActive(true);
+            isAnimePlayed = false;
         }
     }
 
@@ -75,6 +86,18 @@ public class LevelUp : MonoBehaviour
             }
         }
         return res;
+    }
+
+    private IEnumerator LevelUpAnimation()
+    {
+        LevelUpText.SetActive(true);
+        BackLevelUpAnime.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        BackLevelUpAnime.SetActive(false);
+        FrontLevelUpAnime.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        FrontLevelUpAnime.SetActive(false);
+        LevelUpText.SetActive(false);
     }
 }
 
