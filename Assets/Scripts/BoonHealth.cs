@@ -23,7 +23,8 @@ public class BoonHealth : MonoBehaviour
             //add hp change
             // make random
             // Increase player's speed and jump
-            int roll = Random.Range(4, 6);
+            //int roll = Random.Range(4, 6);
+            int roll = 5; // Only one outcome
             if(roll == 1)
             {
                 player.changeSpeed(player.GetMoveSpeed() + speedBoost);
@@ -53,7 +54,7 @@ public class BoonHealth : MonoBehaviour
             else if(roll == 5)
             {
                 playerHP.AddToMaximumHealth(250);
-                playerHP.AddToCurrentHealth(1);
+                playerHP.AddToCurrentHealth(250);
                 bt.getBoon("Max Player Health");
             }
             else if(roll == 6)
