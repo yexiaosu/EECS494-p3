@@ -698,6 +698,7 @@ GameObject:
   - component: {fileID: 189775305}
   - component: {fileID: 189775304}
   - component: {fileID: 189775303}
+  - component: {fileID: 189775306}
   m_Layer: 5
   m_Name: get ability
   m_TagString: Untagged
@@ -766,6 +767,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 66.7}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &189775306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189775302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &190134519
 GameObject:
   m_ObjectHideFlags: 0
@@ -6083,6 +6099,7 @@ GameObject:
   - component: {fileID: 1455552838}
   - component: {fileID: 1455552840}
   - component: {fileID: 1455552841}
+  - component: {fileID: 1455552842}
   m_Layer: 5
   m_Name: UIText
   m_TagString: Untagged
@@ -6179,6 +6196,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreAndLevelText: {fileID: 1455552838}
   scoreOffset: 0
+--- !u!114 &1455552842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455552835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1532524292
 GameObject:
   m_ObjectHideFlags: 0
@@ -6379,6 +6411,7 @@ GameObject:
   - component: {fileID: 1614061916}
   - component: {fileID: 1614061918}
   - component: {fileID: 1614061917}
+  - component: {fileID: 1614061919}
   m_Layer: 5
   m_Name: levelup
   m_TagString: Untagged
@@ -6447,6 +6480,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614061915}
   m_CullTransparentMesh: 1
+--- !u!114 &1614061919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614061915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1671841442
 GameObject:
   m_ObjectHideFlags: 0
