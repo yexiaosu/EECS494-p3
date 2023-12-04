@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3429820247094158715}
   - component: {fileID: 7339701331821122410}
   m_Layer: 6
-  m_Name: bone (throwable)
+  m_Name: projectile
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6543932247921987251, guid: 830f603cf58220a43ab90ddebddaf8d9, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: ba7fa54ab522eac47940a605b7e52fec, type: 3}
+  m_Color: {r: 0.990566, g: 0.098122105, b: 0.098122105, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.11}
+    oldSize: {x: 0.48, y: 0.48}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ba25b9d98ea41b1a221ac96f413e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: -100
+  amount: -75
 --- !u!114 &6029411674245260612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e527737818bfd40992d27ba90fe235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destructionDelay: 2
+  destructionDelay: 3
 --- !u!50 &3429820247094158715
 Rigidbody2D:
   serializedVersion: 4
@@ -189,7 +189,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
