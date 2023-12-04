@@ -8,12 +8,13 @@ public class PlayerMovement : MonoBehaviour
     public bool DashEnabled = false;
     public float DashCd = 1.0f;
     public GameObject DashIcon;
+    public GameObject DoubleJumpIcon;
 
     private float moveSpeed = 4.0f;
     private float jumpForce = 5.5f;
     private bool canDoubleJump = false;
     private float jumpCast = .17f;
-    private bool isJumping = false;
+    private bool isApplyingJumping = false;
     private float maxJumpingTime = 0.5f;
     private float jumpTimer = 0f;
     private bool canDash = true;
@@ -39,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
         tr = GetComponent<TrailRenderer>();
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
-        DashIcon.SetActive(false);
     }
 
     void Update()
@@ -63,43 +63,48 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded)
             {
-                isJumping = true;
+                isApplyingJumping = true;
+                tr.emitting = true;
                 jumpTimer = maxJumpingTime;
                 jumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 GetComponent<PlayerAttack>().StompAnimation.SetActive(false);
+                transform.Find("Canvas").Find("get ability").gameObject.SetActive(false);
             }
             else if (DoubleJumpEnabled && canDoubleJump)
             {
-                isJumping = true;
+                isApplyingJumping = true;
+                tr.emitting = true;
                 jumpTimer = maxJumpingTime;
                 jumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 canDoubleJump = false;
             }
         }
-        if (Input.GetButton("Jump") && isJumping)
+        if (Input.GetButton("Jump") && isApplyingJumping)
         {
             if (jumpTimer > 0)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce*1.2f);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce*1.5f);
                 jumpTimer -= Time.deltaTime;
             }
             else
             {
-                isJumping = false;
+                isApplyingJumping = false;
+                tr.emitting = false;
             }
         }
         if (Input.GetButtonUp("Jump"))
         {
-            isJumping = false;
+            isApplyingJumping = false;
+            tr.emitting = false;
         }
 
         // Dash
         if (Input.GetKey(KeyCode.LeftShift) && canDash && DashEnabled)
         {
             StartCoroutine(Dash(new Vector2(rb.velocity.x, 0).normalized));
-            GameObject coolDown = DashIcon.transform.GetChild(1).gameObject;
+            GameObject coolDown = DashIcon.transform.Find("cooldown").gameObject;
             coolDown.SetActive(true);
             coolDown.GetComponent<Animator>().speed = 4.0f / DashCd;
         }
@@ -160,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         player.IsInvincible = false;
         yield return new WaitForSeconds(DashCd);
         canDash = true;
-        DashIcon.transform.GetChild(1).gameObject.SetActive(false);
+        DashIcon.transform.Find("cooldown").gameObject.SetActive(false);
     }
 
     private void _OnPause(PauseEvent e)

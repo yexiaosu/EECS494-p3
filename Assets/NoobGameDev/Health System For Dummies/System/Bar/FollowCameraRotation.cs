@@ -15,6 +15,10 @@ public class FollowCameraRotation : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if (target == null)
+        {
+            target = Camera.main.transform;
+        }
         transform.LookAt(transform.position + target.forward);
     }
 }

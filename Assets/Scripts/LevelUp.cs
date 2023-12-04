@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using Unity.VisualScripting;
-using TMPro;
 
 public class LevelUp : MonoBehaviour
 {
     public Text UIManagerText;
     public GameObject LevelUpPanel;
     public bool hasDisplayed = false;
+    public GameObject LevelUpText;
+    public GameObject BackLevelUpAnime;
+    public GameObject FrontLevelUpAnime;
+
     public List<BigBoon> bigBoons = new List<BigBoon> { new RangedProjectiles() , new MissileAttack(), new DoubleJump(), new Dash(), new Shield(), new Stomp() };
 
     private UIManager UIManagerObject;
-    private int lastScore = -100;
+    private int lastScore = -50;
     private GameObject player;
+    private bool isAnimePlayed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,12 +30,17 @@ public class LevelUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 100)
+        if (!hasDisplayed && UIManagerObject.GetScore() - lastScore >= 50 && !isAnimePlayed && lastScore >= 0)
+        {
+            StartCoroutine(LevelUpAnimation());
+            isAnimePlayed = true;
+        }
+        if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 50)
         {
             if (lastScore < 0)
-                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Initial Boon";
+                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Initial Boon";
             else
-                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Level Up";
+                LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Level Up";
             EventBus.Publish<PauseEvent>(new PauseEvent());
             lastScore = UIManagerObject.GetScore();
             List<int> randomPos = RandomPick(bigBoons.Count);
@@ -49,10 +57,13 @@ public class LevelUp : MonoBehaviour
                 child.gameObject.SetActive(true);
                 child.gameObject.GetComponent<LevelUpChoice>().BigBoon = bigBoons[randomPos[i]];
                 string levelPrefix = bigBoons[randomPos[i]].CanLevelUp ? "[Lv." + (bigBoons[randomPos[i]].CurrLevel + 1).ToString() + "] " : "";
-                child.GetChild(0).gameObject.GetComponent<TMP_Text>().text = levelPrefix + bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
+                child.GetChild(0).gameObject.GetComponent<Text>().text = levelPrefix + bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
+                child.gameObject.GetComponent<Button>().enabled = false;
+                StartCoroutine(EnableButton(child.gameObject.GetComponent<Button>()));
                 i++;
             }
             LevelUpPanel.SetActive(true);
+            isAnimePlayed = false;
         }
     }
 
@@ -75,6 +86,23 @@ public class LevelUp : MonoBehaviour
             }
         }
         return res;
+    }
+
+    private IEnumerator LevelUpAnimation()
+    {
+        LevelUpText.SetActive(true);
+        BackLevelUpAnime.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        BackLevelUpAnime.SetActive(false);
+        FrontLevelUpAnime.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        FrontLevelUpAnime.SetActive(false);
+    }
+
+    private IEnumerator EnableButton(Button button)
+    {
+        yield return new WaitForSeconds(0.5f);
+        button.enabled = true;
     }
 }
 

@@ -93,7 +93,10 @@ public class Damage : MonoBehaviour
         player.GetComponent<Animator>().SetBool("Hit", true);
         StartCoroutine(SetAnimation(player.GetComponent<Animator>()));
         if (player.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
-            player.GetComponent<Player>().Dead();
+        {
+            string name = sender.GetComponent<TargetName>() == null ? "" : sender.GetComponent<TargetName>().targetName;
+            player.GetComponent<Player>().Dead(name);
+        }
     }
 
     private IEnumerator SetAnimation(Animator animator)

@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     public float ProjectileCd = 2.0f;
     public float ProjectileDamageFactor = 0.4f;
     public float ProjectileSpeed = 3.0f;
+    public GameObject ProjectileIcon;
     // missile attack
     public bool MissileAttackEnabled = false;
     public float ShootCd = 3.0f;
@@ -31,6 +32,7 @@ public class PlayerAttack : MonoBehaviour
     public float radius = 1.0f;
     public float stompingDamageForce = 15.0f;
     public GameObject StompAnimation;
+    public GameObject StompIcon;
 
     private bool ableToMissile = false;
     private float timerMeeleAttack = 0f;
@@ -48,7 +50,6 @@ public class PlayerAttack : MonoBehaviour
         meeleAttackArea = transform.GetChild(0).gameObject;
         pauseEventSubscription = EventBus.Subscribe<PauseEvent>(_OnPause);
         resumeEventSubscription = EventBus.Subscribe<ResumeEvent>(_OnResume);
-        MissileAttackIcon.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -97,7 +98,7 @@ public class PlayerAttack : MonoBehaviour
             if (timerMissileAttack > ShootCd)
             {
                 ableToMissile = true;
-                MissileAttackIcon.transform.GetChild(1).gameObject.SetActive(false);
+                MissileAttackIcon.transform.Find("cooldown").gameObject.SetActive(false);
             }
         }
 
@@ -106,7 +107,7 @@ public class PlayerAttack : MonoBehaviour
             Shoot(vectorAttack);
             timerMissileAttack = 0;
             ableToMissile = false;
-            GameObject coolDown = MissileAttackIcon.transform.GetChild(1).gameObject;
+            GameObject coolDown = MissileAttackIcon.transform.Find("cooldown").gameObject;
             coolDown.SetActive(true);
             coolDown.GetComponent<Animator>().speed = 4.0f / ShootCd;
         }
@@ -188,7 +189,9 @@ public class PlayerAttack : MonoBehaviour
             {
                 Vector2 dir = (new Vector2(child.position.x, child.position.y) - pos).normalized;
                 child.gameObject.GetComponent<EnemyMovement>().Stun(0.1f);
-                child.gameObject.GetComponent<Rigidbody2D>().AddForce(dir * stompingDamageForce, ForceMode2D.Impulse);
+                Rigidbody2D childRb = child.gameObject.GetComponent<Rigidbody2D>();
+                if (childRb != null)
+                    childRb.AddForce(dir * stompingDamageForce, ForceMode2D.Impulse);
                 HealthSystemForDummies health = child.gameObject.GetComponent<HealthSystemForDummies>();
                 int damage = GetComponent<Player>().attack;
                 health.AddToCurrentHealth(-damage);

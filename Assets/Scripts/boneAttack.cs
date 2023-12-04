@@ -44,9 +44,9 @@ public class boneAttack : MonoBehaviour
         {
             // Calculate direction towards the player
             Vector3 directionToPlayer = playerTransform.position - transform.position;
-            float distanceToPlayer = directionToPlayer.magnitude;
+            float distanceToPlayer = playerTransform.position.y - transform.position.y;
 
-            if (distanceToPlayer <= 7.5f)
+            if (distanceToPlayer <= 5f && distanceToPlayer >= -5f)
             {
                 directionToPlayer.Normalize();
 

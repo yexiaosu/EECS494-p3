@@ -11,10 +11,10 @@ public class Player : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-    public void Dead()
+    public void Dead(string name)
     {
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        GetComponent<MessageDisplay>().DisplayMessage("death");
+        GetComponent<MessageDisplay>().DisplayMessage("death", name);
     }
 
     public void IncreaseAttack(int damageInc)

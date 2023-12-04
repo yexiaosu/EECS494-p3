@@ -27,8 +27,16 @@ public class progressBar : MonoBehaviour
         if (playerTransform != null)
         {
             float playerHeight = playerTransform.position.y;
-            playerHeight = playerHeight % 275;
-            playerHeight = playerHeight / 275;
+            if(playerHeight % 150 < 15)
+            {
+                playerHeight = playerHeight % 160;
+            }
+            else
+            {
+                playerHeight = playerHeight % 150;
+            }
+
+            playerHeight = playerHeight / 150;
             playerHeight *= .71f;
             transform.localScale = new Vector3(.69f, playerHeight, 1);
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BoonMovement : MonoBehaviour
 {
-    private float speedBoost = 1f;  // The additional speed the player gains
+    private float speedBoost = .25f;  // The additional speed the player gains
     private float jumpBoost = .5f;   // The additional jump force the player gains
     //public GameObject Canvas;
 
