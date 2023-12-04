@@ -36,7 +36,7 @@ public class LevelUp : MonoBehaviour
             isAnimePlayed = true;
         }
         if (!hasDisplayed && player.GetComponent<PlayerMovement>().GetIsGrounded() && UIManagerObject.GetScore() - lastScore >= 50)
-            {
+        {
             if (lastScore < 0)
                 LevelUpPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Initial Boon";
             else
@@ -58,6 +58,8 @@ public class LevelUp : MonoBehaviour
                 child.gameObject.GetComponent<LevelUpChoice>().BigBoon = bigBoons[randomPos[i]];
                 string levelPrefix = bigBoons[randomPos[i]].CanLevelUp ? "[Lv." + (bigBoons[randomPos[i]].CurrLevel + 1).ToString() + "] " : "";
                 child.GetChild(0).gameObject.GetComponent<Text>().text = levelPrefix + bigBoons[randomPos[i]].Name + ": " + bigBoons[randomPos[i]].Description;
+                child.gameObject.GetComponent<Button>().enabled = false;
+                StartCoroutine(EnableButton(child.gameObject.GetComponent<Button>()));
                 i++;
             }
             LevelUpPanel.SetActive(true);
@@ -95,6 +97,12 @@ public class LevelUp : MonoBehaviour
         FrontLevelUpAnime.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         FrontLevelUpAnime.SetActive(false);
+    }
+
+    private IEnumerator EnableButton(Button button)
+    {
+        yield return new WaitForSeconds(0.5f);
+        button.enabled = true;
     }
 }
 
