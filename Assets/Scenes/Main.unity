@@ -6251,6 +6251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e3ede9b5f1cc04d9bbeccfb15fc671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallHeightThreshold: 15
+  damageMultiplier: 1
 --- !u!1 &1200931214
 GameObject:
   m_ObjectHideFlags: 0
