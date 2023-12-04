@@ -32,7 +32,7 @@ public class BoonAttack : MonoBehaviour
             else if(roll == 2)
             
             {
-                collision.gameObject.GetComponent<Player>().IncreaseAttack(250);
+                collision.gameObject.GetComponent<Player>().IncreaseAttack(100);
                 bt.getBoon("Attack Damage");
                 /*
                 player.changeJump(player.GetJumpForce() + jumpBoost);
@@ -42,7 +42,7 @@ public class BoonAttack : MonoBehaviour
           
             else if (roll == 3) 
             {
-                attackArea.transform.localScale = attackArea.transform.localScale * 1.2f;
+                attackArea.transform.localScale = attackArea.transform.localScale * 1.1f;
                 bt.getBoon("Attack Area");
             }
             else if(roll ==  4)
