@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1880375977897488055}
   - component: {fileID: 3429820247094158715}
   - component: {fileID: 7339701331821122410}
+  - component: {fileID: 6476293317853200721}
   m_Layer: 6
   m_Name: bone (throwable)
   m_TagString: Enemy
@@ -222,3 +223,16 @@ MonoBehaviour:
   OnDone:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6476293317853200721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6558527954570519300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc441d88481b4c3796f8c38457766c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetName: Bone

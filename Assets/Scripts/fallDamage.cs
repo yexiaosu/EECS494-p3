@@ -62,6 +62,6 @@ public class fallDamage : MonoBehaviour
     {
         healthSystem.AddToCurrentHealth(-damageAmount);
         if (this.GetComponent<HealthSystemForDummies>().CurrentHealth <= 0)
-            this.GetComponent<Player>().Dead();
+            this.GetComponent<Player>().Dead("Gravity");
     }
 }

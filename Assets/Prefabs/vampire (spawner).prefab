@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5459664860212572326}
   - component: {fileID: 8559963467274108181}
   - component: {fileID: -3382813575896047244}
+  - component: {fileID: 5547831299036038969}
   m_Layer: 6
   m_Name: vampire (spawner)
   m_TagString: Enemy
@@ -317,6 +318,19 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 2994935649063905116, guid: f498a7cc92121244eb152780c76ff7b2, type: 3}
   spawnInterval: 5
   spawnDistance: 5
+--- !u!114 &5547831299036038969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974341857172255828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc441d88481b4c3796f8c38457766c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetName: Vampire
 --- !u!1001 &3269200572137723868
 PrefabInstance:
   m_ObjectHideFlags: 0
