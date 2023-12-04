@@ -174,17 +174,6 @@ public class BossAI : MonoBehaviour
             yield return null;
         }
 
-        // Stay in the air for an additional 10 seconds
-        yield return new WaitForSeconds(10);
-
-        Vector3 groundPosition = new Vector3(transform.position.x, transform.position.y - 3.2f, transform.position.z);
-        elapsedTime = 0;
-        while (elapsedTime < 5f) // 5 seconds for descent
-        {
-            transform.position = Vector3.Lerp(transform.position, groundPosition, (elapsedTime / 5f));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
 
         // After 10 seconds
         currentState = BossState.Walking;

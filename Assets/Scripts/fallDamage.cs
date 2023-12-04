@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class fallDamage : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class fallDamage : MonoBehaviour
 
     private bool isFalling = false;
     private Vector3 fallStartPosition;
+    private string fallStartSceneName;
 
     private HealthSystemForDummies healthSystem;
 
@@ -24,15 +26,23 @@ public class fallDamage : MonoBehaviour
         {
             if (!isFalling)
             {
-                // Player just started falling
                 fallStartPosition = transform.position;
                 isFalling = true;
+                // Store the current scene name
+                fallStartSceneName = SceneManager.GetActiveScene().name;
             }
         }
         else
         {
             if (isFalling)
             {
+                // Check if the scene has changed since the player started falling
+                if (SceneManager.GetActiveScene().name != fallStartSceneName)
+                {
+                    // The scene has changed, don't apply fall damage
+                    isFalling = false;
+                    return;
+                }
                 // Player has stopped falling
                 float fallDistance = fallStartPosition.y - transform.position.y;
 

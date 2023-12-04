@@ -627,7 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0357dc8e3c8bffc4995d319e227bf6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossRoomPrefab: {fileID: 3896447642381469495, guid: 25a80f2ef63c8ff4c96a909694e908c1, type: 3}
+  bossRoomPrefab: {fileID: 1530645695828123565, guid: e589777099a59104fbe2c32351f4dd4f, type: 3}
 --- !u!1001 &4043523656469594332
 PrefabInstance:
   m_ObjectHideFlags: 0

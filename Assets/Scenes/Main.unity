@@ -9590,7 +9590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 1.5, z: 0}
-  followSpeedMultiplier: 6
+  followSpeedMultiplier: 2
   fallingFollowMultiplier: 5
 --- !u!114 &2011264774
 MonoBehaviour:

@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   afterBossPlatformPrefab: {fileID: 4940423706145406813, guid: 4507667b1ae5c1e468502563ab980094, type: 3}
+  sceneName: main
 --- !u!1 &7480884530036112634
 GameObject:
   m_ObjectHideFlags: 0

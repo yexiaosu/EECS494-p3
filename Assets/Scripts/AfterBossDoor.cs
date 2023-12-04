@@ -5,6 +5,7 @@ public class AfterBossDoor : MonoBehaviour
 {
     public GameObject afterBossPlatformPrefab; // Assign in Inspector
     private RoomManager roomManager;
+    public string sceneName;
 
     private void Start()
     {
@@ -16,7 +17,7 @@ public class AfterBossDoor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
 
-            SceneManager.LoadScene("Level_2");
+            SceneManager.LoadScene(sceneName);
 
         }
     }
