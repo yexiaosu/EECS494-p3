@@ -189,7 +189,9 @@ public class PlayerAttack : MonoBehaviour
             {
                 Vector2 dir = (new Vector2(child.position.x, child.position.y) - pos).normalized;
                 child.gameObject.GetComponent<EnemyMovement>().Stun(0.1f);
-                child.gameObject.GetComponent<Rigidbody2D>().AddForce(dir * stompingDamageForce, ForceMode2D.Impulse);
+                Rigidbody2D childRb = child.gameObject.GetComponent<Rigidbody2D>();
+                if (childRb != null)
+                    childRb.AddForce(dir * stompingDamageForce, ForceMode2D.Impulse);
                 HealthSystemForDummies health = child.gameObject.GetComponent<HealthSystemForDummies>();
                 int damage = GetComponent<Player>().attack;
                 health.AddToCurrentHealth(-damage);
