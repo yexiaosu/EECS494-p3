@@ -629,10 +629,10 @@ MonoBehaviour:
   - {fileID: 960142432468049369, guid: 367bf24bb5611b14487979ada0119665, type: 3}
   transitionPlatformPrefab: {fileID: 342972437626259614, guid: 266b7f73126ad9844bc83399dc931173, type: 3}
   fixedRoomOffset: 3
-  bossDoorPrefab: {fileID: 8187529809649727624, guid: 1c15ab4591aaedc4ba0cac94fd8458b8, type: 3}
+  bossDoorPrefab: {fileID: 7720839687690686692, guid: 820568e44569352498773cff2ee4ca44, type: 3}
   platformTilemap: {fileID: 0}
   spawnThreshold: 10
-  afterBossPrefab: {fileID: 2324682407640127279, guid: 2aeecba1b91a1594887ae04cdbec781e, type: 3}
+  afterBossPrefab: {fileID: 7480884530036112634, guid: c7df17ded2ceeb24cb46cd2fadc5e47d, type: 3}
 --- !u!114 &407456498
 MonoBehaviour:
   m_ObjectHideFlags: 0

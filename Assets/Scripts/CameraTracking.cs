@@ -42,8 +42,8 @@ public class CameraTracking : MonoBehaviour
 
             if (playerScreenPos > 0.66f)
             {
-                // If the player is in the upper third, follow upwards more aggressively
-                targetY = Mathf.Lerp(transform.position.y, targetY, 1.5f * followSpeedMultiplier * Time.deltaTime);
+                // Increased smoothness for upward movement
+                targetY = Mathf.SmoothStep(transform.position.y, targetY, followSpeedMultiplier * Time.deltaTime);
             }
             else if (playerScreenPos < 0.33f)
             {
@@ -60,4 +60,5 @@ public class CameraTracking : MonoBehaviour
             transform.position = new Vector3(transform.position.x + offset.x, targetY, transform.position.z);
         }
     }
+
 }

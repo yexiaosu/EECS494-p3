@@ -27,6 +27,10 @@ public class BossAI : MonoBehaviour
     public GameObject bossRoomStage2Prefab; // Assign this in the Inspector
     private GameObject roomGrid; // Assign or find this in Start()
     private bool transformationTriggered = false;
+    private SpriteRenderer bossSpriteRenderer;
+    public GameObject skeletonEnemyPrefab; // Assign this in the Inspector
+    public GameObject batEnemyPrefab; // Assign this in the Inspector
+
 
 
     void Start()
@@ -43,8 +47,8 @@ public class BossAI : MonoBehaviour
         animator = GetComponent<Animator>();
         healthSystem = GetComponent<HealthSystemForDummies>();
         roomGrid = GameObject.Find("Room Grid");
+        bossSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        
     }
 
     void Update()
@@ -99,9 +103,9 @@ public class BossAI : MonoBehaviour
     IEnumerator TransformAndDestroyPlatforms()
     {
         isTransforming = true;
-        currentState = BossState.Idle;
+        currentState = BossState.Idle; // Lock boss movement at the start of the transformation
 
-        // Move to x = 0, y += 3.5
+        // Teleportation code: Move to x = 0, y += 3.5 (stay in the air)
         Vector3 initialTargetPosition = new Vector3(0, transform.position.y + 3.5f, transform.position.z);
         float elapsedTime = 0;
         while (elapsedTime < 3f)
@@ -111,6 +115,22 @@ public class BossAI : MonoBehaviour
             yield return null;
         }
 
+        // After teleportation, set the boss to idle and stop movement
+        currentState = BossState.Idle;
+        animator.SetBool("Walking", false); // Stop walking animation
+        animator.SetBool("Attacking", false); // Stop attacking animation
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero; // Stop physical movement
+
+        // Spawn Skeletons at specified locations
+
+
+        // Spawn Bats at specified locations
+        Vector3 batPos1 = new Vector3(7, transform.position.y, 0);
+        Vector3 batPos2 = new Vector3(3, transform.position.y, 0);
+        Instantiate(batEnemyPrefab, batPos1, Quaternion.identity);
+        Instantiate(batEnemyPrefab, batPos2, Quaternion.identity);
+
+        // Destroy the current boss room
         foreach (Transform child in roomGrid.transform)
         {
             if (child.name.Contains("Boss Room"))
@@ -120,8 +140,19 @@ public class BossAI : MonoBehaviour
             }
         }
 
-        // Instantiate Boss Room Stage 2
-        Vector3 spawnPosition = new Vector3(0f, playerTransform.position.y - 10, playerTransform.position.z);
+        float originalBossRoomY = 0f;
+        foreach (Transform child in roomGrid.transform)
+        {
+            if (child.name.Contains("Boss Room"))
+            {
+                originalBossRoomY = child.position.y; // Capture the y-position of the original boss room
+                Destroy(child.gameObject); // Destroy the original boss room
+                break; // Exit the loop once the boss room is found and destroyed
+            }
+        }
+
+        // Instantiate Boss Room Stage 2 at the captured y-position
+        Vector3 spawnPosition = new Vector3(0f, originalBossRoomY, playerTransform.position.z);
         Instantiate(bossRoomStage2Prefab, spawnPosition, Quaternion.identity, roomGrid.transform);
 
         // Move enemies to the Enemies parent object
@@ -135,9 +166,27 @@ public class BossAI : MonoBehaviour
         }
 
         // Teleport boss to new position above the player
-        Vector3 teleportPosition = new Vector3(0f, playerTransform.position.y + 20f, transform.position.z);
-        transform.position = teleportPosition;
+        float timegoing = 0;
+        while (timegoing < 10f)
+        {
+            transform.position = Vector3.Lerp(transform.position, initialTargetPosition, (timegoing / 3f));
+            timegoing += Time.deltaTime;
+            yield return null;
+        }
 
+        // Stay in the air for an additional 10 seconds
+        yield return new WaitForSeconds(10);
+
+        Vector3 groundPosition = new Vector3(transform.position.x, transform.position.y - 3.2f, transform.position.z);
+        elapsedTime = 0;
+        while (elapsedTime < 5f) // 5 seconds for descent
+        {
+            transform.position = Vector3.Lerp(transform.position, groundPosition, (elapsedTime / 5f));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // After 10 seconds
         currentState = BossState.Walking;
         isTransforming = false;
     }
@@ -172,36 +221,43 @@ public class BossAI : MonoBehaviour
     }
 
     void MoveTowardsPlayer()
+{
+    if (isTransforming)
     {
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
-
-        // Calculate the absolute distance on the x-axis
-        float xDistance = Mathf.Abs(transform.position.x - playerTransform.position.x);
-
-        // Check if the boss should rush towards the player
-        if (xDistance > 5f)
-        {
-            transform.position += direction * rushSpeed * Time.deltaTime; // Use rush speed
-        }
-        else
-        {
-            transform.position += direction * moveSpeed * Time.deltaTime; // Use normal speed
-        }
-
-        // Flip the sprite based on player position
-        if (playerTransform.position.x > transform.position.x)
-        {
-            // Player is to the right, flip sprite
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-        else
-        {
-            // Player is to the left, use normal orientation
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-
-        animator.SetBool("Walking", true);
+        return; // Skip moving towards the player if the boss is in the process of transforming
     }
+
+    Vector3 direction = (playerTransform.position - transform.position).normalized;
+
+    // Calculate the absolute distance on the x-axis
+    float xDistance = Mathf.Abs(transform.position.x - playerTransform.position.x);
+
+    // Check if the boss should rush towards the player
+    if (xDistance > 5f && !isTransforming) // Ensure boss is not transforming
+    {
+        transform.position += direction * rushSpeed * Time.deltaTime; // Use rush speed
+    }
+    else
+    {
+        transform.position += direction * moveSpeed * Time.deltaTime; // Use normal speed
+    }
+
+    // Flip the sprite based on player position
+    if (playerTransform.position.x > transform.position.x)
+    {
+        // Player is to the right, flip sprite horizontally if needed
+        bossSpriteRenderer.flipX = true;
+    }
+    else
+    {
+        // Player is to the left, flip sprite horizontally if needed
+        bossSpriteRenderer.flipX = false;
+    }
+
+    animator.SetBool("Walking", true);
+}
+
+
 
 
     void PerformAttack()
@@ -225,6 +281,7 @@ public class BossAI : MonoBehaviour
             lastDamageTime = Time.time;
             currentState = BossState.Damaged;
             animator.SetBool("Damaged", true);
+            Debug.Log("Damage set to true");
         }
     }
 
