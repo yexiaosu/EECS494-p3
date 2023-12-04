@@ -31,6 +31,10 @@ public class IceBossAI : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        // Set the Z position of the boss to 0
+        Vector3 currentPosition = transform.position;
+        transform.position = new Vector3(currentPosition.x, currentPosition.y, 0);
+
         iceBossLaserScript = GetComponentInChildren<IceBossLaser>(true);
         if (iceBossLaserScript != null)
         {
@@ -41,6 +45,7 @@ public class IceBossAI : MonoBehaviour
             Debug.LogError("IceBossLaser script not found on any child objects.");
         }
     }
+
 
     void Update()
     {

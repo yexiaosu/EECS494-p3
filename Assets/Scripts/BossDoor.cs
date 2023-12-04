@@ -41,12 +41,11 @@ public class BossDoor : MonoBehaviour
 
     private void TeleportPlayer()
     {
-        // Teleport the player to a position based on the current score
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            int currentScore = uiManager.GetScore();
-            player.transform.position = new Vector3(0, currentScore + 25f, 0);
+            Vector3 currentPosition = player.transform.position;
+            player.transform.position = new Vector3(currentPosition.x, currentPosition.y + 25f, currentPosition.z);
         }
     }
 
