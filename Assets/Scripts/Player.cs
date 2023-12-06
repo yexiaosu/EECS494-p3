@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         GetComponent<MessageDisplay>().DisplayMessage("death", name);
+        EventBus.Publish<PauseEvent>(new PauseEvent());
     }
 
     public void IncreaseAttack(int damageInc)
