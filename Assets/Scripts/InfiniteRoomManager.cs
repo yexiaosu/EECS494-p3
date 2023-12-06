@@ -5,10 +5,17 @@ using Unity.VisualScripting;
 
 public class InfiniteRoomManager : MonoBehaviour
 {
-    public List<GameObject> roomPrefabs;
+    // Separate lists for different worlds
+    public List<GameObject> grassWorldRoomPrefabs;
+    public List<GameObject> tundraWorldRoomPrefabs;
+
     public GameObject transitionPlatformPrefab;
     private bool stopSpawning = false;
-    public float fixedRoomOffset = 0f;
+
+    // Separate offsets for each world
+    public float grassWorldOffset = 0f;
+    public float tundraWorldOffset = 0f;
+
     public GameObject bossDoorPrefab;
     public Tilemap platformTilemap; // Assign this in the Unity Inspector
 
@@ -20,6 +27,7 @@ public class InfiniteRoomManager : MonoBehaviour
     private GameObject lastSpawnedPlatform;
     public GameObject afterBossPrefab;
     private bool bossRoomDoorSpawned = false;
+
 
     void Start()
     {
@@ -46,7 +54,7 @@ public class InfiniteRoomManager : MonoBehaviour
 
         // Set the tutorial room position to the player's Y-coordinate, not relative to it
         Vector3 tutorialRoomPosition = new Vector3(0f, 0f, 0f);
-        GameObject tutorialRoomPrefab = roomPrefabs[0];
+        GameObject tutorialRoomPrefab = tundraWorldRoomPrefabs[0];
         SpawnRoomAt(tutorialRoomPosition, true, tutorialRoomPrefab);
     }
 
@@ -81,18 +89,20 @@ public class InfiniteRoomManager : MonoBehaviour
 
     private GameObject GetRandomRoomPrefab()
     {
-        // Ensure there is more than one prefab to choose from
+        // Determine which world to spawn from based on a condition, e.g., level, player progress, etc.
+        // For the sake of example, I'll just randomly choose a world
+        bool useGrassWorld = Random.Range(0, 2) == 0;
+        List<GameObject> roomPrefabs = useGrassWorld ? grassWorldRoomPrefabs : tundraWorldRoomPrefabs;
+
         if (roomPrefabs.Count <= 1)
         {
             Debug.LogError("Not enough room prefabs to choose from.");
             return null;
         }
 
-        // Select a random index from 1 onwards, skipping the tutorial room
         int randomIndex = Random.Range(1, roomPrefabs.Count);
         return roomPrefabs[randomIndex];
     }
-
 
     private void SpawnTransitionPlatform()
     {
@@ -108,7 +118,8 @@ public class InfiniteRoomManager : MonoBehaviour
         }
 
         GameObject nextRoomPrefab;
-        Vector3 nextRoomPosition = new Vector3(0f, lastSpawnedPlatform.transform.position.y + fixedRoomOffset, 0f);
+        float offset = currentRoom.name.Contains("Grass") ? grassWorldOffset : tundraWorldOffset;
+        Vector3 nextRoomPosition = new Vector3(0f, lastSpawnedPlatform.transform.position.y + offset, 0f);
 
         if (!bossRoomDoorSpawned && roomCount >= 9999)
         {
@@ -142,7 +153,7 @@ public class InfiniteRoomManager : MonoBehaviour
         }
         else
         {
-            float verticalAdjustment = position.y + fixedRoomOffset;
+            float verticalAdjustment = position.y;
             roomInstance.transform.position = new Vector3(position.x, verticalAdjustment, position.z);
         }
 
