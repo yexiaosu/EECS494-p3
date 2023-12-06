@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 boxSize = new Vector2(.25f, .2f);
         bool isGrounded = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
+        bool isHit = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.up, jumpCast, LayerMask.GetMask("Platforms"));
 
         if (isGrounded && DoubleJumpEnabled)
         {
@@ -83,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetButton("Jump") && isApplyingJumping)
         {
-            if (jumpTimer > 0)
+            if (jumpTimer > 0 && !isHit)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce*1.5f);
                 jumpTimer -= Time.deltaTime;
