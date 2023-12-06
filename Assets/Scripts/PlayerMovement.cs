@@ -146,6 +146,12 @@ public class PlayerMovement : MonoBehaviour
     public bool GetIsGrounded()
     {
         Vector2 boxSize = new Vector2(.5f, .2f);
+        return Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
+    }
+
+    public bool GetIsGroundedOrOverEnemy()
+    {
+        Vector2 boxSize = new Vector2(.5f, .2f);
         return Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms", "Enemy"));
     }
 

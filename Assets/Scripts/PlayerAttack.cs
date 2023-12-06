@@ -14,7 +14,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject ProjectileIcon;
     // missile attack
     public bool MissileAttackEnabled = false;
-    public float ShootCd = 3.0f;
+    public float ShootCd = 2.0f;
     public float MissileAttackSpeed = 5.0f;
     public float MissileAttackDamageFactor = 1.0f;
     public GameObject MissileAttackIcon;
@@ -64,7 +64,7 @@ public class PlayerAttack : MonoBehaviour
         DirectionSprite.transform.rotation = new Quaternion(0, 0, 0, 0);
         DirectionSprite.transform.RotateAround(DirectionSprite.transform.position, new Vector3(0, 0, 1), Mathf.Atan2(vectorAttack.y, vectorAttack.x) / Mathf.PI * 180.0f);
 
-        if (isStomping && GetComponent<PlayerMovement>().GetIsGrounded())
+        if (isStomping && GetComponent<PlayerMovement>().GetIsGroundedOrOverEnemy())
         {
             TrailRenderer tr = GetComponent<TrailRenderer>();
             tr.emitting = false;
