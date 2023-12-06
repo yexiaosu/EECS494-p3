@@ -6448,7 +6448,7 @@ MonoBehaviour:
   ProjectileSpeed: 3
   ProjectileIcon: {fileID: 1560306012}
   MissileAttackEnabled: 0
-  ShootCd: 3
+  ShootCd: 2
   MissileAttackSpeed: 5
   MissileAttackDamageFactor: 1
   MissileAttackIcon: {fileID: 510523166}
