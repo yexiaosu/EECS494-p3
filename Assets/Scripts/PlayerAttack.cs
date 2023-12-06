@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -188,7 +186,17 @@ public class PlayerAttack : MonoBehaviour
             if (Vector2.Distance(pos, child.position) < radius)
             {
                 Vector2 dir = (new Vector2(child.position.x, child.position.y) - pos).normalized;
-                child.gameObject.GetComponent<EnemyMovement>().Stun(0.1f);
+                if (dir.y < 0)
+                {
+                    int seed = Random.Range(0, 100);
+                    if (seed < 50)
+                        dir = new Vector2(1, 0);
+                    else
+                        dir = new Vector2(-1, 0);
+                }
+                EnemyMovement em = child.gameObject.GetComponent<EnemyMovement>();
+                if (em != null)
+                    em.Stun(0.1f);
                 Rigidbody2D childRb = child.gameObject.GetComponent<Rigidbody2D>();
                 if (childRb != null)
                     childRb.AddForce(dir * stompingDamageForce, ForceMode2D.Impulse);
