@@ -1089,8 +1089,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838309562495a0244b14dc08b90778c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAlive: 0
-  CurrentHealth: NaN
+  IsAlive: 1
+  CurrentHealth: 20000
   MaximumHealth: 20000
   HasAnimationWhenHealthChanges: 1
   AnimationDuration: 0.1
