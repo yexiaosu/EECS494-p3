@@ -22,7 +22,7 @@ public class Damage : MonoBehaviour
              * It's hurting ENEMIES instead of PLAYER!!!
              * The logics for hurting the player should be added to else block.
              */
-            if (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + sender.transform.lossyScale.y / 2 && spikeComponent == null)
+            if (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + gameObject.transform.lossyScale.y / 2 && spikeComponent == null)
             {
                 // if the sender is not a spike
                 // apply damage to enemy
@@ -60,7 +60,7 @@ public class Damage : MonoBehaviour
              * It's hurting ENEMIES instead of PLAYER!!!
              * The logics for hurting the player should be added to else block.
              */
-            if (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + sender.transform.lossyScale.y / 2 && spikeComponent == null)
+            if (sender.CompareTag("Enemy") && gameObject.transform.position.y > sender.transform.position.y + gameObject.transform.lossyScale.y / 2 && spikeComponent == null)
             {
                 // if the sender is not a spike
                 // apply damage to enemy
@@ -77,7 +77,7 @@ public class Damage : MonoBehaviour
             }
             else
             {
-                // if the sender is a spike
+                // if the sender is a spike or not jumping on head
                 ApplyDamageToPlayer(gameObject, sender);
             }
         }
