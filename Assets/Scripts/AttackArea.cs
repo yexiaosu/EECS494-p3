@@ -18,6 +18,7 @@ public class AttackArea : MonoBehaviour
             // Check if the collided object is an Enemy
             if (collision.GetComponent<Enemy>() != null)
             {
+                Debug.Log("Collided with " + collision.name);
                 collision.GetComponent<Enemy>().GetMeeleHit();
                 health.AddToCurrentHealth(-damage);
                 if (health.CurrentHealth <= 0)
