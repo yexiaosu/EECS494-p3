@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
 
-        Vector2 boxSize = new Vector2(.25f, .2f);
+        Vector2 boxSize = new Vector2(.5f, .2f);
         bool isGrounded = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
         bool isHit = Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.up, jumpCast, LayerMask.GetMask("Platforms"));
 
@@ -145,8 +145,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool GetIsGrounded()
     {
-        Vector2 boxSize = new Vector2(.25f, .2f);
-        return Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms"));
+        Vector2 boxSize = new Vector2(.5f, .2f);
+        return Physics2D.BoxCast(rb.position, boxSize, 0f, Vector2.down, jumpCast, LayerMask.GetMask("Platforms", "Enemy"));
     }
 
     private IEnumerator Dash(Vector2 dir)
