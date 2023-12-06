@@ -9,6 +9,9 @@ public class LoadMainLevel : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene(levelName);
+        if (collision.gameObject.tag == "Player")
+        {
+            SceneManager.LoadScene(levelName);
+        }
     }
 }
