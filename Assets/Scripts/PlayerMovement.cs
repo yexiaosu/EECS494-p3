@@ -73,11 +73,11 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (DoubleJumpEnabled && canDoubleJump)
             {
-                isApplyingJumping = true;
+                isApplyingJumping = false;
                 tr.emitting = true;
                 jumpTimer = maxJumpingTime;
                 jumpSoundEffect.Play();
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce*1.5f);
                 canDoubleJump = false;
             }
         }
