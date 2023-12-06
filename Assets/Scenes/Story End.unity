@@ -1066,7 +1066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26bb3cd6112ee4ce5ad9bae44aae2294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: Infinite_Level
+  levelName: InfiniteLevel
 --- !u!61 &414151946
 BoxCollider2D:
   m_ObjectHideFlags: 0
