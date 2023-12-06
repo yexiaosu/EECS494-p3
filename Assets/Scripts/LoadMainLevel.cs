@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class LoadMainLevel : MonoBehaviour
 {
+    public string levelName = "Main";
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene(levelName);
     }
 }
